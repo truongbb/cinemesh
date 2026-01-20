@@ -6,23 +6,52 @@
 
     <groupId>com.cinemesh</groupId>
     <artifactId>cinemesh</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>common</module>
+
+        <module>infrastructure/config-server</module>
+        <module>infrastructure/discovery-server</module>
 
         <module>services/auth-service</module>
     </modules>
 
     <properties>
+        <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.boot.version>3.5.9</spring.boot.version>
+        <spring.cloud.version>2025.0.1</spring.cloud.version>
+        <project.version>0.0.1-SNAPSHOT</project.version>
     </properties>
 
 
     <dependencyManagement>
+        <dependencies>
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-dependencies</artifactId>-->
+<!--                <version>${spring.boot.version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
 
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-dependencies</artifactId>-->
+<!--                <version>${spring.cloud.version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
+
+            <dependency>
+                <groupId>com.cinemesh</groupId>
+                <artifactId>cinemesh-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
     </dependencyManagement>
 
 </project>

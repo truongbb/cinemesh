@@ -1,0 +1,11 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: discovery-server
+
+eureka:
+  client:
+    register-with-eureka: false # This is "boss" service, because it's a discovery server, it does not have to register to itself
+    fetch-registry: false
