@@ -3,31 +3,31 @@ package com.cinemesh.common.domain;
 import com.cinemesh.common.event.DomainEvent;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public abstract class BaseEntity<TId> implements Entity<TId> {
     protected TId id;
-    private List<DomainEvent> events = new ArrayList();
+    private List<DomainEvent> events;
     private Integer version;
     private Long createdBy;
-    private Date createdDate;
-    private Date modifiedDate;
+    private Instant createdAt;
+    private Instant modifiedAt;
     private boolean created;
     private boolean modified;
 
     protected void create() {
         this.created = true;
-        this.createdBy = -1l;
-        this.createdDate = new Date();
-        this.modifiedDate = new Date();
+        this.createdBy = -1L;
+        this.createdAt = Instant.now();
+        this.modifiedAt = Instant.now();
     }
 
     protected void modify() {
         this.modified = true;
-        this.modifiedDate = new Date();
+        this.modifiedAt = Instant.now();
     }
 
     public void addEvent(DomainEvent event) {
@@ -51,12 +51,12 @@ public abstract class BaseEntity<TId> implements Entity<TId> {
         return this.createdBy;
     }
 
-    public Date getCreatedDate() {
-        return this.createdDate;
+    public Instant getCreatedAt() {
+        return this.createdAt;
     }
 
-    public Date getModifiedDate() {
-        return this.modifiedDate;
+    public Instant getModifiedAt() {
+        return this.modifiedAt;
     }
 
     public boolean isCreated() {

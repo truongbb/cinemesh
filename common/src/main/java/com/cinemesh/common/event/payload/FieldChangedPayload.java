@@ -3,7 +3,8 @@ package com.cinemesh.common.event.payload;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 
 public class FieldChangedPayload extends BaseEventPayload {
@@ -12,7 +13,7 @@ public class FieldChangedPayload extends BaseEventPayload {
     private String fieldName;
     private String oldValue;
     private String newValue;
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     public FieldChangedPayload() {
     }
@@ -37,9 +38,12 @@ public class FieldChangedPayload extends BaseEventPayload {
             return ((BigDecimal) obj).toPlainString();
         } else if (obj instanceof Double) {
             return (new BigDecimal((Double) obj)).toPlainString();
-        } else {
-            return obj instanceof Date ? sdf.format((Date) obj) : obj.toString();
+        } else if (obj instanceof Date) {
+            return FORMATTER.format(((Date) obj).toInstant());
+        } else if (obj instanceof TemporalAccessor) {
+            return FORMATTER.format((TemporalAccessor) obj);
         }
+        return obj.toString();
     }
 
     public String getReference() {
