@@ -12,3 +12,7 @@ GRANT ALL PRIVILEGES ON DATABASE cinemesh_movie_db TO cinemesh;
 GRANT ALL PRIVILEGES ON DATABASE cinemesh_booking_db TO cinemesh;
 GRANT ALL PRIVILEGES ON DATABASE cinemesh_payment_db TO cinemesh;
 GRANT ALL PRIVILEGES ON DATABASE cinemesh_notification_db TO cinemesh;
+
+-- master data: ROLES
+insert into roles (id, name)values (gen_random_uuid(), 'ROLE_CUSTOMER');
+insert into roles (id, name)values (gen_random_uuid(), 'ROLE_ADMIN');

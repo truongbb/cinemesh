@@ -20,7 +20,7 @@ public class Role extends BaseLocalEntity<User, UUID> implements LocalEntity<Use
     public Role() {
     }
 
-    protected Role(User aggRoot, RoleDto dto) {
+    public Role(User aggRoot, RoleDto dto) {
         this.aggRoot = aggRoot;
         this.id = UUID.randomUUID();
         this.name = dto.getName();
