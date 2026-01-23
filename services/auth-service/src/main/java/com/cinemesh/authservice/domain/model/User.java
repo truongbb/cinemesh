@@ -1,20 +1,26 @@
 package com.cinemesh.authservice.domain.model;
 
-import com.cinemesh.authservice.domain.value_object.UserStatus;
+import com.cinemesh.authservice.domain.exception.AuthErrorCode;
+import com.cinemesh.authservice.statics.UserStatus;
+import com.cinemesh.common.domain.AggregateRoot;
+import com.cinemesh.common.domain.BaseEntity;
+import com.cinemesh.common.dto.RoleDto;
+import com.cinemesh.common.event.CinemeshEvent;
+import com.cinemesh.common.event.CinemeshEventName;
+import com.cinemesh.common.event.payload.FieldChangedPayload;
+import com.cinemesh.common.exception.NotFoundException;
+import com.cinemesh.common.utils.ObjectUtils;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor
-public class User {
+public class User extends BaseEntity<UUID> implements AggregateRoot<UUID> {
 
-    private UUID id;
     private String email;
     private String password;
     private String fullName;
@@ -23,68 +29,148 @@ public class User {
     private String gender;
     private String avatarUrl;
     private UserStatus status;
-    private Set<Role> roles = new HashSet<>();
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private Set<Role> roles;
 
-    // Regex Email đơn giản
-//    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
-//
-//    // Constructor đầy đủ (Dùng khi load từ DB lên)
-    public User(UUID id, String email, String password, String fullName, String phone,
-                LocalDate dob, String gender, String avatarUrl, UserStatus status,
-                Set<Role> roles, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public User() {
+        UUID id = UUID.randomUUID();
         this.id = id;
-        this.email = email;
-        this.password = password;
-        this.fullName = fullName;
-        this.phone = phone;
-        this.dob = dob;
-        this.gender = gender;
-        this.avatarUrl = avatarUrl;
-        this.status = status;
-        this.roles = roles != null ? roles : new HashSet<>();
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.roles = new HashSet<>();
+        create();
+        addEvent(new CinemeshEvent(CinemeshEventName.USER_CREATED, id));
     }
-//
-//    // Factory Method: Tạo User mới (Dùng khi User đăng ký)
-//    public static User create(String email, String encodedPassword, String fullName, Role customerRole) {
-//        if (email == null || !EMAIL_PATTERN.matcher(email).matches()) {
-//            throw new AuthDomainException("Invalid email format");
-//        }
-//        if (encodedPassword == null || encodedPassword.length() < 6) {
-//            throw new AuthDomainException("Password is too weak");
-//        }
-//
-//        User user = new User(
-//                UUID.randomUUID(),
-//                email,
-//                encodedPassword,
-//                fullName,
-//                null, null, null, null, // Các trường optional để null
-//                UserStatus.ACTIVE,      // Mặc định là Active
-//                new HashSet<>(),
-//                LocalDateTime.now(),
-//                LocalDateTime.now()
-//        );
-//        user.roles.add(customerRole);
-//        return user;
-//    }
-//
-//    // Logic nghiệp vụ: Khóa tài khoản
-//    public void lock() {
-//        if (this.status == UserStatus.LOCKED) return;
-//        this.status = UserStatus.LOCKED;
-//        this.updatedAt = LocalDateTime.now();
-//    }
-//
-//    // Logic nghiệp vụ: Cập nhật thông tin
-//    public void updateProfile(String fullName, String phone, String avatarUrl) {
-//        this.fullName = fullName;
-//        this.phone = phone;
-//        this.avatarUrl = avatarUrl;
-//        this.updatedAt = LocalDateTime.now();
-//    }
+
+    public void setEmail(String email) {
+        if (ObjectUtils.equals(this.email, email)) return;
+        addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("email", this.email, email)));
+        this.email = email;
+        modify();
+    }
+
+    public void setPassword(String password) {
+        if (ObjectUtils.equals(this.password, password)) return;
+        addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("password", this.password, password)));
+        this.password = password;
+        modify();
+    }
+
+    public void setFullName(String fullName) {
+        if (ObjectUtils.equals(this.fullName, fullName)) return;
+        addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("fullName", this.fullName, fullName)));
+        this.fullName = fullName;
+        modify();
+    }
+
+    public void setPhone(String phone) {
+        if (ObjectUtils.equals(this.phone, phone)) return;
+        addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("phone", this.phone, phone)));
+        this.phone = phone;
+        modify();
+    }
+
+    public void setDob(LocalDate dob) {
+        if (ObjectUtils.equals(this.dob, dob)) return;
+        addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("dob", this.dob, dob)));
+        this.dob = dob;
+        modify();
+    }
+
+    public void setGender(String gender) {
+        if (ObjectUtils.equals(this.gender, gender)) return;
+        addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("gender", this.gender, gender)));
+        this.gender = gender;
+        modify();
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        if (ObjectUtils.equals(this.avatarUrl, avatarUrl)) return;
+        addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("avatarUrl", this.avatarUrl, avatarUrl)));
+        this.avatarUrl = avatarUrl;
+        modify();
+    }
+
+    public void setStatus(UserStatus status) {
+        if (ObjectUtils.equals(this.status, status)) return;
+        addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("status", this.status, status)));
+        this.status = status;
+        modify();
+    }
+
+    /**
+     * Chỉ update thông tin Role vào user thông qua Role
+     * RoleDto không có id: tạo mới Item
+     * RoleDto có id:
+     * case 1: id không tồn tại trong database : throw not found exception
+     * case 2: id tồn tại trong database : update bản ghi bình thường
+     */
+    public void setRoles(List<RoleDto> dtos) {
+        this.roles = this.roles == null ? new HashSet<>() : this.roles;
+
+        // danh sách phần tử được thêm mới: không truyền lên id
+        List<RoleDto> addingRoles = dtos.stream().filter(x -> x.getId() == null).toList();
+
+        // danh sách phần tử truyền lên id
+        List<RoleDto> existedRoles = dtos.stream().filter(x -> x.getId() != null).toList();
+
+        // danh sách phần tử được cập nhật: truyền lên id va id ton tai trong db
+        List<RoleDto> updatedRoles = existedRoles.stream()
+                .filter(quizDto ->
+                        this.roles
+                                .stream()
+                                .anyMatch(quizRoot -> quizRoot.getId().toString().equals(quizDto.getId().toString())
+                                ))
+                .toList();
+
+        //nếu dto có id mà id ko trong domain thì throw exception
+        List<RoleDto> addDtoIdNotExitDomains = existedRoles.stream()
+                .filter(quizDto ->
+                        this.roles.stream().noneMatch(quizRoot -> quizRoot.getId().equals(quizDto.getId()))
+                )
+                .toList();
+
+        if (!addDtoIdNotExitDomains.isEmpty()) {
+            throw new NotFoundException(AuthErrorCode.ROLE_NOT_FOUND);
+        }
+
+        //list sẽ delete khỏi list cũ
+        List<Role> deleteAdds = this.roles.stream()
+                .filter(quizRoot -> existedRoles.stream().noneMatch(quizDto -> quizDto.getId().equals(quizRoot.getId())))
+                .toList();
+
+        addRoles(addingRoles);
+        removeRoles(deleteAdds);
+        updateRoles(updatedRoles);
+    }
+
+    private void addRoles(List<RoleDto> roleDtos) {
+        roleDtos.forEach(it -> {
+            Role role = new Role(this, it);
+            this.roles.add(role);
+            addEvent(new CinemeshEvent(CinemeshEventName.ROLES_ADDED, it.getId()));
+            modify();
+        });
+    }
+
+    private void removeRoles(List<Role> roles) {
+        roles.forEach(it -> {
+            this.roles.removeIf(obj -> obj.getId().equals(it.getId()));
+            addEvent(new CinemeshEvent(CinemeshEventName.ROLES_REMOVED, it.getId().toString()));
+            modify();
+        });
+    }
+
+    private void updateRoles(List<RoleDto> dtos) {
+        for (RoleDto dto : dtos) {
+            this.roles.stream()
+                    .filter(x -> x.getId().equals(dto.getId()))
+                    .findFirst()
+                    .ifPresent(role -> {
+                        role.update(dto);
+                        if (role.isModified()) {
+                            addEvent(new CinemeshEvent(CinemeshEventName.ROLES_UPDATED, role.getId()));
+                            modify();
+                        }
+                    });
+        }
+    }
 
 }

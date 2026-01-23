@@ -1,6 +1,6 @@
 package com.cinemesh.authservice.infrashtructure.persistence.entity;
 
-import com.cinemesh.authservice.domain.value_object.RoleName;
+import com.cinemesh.common.statics.RoleName;
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

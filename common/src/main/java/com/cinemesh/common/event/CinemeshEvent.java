@@ -9,17 +9,18 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.Date;
 
-public class BaseProcessEvent extends DomainEvent {
-    public BaseProcessEvent() {
+public class CinemeshEvent extends DomainEvent {
+    public CinemeshEvent() {
+        super();
     }
 
-    public BaseProcessEvent(BaseEventName name, Object payload) {
+    public CinemeshEvent(CinemeshEventName name, Object payload) {
         this.setName(name.name());
         this.setPayload(payload);
-        this.setCreatedAt((new Date()).toInstant());
+        this.setCreatedAt(new Date().toInstant());
     }
 
-    public BaseProcessEvent(BaseEventName name) {
+    public CinemeshEvent(CinemeshEventName name) {
         this.setName(name.name());
         this.setCreatedAt(Instant.now());
     }
@@ -30,13 +31,13 @@ public class BaseProcessEvent extends DomainEvent {
         }
 
         public DomainEvent deserialize(JsonParser jsonParser, DeserializationContext context) throws IOException {
-            return (DomainEvent) jsonParser.readValueAs(BaseProcessEvent.class);
+            return jsonParser.readValueAs(CinemeshEvent.class);
         }
     }
 
     public static class DomainEventModule extends SimpleModule {
-        public DomainEventModule() {
-            this.addDeserializer(DomainEvent.class, new DomainEventDeserializer());
+        {
+            addDeserializer(DomainEvent.class, new DomainEventDeserializer());
         }
     }
 }

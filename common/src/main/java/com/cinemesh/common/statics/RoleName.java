@@ -1,4 +1,4 @@
-package com.cinemesh.authservice.domain.value_object;
+package com.cinemesh.common.statics;
 
 public enum RoleName {
     ROLE_ADMIN,

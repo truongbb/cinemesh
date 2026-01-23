@@ -2,6 +2,7 @@ package com.cinemesh.common.domain;
 
 import com.cinemesh.common.event.DomainEvent;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public abstract class BaseEntity<TId> implements Entity<TId> {
     protected TId id;
     private List<DomainEvent> events;
     private Integer version;
-    private Long createdBy;
+    private String createdBy;
     private Instant createdAt;
     private Instant modifiedAt;
     private boolean created;
@@ -20,7 +21,7 @@ public abstract class BaseEntity<TId> implements Entity<TId> {
 
     protected void create() {
         this.created = true;
-        this.createdBy = -1L;
+        this.createdBy = SecurityContextHolder.getContext().getAuthentication().getName();
         this.createdAt = Instant.now();
         this.modifiedAt = Instant.now();
     }
@@ -47,7 +48,7 @@ public abstract class BaseEntity<TId> implements Entity<TId> {
         return this.version;
     }
 
-    public Long getCreatedBy() {
+    public String getCreatedBy() {
         return this.createdBy;
     }
 

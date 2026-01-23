@@ -1,6 +1,6 @@
 package com.cinemesh.authservice.infrashtructure.persistence.entity;
 
-import com.cinemesh.authservice.domain.value_object.UserStatus;
+import com.cinemesh.authservice.statics.UserStatus;
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;

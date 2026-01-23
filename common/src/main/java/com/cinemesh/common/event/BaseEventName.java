@@ -1,5 +1,5 @@
 package com.cinemesh.common.event;
 
-public enum BaseProcessEventName {
+public enum BaseEventName {
     FIELD_VALUE_CHANGED;
 }

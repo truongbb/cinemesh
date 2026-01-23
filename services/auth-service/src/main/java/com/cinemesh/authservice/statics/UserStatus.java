@@ -1,4 +1,4 @@
-package com.cinemesh.authservice.domain.value_object;
+package com.cinemesh.authservice.statics;
 
 public enum UserStatus {
     ACTIVE,
