@@ -1,6 +1,5 @@
 package com.cinemesh.authservice.domain.model;
 
-import com.cinemesh.authservice.domain.exception.AuthErrorCode;
 import com.cinemesh.authservice.statics.UserStatus;
 import com.cinemesh.common.domain.AggregateRoot;
 import com.cinemesh.common.domain.BaseEntity;
@@ -8,9 +7,9 @@ import com.cinemesh.common.dto.RoleDto;
 import com.cinemesh.common.event.CinemeshEvent;
 import com.cinemesh.common.event.CinemeshEventName;
 import com.cinemesh.common.event.payload.FieldChangedPayload;
-import com.cinemesh.common.exception.NotFoundException;
 import com.cinemesh.common.utils.ObjectUtils;
 import lombok.Getter;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -95,82 +94,22 @@ public class User extends BaseEntity<UUID> implements AggregateRoot<UUID> {
         modify();
     }
 
-    /**
-     * Chỉ update thông tin Role vào user thông qua Role
-     * RoleDto không có id: tạo mới Item
-     * RoleDto có id:
-     * case 1: id không tồn tại trong database : throw not found exception
-     * case 2: id tồn tại trong database : update bản ghi bình thường
-     */
-    public void setRoles(List<RoleDto> dtos) {
-        this.roles = this.roles == null ? new HashSet<>() : this.roles;
-
-        // danh sách phần tử được thêm mới: không truyền lên id
-        List<RoleDto> addingRoles = dtos.stream().filter(x -> x.getId() == null).toList();
-
-        // danh sách phần tử truyền lên id
-        List<RoleDto> existedRoles = dtos.stream().filter(x -> x.getId() != null).toList();
-
-        // danh sách phần tử được cập nhật: truyền lên id va id ton tai trong db
-        List<RoleDto> updatedRoles = existedRoles.stream()
-                .filter(quizDto ->
-                        this.roles
-                                .stream()
-                                .anyMatch(quizRoot -> quizRoot.getId().toString().equals(quizDto.getId().toString())
-                                ))
-                .toList();
-
-        //nếu dto có id mà id ko trong domain thì throw exception
-        List<RoleDto> addDtoIdNotExitDomains = existedRoles.stream()
-                .filter(quizDto ->
-                        this.roles.stream().noneMatch(quizRoot -> quizRoot.getId().equals(quizDto.getId()))
-                )
-                .toList();
-
-        if (!addDtoIdNotExitDomains.isEmpty()) {
-            throw new NotFoundException(AuthErrorCode.ROLE_NOT_FOUND);
-        }
-
-        //list sẽ delete khỏi list cũ
-        List<Role> deleteAdds = this.roles.stream()
-                .filter(quizRoot -> existedRoles.stream().noneMatch(quizDto -> quizDto.getId().equals(quizRoot.getId())))
-                .toList();
-
-        addRoles(addingRoles);
-        removeRoles(deleteAdds);
-        updateRoles(updatedRoles);
-    }
-
-    private void addRoles(List<RoleDto> roleDtos) {
-        roleDtos.forEach(it -> {
-            Role role = new Role(this, it);
+    public void addRoles(List<RoleDto> roleDtos) {
+        if (CollectionUtils.isEmpty(roleDtos)) this.roles = new HashSet<>();
+        roleDtos.forEach(roleDto -> {
+            Role role = new Role(roleDto);
             this.roles.add(role);
-            addEvent(new CinemeshEvent(CinemeshEventName.ROLES_ADDED, it.getId()));
-            modify();
+            addEvent(new CinemeshEvent(CinemeshEventName.USER_ROLES_ADDED, roleDto.getId().toString()));
         });
+        modify();
     }
 
-    private void removeRoles(List<Role> roles) {
-        roles.forEach(it -> {
+    public void removeRoles(List<RoleDto> roleDtos) {
+        roleDtos.forEach(it -> {
             this.roles.removeIf(obj -> obj.getId().equals(it.getId()));
-            addEvent(new CinemeshEvent(CinemeshEventName.ROLES_REMOVED, it.getId().toString()));
+            addEvent(new CinemeshEvent(CinemeshEventName.USER_ROLES_REMOVED, it.getId().toString()));
             modify();
         });
-    }
-
-    private void updateRoles(List<RoleDto> dtos) {
-        for (RoleDto dto : dtos) {
-            this.roles.stream()
-                    .filter(x -> x.getId().equals(dto.getId()))
-                    .findFirst()
-                    .ifPresent(role -> {
-                        role.update(dto);
-                        if (role.isModified()) {
-                            addEvent(new CinemeshEvent(CinemeshEventName.ROLES_UPDATED, role.getId()));
-                            modify();
-                        }
-                    });
-        }
     }
 
 }

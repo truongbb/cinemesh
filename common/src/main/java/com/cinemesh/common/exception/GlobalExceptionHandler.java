@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestControllerAdvice
 @Slf4j
@@ -50,7 +49,7 @@ public class GlobalExceptionHandler {
                             .message(msg)
                             .build();
                 })
-                .collect(Collectors.toList());
+                .toList();
 
         return new ResponseEntity<>(
                 ErrorResponse.builder().errors(details).build(),

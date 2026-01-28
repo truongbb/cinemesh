@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: config-server
+  messages:
+    basename: messages
+    encoding: UTF-8
+    fallback-to-system-locale: false
   profiles:
     active: native # local file instead of git
   cloud:

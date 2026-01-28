@@ -1,7 +1,6 @@
 package com.cinemesh.authservice.domain.model;
 
-import com.cinemesh.common.domain.BaseLocalEntity;
-import com.cinemesh.common.domain.LocalEntity;
+import com.cinemesh.common.domain.BaseAggregateRoot;
 import com.cinemesh.common.dto.RoleDto;
 import com.cinemesh.common.event.CinemeshEvent;
 import com.cinemesh.common.event.CinemeshEventName;
@@ -13,22 +12,24 @@ import lombok.Getter;
 import java.util.UUID;
 
 @Getter
-public class Role extends BaseLocalEntity<User, UUID> implements LocalEntity<User, UUID> {
+public class Role extends BaseAggregateRoot<UUID> {
 
     private RoleName name;
 
     public Role() {
-    }
-
-    public Role(User aggRoot, RoleDto dto) {
-        this.aggRoot = aggRoot;
-        this.id = UUID.randomUUID();
-        this.name = dto.getName();
+        UUID id = UUID.randomUUID();
+        this.id = id;
         create();
+        addEvent(new CinemeshEvent(CinemeshEventName.ROLE_CREATED, id));
     }
 
-    protected void update(RoleDto dto) {
-        setName(dto.getName());
+    public Role(RoleDto roleDto) {
+        this.id = roleDto.getId() == null ? UUID.randomUUID() : roleDto.getId();
+        this.name = roleDto.getName();
+        if (roleDto.getId() == null) {
+            create();
+            addEvent(new CinemeshEvent(CinemeshEventName.ROLE_CREATED, id));
+        }
     }
 
     public void setName(RoleName name) {
