@@ -1,6 +1,8 @@
 package com.cinemesh.authservice.presenration.rest;
 
+import com.cinemesh.authservice.application.dto.request.LoginRequest;
 import com.cinemesh.authservice.application.dto.request.RegisterRequest;
+import com.cinemesh.authservice.application.dto.response.LoginResponse;
 import com.cinemesh.authservice.application.dto.response.RegisterResponse;
 import com.cinemesh.authservice.application.service.AuthService;
 import jakarta.validation.Valid;
@@ -16,12 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/authentications")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class UserController {
+public class AuthenticationController {
 
     AuthService authService;
 
+    @PostMapping("/registration")
+    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request) {
+        RegisterResponse response = authService.register(request);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
 
+    @PostMapping("/login")
+    public LoginResponse login(@Valid @RequestBody LoginRequest request) {
+        return authService.login(request);
+    }
 
 }

@@ -12,6 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalUnit;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +31,7 @@ public class JwtService {
 
     public String generateJwtToken(UserClaimsDto userClaims, boolean refreshToken) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", userClaims.getRole());
+        claims.put("roles", String.join(", ", userClaims.getRoles().stream().map(r -> r.getName().name()).toList()));
         claims.put("userId", userClaims.getUserId());
         // claims.put("fullName", userClaims.getFullName()); // Ví dụ mở rộng
 
@@ -34,11 +39,13 @@ public class JwtService {
         long expiration = refreshToken ? jwtProperties.getRefreshToken().getTokenValidityMilliseconds()
                 : jwtProperties.getAccessToken().getTokenValidityMilliseconds();
 
+        Date expirationDate = Date.from(LocalDateTime.now().plusSeconds(expiration / 1000).atZone(ZoneId.systemDefault()).toInstant());
+
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userClaims.getEmail())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(expiration))
+                .setExpiration(expirationDate)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }

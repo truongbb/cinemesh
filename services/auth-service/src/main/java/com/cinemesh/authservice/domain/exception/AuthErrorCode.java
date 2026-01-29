@@ -6,7 +6,8 @@ import lombok.Getter;
 @Getter
 public enum AuthErrorCode implements BaseErrorCode {
     ROLE_NOT_FOUND("001001"),
-    EMAIL_ALREADY_EXISTS("001002")
+    EMAIL_ALREADY_EXISTS("001002"),
+    USER_EMAIL_NOT_FOUND("001003"),
 
     ;
 

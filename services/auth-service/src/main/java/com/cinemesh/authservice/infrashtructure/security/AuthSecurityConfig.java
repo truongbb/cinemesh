@@ -32,7 +32,8 @@ public class AuthSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Mặc định cho phép Swagger chạy
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll() // đăng ký tài khoản
+                        .requestMatchers(HttpMethod.POST, "/api/v1/authentications/registration").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/authentications/login").permitAll()
                         // Còn lại chặn hết
                         .anyRequest().authenticated()
                 )

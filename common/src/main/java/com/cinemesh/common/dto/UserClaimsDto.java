@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -12,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class UserClaimsDto {
     private String userId;
     private String email; // Đóng vai trò là Subject
-    private String role;
+    private List<RoleDto> roles;
 
     // Sau này thích thêm gì thì thêm vào đây, không ảnh hưởng hàm generate
     // private String fullName;
