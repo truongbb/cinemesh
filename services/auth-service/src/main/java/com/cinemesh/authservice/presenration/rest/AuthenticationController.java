@@ -1,8 +1,9 @@
 package com.cinemesh.authservice.presenration.rest;
 
 import com.cinemesh.authservice.application.dto.request.LoginRequest;
+import com.cinemesh.authservice.application.dto.request.RefreshTokenRequest;
 import com.cinemesh.authservice.application.dto.request.RegisterRequest;
-import com.cinemesh.authservice.application.dto.response.LoginResponse;
+import com.cinemesh.authservice.application.dto.response.AuthenticationTokenResponse;
 import com.cinemesh.authservice.application.dto.response.RegisterResponse;
 import com.cinemesh.authservice.application.service.AuthService;
 import jakarta.validation.Valid;
@@ -31,8 +32,19 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public LoginResponse login(@Valid @RequestBody LoginRequest request) {
+    public AuthenticationTokenResponse login(@Valid @RequestBody LoginRequest request) {
         return authService.login(request);
     }
+
+    @PostMapping("/logout")
+    public void logout() {
+        authService.logout();
+    }
+
+    @PostMapping("/refresh")
+    public AuthenticationTokenResponse refresh(@RequestBody @Valid RefreshTokenRequest request) {
+        return authService.refresh(request);
+    }
+
 
 }

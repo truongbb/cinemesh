@@ -26,7 +26,7 @@ public class BaseSecurityConfig {
     @Bean
     // QUAN TRỌNG: Chỉ tạo Bean này nếu service con KHÔNG tự tạo Bean riêng
     @ConditionalOnMissingBean(SecurityFilterChain.class)
-    public SecurityFilterChain filterChain(HttpSecurity http) {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

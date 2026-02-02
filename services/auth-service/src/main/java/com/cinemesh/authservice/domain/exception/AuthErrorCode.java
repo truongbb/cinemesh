@@ -8,6 +8,7 @@ public enum AuthErrorCode implements BaseErrorCode {
     ROLE_NOT_FOUND("001001"),
     EMAIL_ALREADY_EXISTS("001002"),
     USER_EMAIL_NOT_FOUND("001003"),
+    INVALID_REFRESH_TOKEN("001004"),
 
     ;
 

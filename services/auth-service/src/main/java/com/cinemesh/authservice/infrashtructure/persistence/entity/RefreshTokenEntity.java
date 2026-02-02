@@ -1,10 +1,9 @@
 package com.cinemesh.authservice.infrashtructure.persistence.entity;
 
+import com.cinemesh.authservice.statics.RefreshTokenStatus;
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "refresh_tokens")
@@ -22,7 +21,8 @@ public class RefreshTokenEntity extends BaseEntity {
     @Column(nullable = false, unique = true, columnDefinition = "text")
     private String token;
 
-    @Column(name = "expiry_at", nullable = false)
-    private LocalDateTime expiryAt;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private RefreshTokenStatus status;
 
 }
