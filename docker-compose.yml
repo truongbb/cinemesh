@@ -81,9 +81,10 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
       KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: cinemesh-connect
-      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://kafka-connect:8083
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://cinemesh-connect:8083
     networks:
       - cinemesh-net
+
 volumes:
   postgres_data:
 
