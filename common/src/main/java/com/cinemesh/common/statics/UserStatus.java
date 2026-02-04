@@ -1,4 +1,4 @@
-package com.cinemesh.authservice.statics;
+package com.cinemesh.common.statics;
 
 public enum UserStatus {
     ACTIVE,

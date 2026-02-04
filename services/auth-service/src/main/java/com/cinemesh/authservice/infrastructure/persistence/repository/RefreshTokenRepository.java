@@ -1,7 +1,7 @@
-package com.cinemesh.authservice.infrashtructure.persistence.repository;
+package com.cinemesh.authservice.infrastructure.persistence.repository;
 
-import com.cinemesh.authservice.infrashtructure.persistence.entity.RefreshTokenEntity;
-import com.cinemesh.authservice.infrashtructure.persistence.entity.UserEntity;
+import com.cinemesh.authservice.infrastructure.persistence.entity.RefreshTokenEntity;
+import com.cinemesh.authservice.infrastructure.persistence.entity.UserEntity;
 import com.cinemesh.authservice.statics.RefreshTokenStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

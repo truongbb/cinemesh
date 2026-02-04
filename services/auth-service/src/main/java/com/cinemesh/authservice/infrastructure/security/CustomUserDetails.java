@@ -1,6 +1,6 @@
-package com.cinemesh.authservice.infrashtructure.security;
+package com.cinemesh.authservice.infrastructure.security;
 
-import com.cinemesh.authservice.infrashtructure.persistence.entity.UserEntity;
+import com.cinemesh.authservice.infrastructure.persistence.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

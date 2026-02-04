@@ -1,12 +1,13 @@
 package com.cinemesh.authservice.domain.model;
 
-import com.cinemesh.authservice.statics.UserStatus;
 import com.cinemesh.common.domain.AggregateRoot;
 import com.cinemesh.common.domain.BaseEntity;
 import com.cinemesh.common.dto.RoleDto;
+import com.cinemesh.common.dto.UserDto;
 import com.cinemesh.common.event.CinemeshEvent;
 import com.cinemesh.common.event.CinemeshEventName;
 import com.cinemesh.common.event.payload.FieldChangedPayload;
+import com.cinemesh.common.statics.UserStatus;
 import com.cinemesh.common.utils.ObjectUtils;
 import lombok.Getter;
 import org.springframework.util.CollectionUtils;
@@ -16,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Getter
 public class User extends BaseEntity<UUID> implements AggregateRoot<UUID> {
@@ -36,6 +38,26 @@ public class User extends BaseEntity<UUID> implements AggregateRoot<UUID> {
         this.roles = new HashSet<>();
         create();
         addEvent(new CinemeshEvent(CinemeshEventName.USER_CREATED, id));
+    }
+
+    public User(UserDto dto) {
+        this.id = dto.getId() == null ? UUID.randomUUID() : dto.getId();
+        this.email = dto.getEmail();
+        this.password = dto.getPassword();
+        this.fullName = dto.getFullName();
+        this.phone = dto.getPhone();
+        this.dob = dto.getDob();
+        this.gender = dto.getGender();
+        this.avatarUrl = dto.getAvatarUrl();
+        this.status = dto.getStatus();
+        if (dto.getRoles() != null && !dto.getRoles().isEmpty()) {
+            this.roles = dto.getRoles().stream()
+                    .map(Role::new)
+                    .collect(Collectors.toSet());
+        } else {
+            this.roles = new HashSet<>();
+        }
+        create();
     }
 
     public void setEmail(String email) {

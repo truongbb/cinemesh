@@ -1,6 +1,6 @@
-package com.cinemesh.authservice.infrashtructure.security;
+package com.cinemesh.authservice.infrastructure.security;
 
-import com.cinemesh.authservice.infrashtructure.persistence.repository.UserRepository;
+import com.cinemesh.authservice.infrastructure.persistence.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

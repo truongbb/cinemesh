@@ -1,4 +1,4 @@
-package com.cinemesh.authservice.infrashtructure.persistence.entity;
+package com.cinemesh.authservice.infrastructure.persistence.entity;
 
 import com.cinemesh.authservice.statics.RefreshTokenStatus;
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;

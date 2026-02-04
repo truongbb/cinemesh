@@ -7,15 +7,15 @@ import com.cinemesh.authservice.application.dto.response.AuthenticationTokenResp
 import com.cinemesh.authservice.application.dto.response.RegisterResponse;
 import com.cinemesh.authservice.domain.exception.AuthErrorCode;
 import com.cinemesh.authservice.domain.model.User;
-import com.cinemesh.authservice.infrashtructure.persistence.entity.RefreshTokenEntity;
-import com.cinemesh.authservice.infrashtructure.persistence.entity.RoleEntity;
-import com.cinemesh.authservice.infrashtructure.persistence.entity.UserEntity;
-import com.cinemesh.authservice.infrashtructure.persistence.repository.RefreshTokenRepository;
-import com.cinemesh.authservice.infrashtructure.persistence.repository.RoleRepository;
-import com.cinemesh.authservice.infrashtructure.persistence.repository.UserRepository;
-import com.cinemesh.authservice.infrashtructure.security.CustomUserDetails;
+import com.cinemesh.authservice.infrastructure.persistence.adapter.UserPersistenceAdapter;
+import com.cinemesh.authservice.infrastructure.persistence.entity.RefreshTokenEntity;
+import com.cinemesh.authservice.infrastructure.persistence.entity.RoleEntity;
+import com.cinemesh.authservice.infrastructure.persistence.entity.UserEntity;
+import com.cinemesh.authservice.infrastructure.persistence.repository.RefreshTokenRepository;
+import com.cinemesh.authservice.infrastructure.persistence.repository.RoleRepository;
+import com.cinemesh.authservice.infrastructure.persistence.repository.UserRepository;
+import com.cinemesh.authservice.infrastructure.security.CustomUserDetails;
 import com.cinemesh.authservice.statics.RefreshTokenStatus;
-import com.cinemesh.authservice.statics.UserStatus;
 import com.cinemesh.common.dto.RoleDto;
 import com.cinemesh.common.dto.UserClaimsDto;
 import com.cinemesh.common.dto.UserDetailsDto;
@@ -25,12 +25,12 @@ import com.cinemesh.common.security.JwtProperties;
 import com.cinemesh.common.security.JwtService;
 import com.cinemesh.common.security.SecurityUtils;
 import com.cinemesh.common.statics.RoleName;
+import com.cinemesh.common.statics.UserStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -49,14 +49,13 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthService {
 
-
     ObjectMapper objectMapper;
     JwtService jwtService;
     JwtProperties jwtProperties;
     UserRepository userRepository;
     RoleRepository roleRepository;
     PasswordEncoder passwordEncoder;
-    UserSaveService userSaveService;
+    UserPersistenceAdapter userPersistenceAdapter;
     AuthenticationManager authenticationManager;
     RefreshTokenRepository refreshTokenRepository;
 
@@ -66,9 +65,7 @@ public class AuthService {
         }
 
         User user = buildNewUser(request);
-        userSaveService.saveUser(user);
-
-        sendActivationEmail(user);
+        userPersistenceAdapter.saveUser(user);
 
         return RegisterResponse.builder()
                 .id(user.getId())
@@ -90,11 +87,6 @@ public class AuthService {
         user.addRoles(List.of(roleDto));
 
         return user;
-    }
-
-    @Async
-    public void sendActivationEmail(User user) {
-        // TODO - send activation email
     }
 
     public AuthenticationTokenResponse login(@Valid LoginRequest request) {

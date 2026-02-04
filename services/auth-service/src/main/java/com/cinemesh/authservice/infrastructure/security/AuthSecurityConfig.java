@@ -1,4 +1,4 @@
-package com.cinemesh.authservice.infrashtructure.security;
+package com.cinemesh.authservice.infrastructure.security;
 
 import com.cinemesh.common.security.JwtAuthenticationFilter;
 import lombok.AccessLevel;
@@ -34,6 +34,7 @@ public class AuthSecurityConfig {
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/authentications/registration").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/authentications/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users/{id}/activation").permitAll()
                         // Còn lại chặn hết
                         .anyRequest().authenticated()
                 )

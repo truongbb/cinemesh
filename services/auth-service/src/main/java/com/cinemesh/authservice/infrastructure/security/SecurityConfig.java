@@ -1,4 +1,4 @@
-package com.cinemesh.authservice.infrashtructure.security;
+package com.cinemesh.authservice.infrastructure.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

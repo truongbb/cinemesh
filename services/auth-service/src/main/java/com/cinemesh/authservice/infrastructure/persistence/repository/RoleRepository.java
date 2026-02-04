@@ -1,6 +1,6 @@
-package com.cinemesh.authservice.infrashtructure.persistence.repository;
+package com.cinemesh.authservice.infrastructure.persistence.repository;
 
-import com.cinemesh.authservice.infrashtructure.persistence.entity.RoleEntity;
+import com.cinemesh.authservice.infrastructure.persistence.entity.RoleEntity;
 import com.cinemesh.common.statics.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -11,13 +11,48 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: truongbb96
+    password: 'xrhz quxn ohfw jdwv' # App password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/ # <--- Eureka address
+
+application:
+  account:
+    activation:
+      activationUrl: http://localhost:9000/api/v1/users/{id}/activation
+      expiredDurationInMilliseconds: 1800000
+      maxResendTimes: 3
+    passwordForgotten:
+      url: http://localhost:9000/api/v1/users/{id}/password_forgotten
+      expiredDurationInMilliseconds: 1800000
+  kafka:
+    user-log: # lắng nghe message quyét từ bảng user-logs của auth-service
+      bootstrap-server: localhost:9092 # Or kafka:29092 if inside Docker
+      topic: cinemesh.auth-service.user-logs
+      group-id: user-logs-dev
+      retry-interval: 2000 #Khoảng thời gian giữa các lần lặp
+      retry-multiplier: 2 #Hệ số tăng thời gian
+      retry-max-interval: 10000 #Khoảng thời gian lớn nhất giữa các lần lặp
+      retry-max-attempts: 2 #Số lần lặp lại công việc nếu xảy ra lỗi
+      ignored: false #Có bỏ qua hay không (commit và đi tiếp)?
+      reproduced: false #Có đẩy sang topic khác không?
+      reproduce-topic: cinemesh.auth-service.user-logs
+      stopped: true #Dừng lại khi xử lý lỗi message và đã thực hiện xử lý lại message nếu có.
+      auto-startup: true #Tự động startup kafka consumer

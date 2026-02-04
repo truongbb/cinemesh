@@ -15,4 +15,7 @@ public enum CinemeshEventName {
     ROLE_UPDATED,
     ROLE_REMOVED,
 
+    USER_ACTIVATED,
+    USER_DEACTIVATED,
+
 }

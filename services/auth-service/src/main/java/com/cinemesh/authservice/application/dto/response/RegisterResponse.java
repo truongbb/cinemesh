@@ -1,6 +1,6 @@
 package com.cinemesh.authservice.application.dto.response;
 
-import com.cinemesh.authservice.statics.UserStatus;
+import com.cinemesh.common.statics.UserStatus;
 import lombok.Builder;
 import lombok.Data;
 
