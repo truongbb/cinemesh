@@ -18,4 +18,12 @@ public enum CinemeshEventName {
     USER_ACTIVATED,
     USER_DEACTIVATED,
 
+    /**
+     * MOVIE-SERVICE
+     */
+    MOVIE_CREATED,
+
+    GENRE_CREATED,
+    GENRE_UPDATED,
+
 }

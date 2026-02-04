@@ -1,4 +1,4 @@
-package com.cinemesh.authservice.infrastructure.persistence.entity;
+package com.cinemesh.movieservice.infrastructure.persistence.entity;
 
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;
 import com.cinemesh.common.statics.LogType;
@@ -13,15 +13,15 @@ import lombok.Setter;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user_logs")
+@Table(name = "movie_logs")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserLogEntity extends BaseEntity {
+public class MovieLogEntity extends BaseEntity {
 
     @Column
-    private UUID userId;
+    private UUID movieId;
 
     @Column
     private LogType type;

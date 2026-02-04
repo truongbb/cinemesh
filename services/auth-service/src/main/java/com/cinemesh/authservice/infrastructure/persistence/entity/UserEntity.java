@@ -38,7 +38,7 @@ public class UserEntity extends BaseEntity {
     private UserStatus status;
 
     // Quan hệ Many-to-Many với Roles
-    @ManyToMany(fetch = FetchType.EAGER) // Load User kèm luôn Role cho tiện
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
