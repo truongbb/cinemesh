@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public enum MovieErrorCode implements BaseErrorCode {
     GENRE_MUST_BE_EXISTED_BEFORE_CREATE_MOVIE("003001"),
-
+    GENRE_EXISTED("003002"),
     ;
 
     private final String code;

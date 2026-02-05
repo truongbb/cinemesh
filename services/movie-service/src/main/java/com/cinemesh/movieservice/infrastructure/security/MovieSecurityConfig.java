@@ -1,6 +1,7 @@
 package com.cinemesh.movieservice.infrastructure.security;
 
 import com.cinemesh.common.security.JwtAuthenticationFilter;
+import com.cinemesh.common.statics.RoleName;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -32,7 +33,7 @@ public class MovieSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Mặc định cho phép Swagger chạy
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/authentications/registration").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/movie-genres").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
                         // Còn lại chặn hết
                         .anyRequest().authenticated()
                 )
