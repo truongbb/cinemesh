@@ -34,6 +34,7 @@ public class MovieSecurityConfig {
                         // Mặc định cho phép Swagger chạy
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/movie-genres").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
+                        .requestMatchers(HttpMethod.GET, "/api/v1/movie-genres").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
                         // Còn lại chặn hết
                         .anyRequest().authenticated()
                 )

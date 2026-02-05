@@ -19,4 +19,5 @@ public class MovieGenreEntity extends BaseEntity {
 
     @Column
     private String name;
+
 }

@@ -1,5 +1,6 @@
 package com.cinemesh.common.domain;
 
+import com.cinemesh.common.dto.UserDetailsDto;
 import com.cinemesh.common.event.DomainEvent;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,7 +22,8 @@ public abstract class BaseEntity<TId> implements Entity<TId> {
 
     protected void create() {
         this.created = true;
-        this.createdBy = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserDetailsDto principal = (UserDetailsDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        this.createdBy = principal.getEmail();
         this.createdAt = Instant.now();
         this.modifiedAt = Instant.now();
     }
