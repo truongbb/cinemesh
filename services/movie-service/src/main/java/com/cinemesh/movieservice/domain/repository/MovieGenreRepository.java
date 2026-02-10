@@ -13,4 +13,6 @@ public interface MovieGenreRepository {
 
     void saveGenre(MovieGenre genre);
 
+    void deleteGenre(MovieGenre genre);
+
 }

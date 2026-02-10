@@ -1,14 +1,21 @@
 package com.cinemesh.common.infrastructure.persistence.audit;
 
+import com.cinemesh.common.dto.SimpleUserDetailsDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
 
-// T ở đây thường là String (Username/Email) hoặc UUID (UserID)
+@AllArgsConstructor
 public class AuditorAwareImpl implements AuditorAware<String> {
 
+    ObjectMapper objectMapper;
+
+    @SneakyThrows
     @Override
     public Optional<String> getCurrentAuditor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -21,6 +28,9 @@ public class AuditorAwareImpl implements AuditorAware<String> {
         }
 
         // Trả về username (email) của người dùng
-        return Optional.ofNullable(authentication.getName());
+//        UserDetailsDto userDetailsDto = (UserDetailsDto) authentication.getPrincipal();
+        String userDetails = objectMapper.writeValueAsString(authentication.getPrincipal());
+        SimpleUserDetailsDto userDetailsDto = objectMapper.readValue(userDetails, SimpleUserDetailsDto.class);
+        return Optional.ofNullable(userDetailsDto.getEmail());
     }
 }

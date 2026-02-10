@@ -2,6 +2,7 @@ package com.cinemesh.movieservice.application.service;
 
 import com.cinemesh.common.dto.MovieGenreDto;
 import com.cinemesh.common.dto.response.CommonSearchResponse;
+import com.cinemesh.common.exception.NotFoundException;
 import com.cinemesh.common.exception.UnprocessableEntityException;
 import com.cinemesh.movieservice.application.dto.request.MovieGenreRequest;
 import com.cinemesh.movieservice.application.dto.request.SearchMovieGenreRequest;
@@ -21,6 +22,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -75,6 +78,26 @@ public class MovieGenreService {
                                 .build()
                 )
                 .build();
+    }
+
+    public MovieGenreResponse getGenreDetail(UUID id) {
+        MovieGenre genre = movieGenrePersistenceAdapter.findById(id)
+                .orElseThrow(() -> new NotFoundException(MovieErrorCode.GENRE_NOT_FOUND));
+        return objectMapper.convertValue(genre, MovieGenreResponse.class);
+    }
+
+    public MovieGenreResponse updateGenre(UUID id, @Valid MovieGenreRequest request) {
+        MovieGenre genre = movieGenrePersistenceAdapter.findById(id)
+                .orElseThrow(() -> new NotFoundException(MovieErrorCode.GENRE_NOT_FOUND));
+        genre.setName(request.getName());
+        movieGenrePersistenceAdapter.saveGenre(genre);
+        return objectMapper.convertValue(genre, MovieGenreResponse.class);
+    }
+
+    public void deleteGenre(UUID id) {
+        MovieGenre genre = movieGenrePersistenceAdapter.findById(id)
+                .orElseThrow(() -> new NotFoundException(MovieErrorCode.GENRE_NOT_FOUND));
+        movieGenrePersistenceAdapter.deleteGenre(genre);
     }
 
 }

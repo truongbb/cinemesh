@@ -1,5 +1,6 @@
 package com.cinemesh.common.infrastructure.persistence.audit;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -10,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class JpaAuditingConfig {
 
     @Bean
-    public AuditorAware<String> auditorProvider() {
-        return new AuditorAwareImpl();
+    public AuditorAware<String> auditorProvider(ObjectMapper objectMapper) {
+        return new AuditorAwareImpl(objectMapper);
     }
 }

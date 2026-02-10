@@ -3,6 +3,7 @@ package com.cinemesh.common.domain;
 import com.cinemesh.common.dto.UserDetailsDto;
 import com.cinemesh.common.event.DomainEvent;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.Instant;
@@ -22,8 +23,14 @@ public abstract class BaseEntity<TId> implements Entity<TId> {
 
     protected void create() {
         this.created = true;
-        UserDetailsDto principal = (UserDetailsDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        this.createdBy = principal.getEmail();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Nếu chưa login hoặc là user ẩn danh (anonymous) -> Trả về SYSTEM hoặc null
+        if (authentication != null && authentication.isAuthenticated()
+                && !authentication.getPrincipal().equals("anonymousUser")) {
+            // Trả về username (email) của người dùng
+            UserDetailsDto userDetailsDto = (UserDetailsDto) authentication.getPrincipal();
+            this.createdBy = userDetailsDto.getEmail();
+        }
         this.createdAt = Instant.now();
         this.modifiedAt = Instant.now();
     }

@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/movie-genres")
@@ -28,5 +30,21 @@ public class MovieGenreController {
     public CommonSearchResponse<MovieGenreResponse> searchGenre(SearchMovieGenreRequest request) {
         return movieGenreService.searchGenre(request);
     }
+
+    @GetMapping("/{id}")
+    public MovieGenreResponse getGenreDetail(@PathVariable UUID id) {
+        return movieGenreService.getGenreDetail(id);
+    }
+
+    @PutMapping("/{id}")
+    public MovieGenreResponse updateGenre(@PathVariable UUID id,  @RequestBody @Valid MovieGenreRequest request) {
+        return movieGenreService.updateGenre(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteGenre(@PathVariable UUID id) {
+        movieGenreService.deleteGenre(id);
+    }
+
 
 }

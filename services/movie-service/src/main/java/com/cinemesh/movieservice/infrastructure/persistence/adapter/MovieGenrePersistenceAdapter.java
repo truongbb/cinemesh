@@ -39,4 +39,10 @@ public class MovieGenrePersistenceAdapter implements com.cinemesh.movieservice.d
         MovieGenreEntity entity = objectMapper.convertValue(genre, MovieGenreEntity.class);
         movieGenreRepository.save(entity);
     }
+
+    @Override
+    public void deleteGenre(MovieGenre genre) {
+        MovieGenreEntity entity = objectMapper.convertValue(genre, MovieGenreEntity.class);
+        movieGenreRepository.delete(entity);
+    }
 }
