@@ -2,9 +2,7 @@ package com.cinemesh.authservice.infrastructure.persistence.entity;
 
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;
 import com.cinemesh.common.statics.LogType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +22,7 @@ public class UserLogEntity extends BaseEntity {
     private UUID userId;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private LogType type;
 
     @Column(columnDefinition = "TEXT")

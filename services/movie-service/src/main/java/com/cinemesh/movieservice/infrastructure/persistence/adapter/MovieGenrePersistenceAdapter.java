@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,6 +27,12 @@ public class MovieGenrePersistenceAdapter implements com.cinemesh.movieservice.d
     public Optional<MovieGenre> findById(UUID id) {
         return movieGenreRepository.findById(id)
                 .map(movieGenreMapper::convertToDomain);
+    }
+
+    @Override
+    public List<MovieGenre> findAllByIds(List<UUID> ids) {
+        return movieGenreRepository.findAllById(ids)
+                .stream().map(movieGenreMapper::convertToDomain).toList();
     }
 
     @Override

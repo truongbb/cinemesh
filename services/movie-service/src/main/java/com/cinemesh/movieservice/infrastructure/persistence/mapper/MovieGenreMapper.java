@@ -25,4 +25,11 @@ public class MovieGenreMapper {
         return new MovieGenre(dto);
     }
 
+    public MovieGenreDto convertToDto(MovieGenre domain) {
+        if (domain == null) {
+            return null;
+        }
+        return objectMapper.convertValue(domain, MovieGenreDto.class);
+    }
+
 }

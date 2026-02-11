@@ -3,6 +3,7 @@ package com.cinemesh.common.dto;
 import com.cinemesh.common.statics.MovieRated;
 import com.cinemesh.common.statics.MovieStatus;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class MovieDto {

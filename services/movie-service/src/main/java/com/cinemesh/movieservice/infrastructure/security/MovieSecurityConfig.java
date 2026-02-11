@@ -31,14 +31,19 @@ public class MovieSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Mặc định cho phép Swagger chạy
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+
                         .requestMatchers(HttpMethod.POST, "/api/v1/movie-genres").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
                         .requestMatchers(HttpMethod.PUT, "/api/v1/movie-genres/{id}").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/movie-genres/{id}").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
                         .requestMatchers(HttpMethod.GET, "/api/v1/movie-genres").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/movie-genres/{id}").permitAll()
-                        // Còn lại chặn hết
+
+                        .requestMatchers(HttpMethod.POST, "/api/v1/movies").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/movies").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
+                        .requestMatchers(HttpMethod.GET, "/api/v1/movies").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/movies/{id}").permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

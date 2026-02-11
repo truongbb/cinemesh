@@ -48,7 +48,8 @@ public class MovieEntity extends BaseEntity {
     @Column(length = 1000)
     private String actors;
 
-    @Column
+    @Column(columnDefinition = "varchar(50)")
+    @Enumerated(EnumType.STRING)
     private MovieRated rated;
 
     @ManyToMany(fetch = FetchType.EAGER)
