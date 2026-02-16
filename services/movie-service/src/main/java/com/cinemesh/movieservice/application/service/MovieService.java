@@ -1,25 +1,37 @@
 package com.cinemesh.movieservice.application.service;
 
+import com.cinemesh.common.dto.MovieDto;
+import com.cinemesh.common.dto.MovieGenreDto;
+import com.cinemesh.common.dto.response.CommonSearchResponse;
 import com.cinemesh.common.exception.NotFoundException;
 import com.cinemesh.movieservice.application.dto.request.MovieRequest;
+import com.cinemesh.movieservice.application.dto.request.SearchMovieRequest;
+import com.cinemesh.movieservice.application.dto.request.UpdateMovieRequest;
 import com.cinemesh.movieservice.application.dto.response.MovieResponse;
 import com.cinemesh.movieservice.domain.exception.MovieErrorCode;
 import com.cinemesh.movieservice.domain.model.Movie;
 import com.cinemesh.movieservice.domain.model.MovieGenre;
 import com.cinemesh.movieservice.infrastructure.persistence.adapter.MovieGenrePersistenceAdapter;
 import com.cinemesh.movieservice.infrastructure.persistence.adapter.MoviePersistenceAdapter;
+import com.cinemesh.movieservice.infrastructure.persistence.entity.MovieEntity;
 import com.cinemesh.movieservice.infrastructure.persistence.mapper.MovieMapper;
 import com.cinemesh.movieservice.infrastructure.persistence.repository.MovieRepository;
+import com.cinemesh.movieservice.infrastructure.persistence.specification.MovieSpecification;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -46,47 +58,56 @@ public class MovieService {
         return movieMapper.convertDomainToResponse(movie);
     }
 
-//    public CommonSearchResponse<MovieResponse> searchGenre(SearchMovieGenreRequest request) {
-//        PageRequest pageable = PageRequest.of(request.getPageIndex(), request.getPageSize());
-//
-////        Specification<MovieGenreEntity> spec = Specification.where(null); // Start empty
-//        Specification<MovieGenreEntity> spec = (root, query, cb) -> cb.conjunction();
-//        if (request.getName() != null) {
-//            spec = spec.and(MovieGenreSpecification.hasName(request.getName()));
-//        }
-//        Page<MovieGenreEntity> pageResult = movieRepository.findAll(spec, pageable);
-//
-//        return CommonSearchResponse.<MovieGenreResponse>builder()
-//                .data(
-//                        pageResult.getContent()
-//                                .stream()
-//                                .map(entity -> objectMapper.convertValue(entity, MovieGenreResponse.class))
-//                                .toList()
-//                )
-//                .pagination(
-//                        CommonSearchResponse.PaginationResponse.builder()
-//                                .pageSize(request.getPageSize())
-//                                .pageIndex(request.getPageIndex())
-//                                .totalRecords(pageResult.getTotalElements())
-//                                .totalPage(pageResult.getTotalPages())
-//                                .build()
-//                )
-//                .build();
-//    }
-//
-//    public MovieResponse getGenreDetail(UUID id) {
-//        MovieGenre genre = moviePersistenceAdapter.findById(id)
-//                .orElseThrow(() -> new NotFoundException(MovieErrorCode.GENRE_NOT_FOUND));
-//        return objectMapper.convertValue(genre, MovieResponse.class);
-//    }
-//
-//    public MovieResponse updateGenre(UUID id, @Valid MovieRequest request) {
-//        Movie genre = moviePersistenceAdapter.findById(id)
-//                .orElseThrow(() -> new NotFoundException(MovieErrorCode.GENRE_NOT_FOUND));
-//        genre.setName(request.getName());
-//        moviePersistenceAdapter.saveMovie(genre);
-//        return objectMapper.convertValue(genre, MovieResponse.class);
-//    }
+    public MovieResponse updateMovie(UUID id, @Valid UpdateMovieRequest request) {
+        Movie movie = moviePersistenceAdapter.findById(id)
+                .orElseThrow(() -> new NotFoundException(MovieErrorCode.MOVIE_NOT_FOUND));
 
+        MovieDto movieDto = objectMapper.convertValue(request, MovieDto.class);
+        movieDto.setId(id);
+        List<MovieGenre> genres = movieGenrePersistenceAdapter.findAllByIds(request.getGenreIds());
+        if (CollectionUtils.isEmpty(genres)) {
+            throw new NotFoundException(MovieErrorCode.GENRE_NOT_FOUND);
+        }
+        List<MovieGenreDto> movieGenreDtos = genres
+                .stream()
+                .map(genre -> MovieGenreDto.builder().id(genre.getId()).name(genre.getName()).build())
+                .toList();
+        movieDto.setGenres(new HashSet<>(movieGenreDtos));
+
+        movie.update(movieDto);
+        moviePersistenceAdapter.saveMovie(movie);
+        return objectMapper.convertValue(movie, MovieResponse.class);
+    }
+
+    public CommonSearchResponse<MovieResponse> searchMovie(SearchMovieRequest request) {
+        PageRequest pageable = PageRequest.of(request.getPageIndex(), request.getPageSize());
+
+        Specification<MovieEntity> spec = MovieSpecification.search(request);
+
+        Page<MovieEntity> pageResult = movieRepository.findAll(spec, pageable);
+
+        return CommonSearchResponse.<MovieResponse>builder()
+                .data(
+                        pageResult.getContent()
+                                .stream()
+                                .map(movieMapper::convertEntityToResponse)
+                                .toList()
+                )
+                .pagination(
+                        CommonSearchResponse.PaginationResponse.builder()
+                                .pageSize(request.getPageSize())
+                                .pageIndex(request.getPageIndex())
+                                .totalRecords(pageResult.getTotalElements())
+                                .totalPage(pageResult.getTotalPages())
+                                .build()
+                )
+                .build();
+    }
+
+    public MovieResponse getMovieDetail(UUID id) {
+        Movie movie = moviePersistenceAdapter.findById(id)
+                .orElseThrow(() -> new NotFoundException(MovieErrorCode.GENRE_NOT_FOUND));
+        return objectMapper.convertValue(movie, MovieResponse.class);
+    }
 
 }

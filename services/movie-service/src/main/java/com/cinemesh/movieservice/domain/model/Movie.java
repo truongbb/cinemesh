@@ -15,10 +15,7 @@ import com.cinemesh.movieservice.domain.exception.MovieErrorCode;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -66,6 +63,23 @@ public class Movie extends BaseEntity<UUID> implements AggregateRoot<UUID> {
             this.genres = new HashSet<>();
         }
         create();
+    }
+
+    public void update(MovieDto dto) {
+        this.id = dto.getId();
+        setEngTitle(dto.getEngTitle());
+        setVnTitle(dto.getVnTitle());
+        setDescription(dto.getDescription());
+        setDurationMinutes(dto.getDurationMinutes());
+        setReleaseDate(dto.getReleaseDate());
+        setPosterUrl(dto.getPosterUrl());
+        setTrailerUrl(dto.getTrailerUrl());
+        setDirectors(dto.getDirectors());
+        setActors(dto.getActors());
+        setRated(dto.getRated());
+        setStatus(dto.getStatus());
+        setGenres(dto.getGenres());
+        modify();
     }
 
     public void setEngTitle(String engTitle) {
@@ -150,7 +164,7 @@ public class Movie extends BaseEntity<UUID> implements AggregateRoot<UUID> {
      * - Phần tử nào không có ID -> bắn lỗi, vì genre phải tồn tại trước đó rồi
      * - Phan tử nào tồn tại ID -> update bình thường
      */
-    public void setGenres(List<MovieGenreDto> dtos) {
+    public void setGenres(Collection<MovieGenreDto> dtos) {
         this.genres = this.genres == null ? new HashSet<>() : this.genres;
 
         // danh sách phần tử không truyền lên id

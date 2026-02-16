@@ -56,4 +56,9 @@ public class MovieMapper {
         return objectMapper.convertValue(domain, MovieResponse.class);
     }
 
+    public MovieResponse convertEntityToResponse(MovieEntity domain) {
+        if (domain == null) return null;
+        return objectMapper.convertValue(domain, MovieResponse.class);
+    }
+
 }
