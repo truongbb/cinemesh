@@ -7,6 +7,7 @@ import com.cinemesh.common.event.CinemeshEventName;
 import com.cinemesh.common.event.payload.FieldChangedPayload;
 import com.cinemesh.common.exception.NotFoundException;
 import com.cinemesh.common.utils.ObjectUtils;
+import com.cinemesh.theaterservice.application.dto.RoomDto;
 import com.cinemesh.theaterservice.application.dto.SeatDto;
 import com.cinemesh.theaterservice.domain.exception.TheaterErrorCode;
 import com.cinemesh.theaterservice.statics.RoomStatus;
@@ -27,6 +28,19 @@ public class Room extends BaseEntity<UUID> implements AggregateRoot<UUID> {
     public Room() {
         this.id = UUID.randomUUID();
         this.seats = new ArrayList<>();
+        create();
+        addEvent(new CinemeshEvent(CinemeshEventName.ROOM_CREATED, id));
+    }
+
+    public Room(RoomDto roomDto) {
+        this.id = roomDto.getId() == null ? UUID.randomUUID() : roomDto.getId();
+        this.name = roomDto.getName();
+        this.totalSeats = roomDto.getTotalSeats();
+        this.status = roomDto.getStatus();
+        this.seats = roomDto.getSeats()
+                .stream()
+                .map(seatDto -> new Seat(this, seatDto))
+                .toList();
         create();
         addEvent(new CinemeshEvent(CinemeshEventName.ROOM_CREATED, id));
     }

@@ -1,8 +1,8 @@
 package com.cinemesh.theaterservice.presentation.rest;
 
 import com.cinemesh.theaterservice.application.dto.request.RoomRequest;
+import com.cinemesh.theaterservice.application.dto.response.RoomResponse;
 import com.cinemesh.theaterservice.application.service.RoomService;
-import com.cinemesh.theaterservice.domain.model.Room;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class RoomController {
     RoomService roomService;
 
     @PostMapping
-    public Room createRoom(@RequestBody @Valid RoomRequest request) {
+    public RoomResponse createRoom(@RequestBody @Valid RoomRequest request) {
         return roomService.createRoom(request);
     }
 

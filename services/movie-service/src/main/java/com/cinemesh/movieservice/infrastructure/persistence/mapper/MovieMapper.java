@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MovieMapper {
 
-
     ObjectMapper objectMapper;
     MovieGenreMapper movieGenreMapper;
 

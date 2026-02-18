@@ -12,7 +12,7 @@ public interface RoomRepository {
 
     List<Room> findAllByIds(List<UUID> ids);
 
-//    Optional<Room> findByName(String name);
+    Optional<Room> findByName(String name);
 
     void saveRoom(Room room);
 

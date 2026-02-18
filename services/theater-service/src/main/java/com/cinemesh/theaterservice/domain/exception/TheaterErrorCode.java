@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 public enum TheaterErrorCode implements BaseErrorCode {
     SEAT_NOT_FOUND("004001"),
+    ROOM_EXISTED("004002"),
     ;
 
     private final String code;

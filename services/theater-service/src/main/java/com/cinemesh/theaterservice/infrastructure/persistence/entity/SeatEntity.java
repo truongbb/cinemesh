@@ -2,9 +2,7 @@ package com.cinemesh.theaterservice.infrastructure.persistence.entity;
 
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;
 import com.cinemesh.theaterservice.statics.SeatType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,5 +25,9 @@ public class SeatEntity extends BaseEntity {
 
     @Column
     private SeatType type;
+
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private RoomEntity room;
 
 }

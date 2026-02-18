@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class RoomEntity extends BaseEntity {
 
-    @Column
+    @Column(unique = true)
     private String name;
 
     @Column(name = "total_seats")
@@ -29,12 +29,7 @@ public class RoomEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RoomStatus status;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "room_seats",
-            joinColumns = @JoinColumn(name = "room_id"),
-            inverseJoinColumns = @JoinColumn(name = "seat_id")
-    )
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<SeatEntity> seats;
 
 }

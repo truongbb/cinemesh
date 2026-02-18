@@ -1,4 +1,4 @@
-package com.cinemesh.theaterservice.application.dto;
+package com.cinemesh.theaterservice.application.dto.response;
 
 import com.cinemesh.theaterservice.statics.RoomStatus;
 import lombok.*;
@@ -9,15 +9,15 @@ import java.util.UUID;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RoomDto {
+public class RoomResponse {
 
     UUID id;
     String name;
     Integer totalSeats;
     RoomStatus status;
-    List<SeatDto> seats;
+    List<SeatResponse> seats;
 
 }

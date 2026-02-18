@@ -46,11 +46,11 @@ public class RoomPersistenceAdapter implements com.cinemesh.theaterservice.domai
                 .toList();
     }
 
-//    @Override
-//    public Optional<Room> findByName(String name) {
-//        return roomRepository.findBy(id)
-//                .map(room -> objectMapper.convertValue(room, Room.class));
-//    }
+    @Override
+    public Optional<Room> findByName(String name) {
+        return roomRepository.findByName(name)
+                .map(room -> objectMapper.convertValue(room, Room.class));
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
