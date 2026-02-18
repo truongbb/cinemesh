@@ -1,7 +1,7 @@
 package com.cinemesh.movieservice.application.service;
 
-import com.cinemesh.common.dto.MovieDto;
-import com.cinemesh.common.dto.MovieGenreDto;
+import com.cinemesh.movieservice.application.dto.MovieDto;
+import com.cinemesh.movieservice.application.dto.MovieGenreDto;
 import com.cinemesh.common.dto.response.CommonSearchResponse;
 import com.cinemesh.common.exception.NotFoundException;
 import com.cinemesh.movieservice.application.dto.request.MovieRequest;

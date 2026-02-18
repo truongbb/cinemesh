@@ -26,4 +26,13 @@ public enum CinemeshEventName {
     GENRE_CREATED,
     GENRE_UPDATED,
 
+    /**
+     * THEATER-SERVICE
+     */
+    ROOM_CREATED,
+
+    SEAT_ADDED,
+    SEAT_UPDATED,
+    SEAT_REMOVED,
+
 }

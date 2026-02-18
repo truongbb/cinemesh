@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public enum TheaterErrorCode implements BaseErrorCode {
-//    GENRE_MUST_BE_EXISTED_BEFORE_CREATE_MOVIE("003001"),
+    SEAT_NOT_FOUND("004001"),
     ;
 
     private final String code;

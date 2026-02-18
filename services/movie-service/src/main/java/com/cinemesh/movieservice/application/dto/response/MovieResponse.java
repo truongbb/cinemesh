@@ -1,6 +1,6 @@
 package com.cinemesh.movieservice.application.dto.response;
 
-import com.cinemesh.common.statics.MovieRated;
+import com.cinemesh.movieservice.statics.MovieRated;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

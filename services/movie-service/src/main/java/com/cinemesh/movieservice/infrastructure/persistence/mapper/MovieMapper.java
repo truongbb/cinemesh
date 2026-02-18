@@ -1,7 +1,7 @@
 package com.cinemesh.movieservice.infrastructure.persistence.mapper;
 
-import com.cinemesh.common.dto.MovieDto;
-import com.cinemesh.common.statics.MovieStatus;
+import com.cinemesh.movieservice.application.dto.MovieDto;
+import com.cinemesh.movieservice.statics.MovieStatus;
 import com.cinemesh.movieservice.application.dto.request.MovieRequest;
 import com.cinemesh.movieservice.application.dto.response.MovieResponse;
 import com.cinemesh.movieservice.domain.model.Movie;

@@ -1,6 +1,6 @@
 package com.cinemesh.movieservice.infrastructure.persistence.mapper;
 
-import com.cinemesh.common.dto.MovieGenreDto;
+import com.cinemesh.movieservice.application.dto.MovieGenreDto;
 import com.cinemesh.movieservice.domain.model.MovieGenre;
 import com.cinemesh.movieservice.infrastructure.persistence.entity.MovieGenreEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;

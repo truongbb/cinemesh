@@ -1,8 +1,8 @@
 package com.cinemesh.movieservice.application.dto.request;
 
 import com.cinemesh.common.dto.request.CommonSearchRequest;
-import com.cinemesh.common.statics.MovieRated;
-import com.cinemesh.common.statics.MovieStatus;
+import com.cinemesh.movieservice.statics.MovieRated;
+import com.cinemesh.movieservice.statics.MovieStatus;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.cinemesh.common.dto;
+package com.cinemesh.movieservice.application.dto;
 
 import lombok.*;
 
