@@ -17,6 +17,7 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.StaleStateException;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -44,6 +45,7 @@ public class MoviePersistenceAdapter implements com.cinemesh.movieservice.domain
 //    }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveMovie(Movie movie) {
         try {
             MovieLogEntity log = new MovieLogEntity();
