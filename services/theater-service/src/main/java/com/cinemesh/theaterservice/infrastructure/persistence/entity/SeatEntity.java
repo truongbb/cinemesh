@@ -2,11 +2,9 @@ package com.cinemesh.theaterservice.infrastructure.persistence.entity;
 
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;
 import com.cinemesh.theaterservice.statics.SeatType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @Entity
@@ -28,6 +26,9 @@ public class SeatEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "room_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonBackReference
     private RoomEntity room;
 
 }

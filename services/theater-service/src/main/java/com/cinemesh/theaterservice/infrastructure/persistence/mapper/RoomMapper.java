@@ -2,7 +2,7 @@ package com.cinemesh.theaterservice.infrastructure.persistence.mapper;
 
 import com.cinemesh.theaterservice.application.dto.RoomDto;
 import com.cinemesh.theaterservice.application.dto.SeatDto;
-import com.cinemesh.theaterservice.application.dto.request.RoomRequest;
+import com.cinemesh.theaterservice.application.dto.request.RoomCreationRequest;
 import com.cinemesh.theaterservice.application.dto.request.SeatRequest;
 import com.cinemesh.theaterservice.application.dto.response.RoomResponse;
 import com.cinemesh.theaterservice.application.dto.response.SeatResponse;
@@ -25,10 +25,10 @@ public class RoomMapper {
 
     ObjectMapper objectMapper;
 
-    public RoomDto convertFromRequestToDto(RoomRequest roomRequest) {
-        List<SeatRequest> seats = CollectionUtils.isEmpty(roomRequest.getSeats()) ? new ArrayList<>() : roomRequest.getSeats();
+    public RoomDto convertFromRequestToDto(RoomCreationRequest roomCreationRequest) {
+        List<SeatRequest> seats = CollectionUtils.isEmpty(roomCreationRequest.getSeats()) ? new ArrayList<>() : roomCreationRequest.getSeats();
         return RoomDto.builder()
-                .name(roomRequest.getName())
+                .name(roomCreationRequest.getName())
                 .seats(
                         seats.stream()
                                 .map(seatRequest -> objectMapper.convertValue(seatRequest, SeatDto.class))

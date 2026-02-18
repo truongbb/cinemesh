@@ -74,7 +74,7 @@ public class Room extends BaseEntity<UUID> implements AggregateRoot<UUID> {
      * case 1: id không tồn tại trong database: throw not found exception
      * case 2: id tồn tại trong database: update bản ghi bình thường
      */
-    public void updateAssureds(List<SeatDto> seatDtos) {
+    public void updateSeats(List<SeatDto> seatDtos) {
         this.seats = this.seats == null ? new ArrayList<>() : this.seats;
 
         // danh sách phần tử được thêm mới: không truyền lên id
@@ -88,7 +88,7 @@ public class Room extends BaseEntity<UUID> implements AggregateRoot<UUID> {
                 .filter(dto -> this.seats.stream().anyMatch(seat -> seat.getId().toString().equals(dto.getId().toString())
                 )).toList();
 
-        //nếu dto có id mà id ko trong domain thì throw exception
+        // nếu dto có id mà id ko trong domain thì throw exception
         List<SeatDto> notExistedSeats = existedSeats.stream()
                 .filter(dto -> this.seats.stream().noneMatch(seat -> seat.getId().equals(dto.getId()))).toList();
 
@@ -96,14 +96,14 @@ public class Room extends BaseEntity<UUID> implements AggregateRoot<UUID> {
             throw new NotFoundException(TheaterErrorCode.SEAT_NOT_FOUND);
         }
 
-        //list sẽ delete khỏi list cũ
+        // list sẽ delete khỏi list cũ
         List<Seat> deletingSeats = this.seats.stream()
                 .filter(seat -> existedSeats.stream().noneMatch(seatDto -> seatDto.getId().equals(seat.getId())))
                 .toList();
 
         addSeats(addingSeats);
         removeSeats(deletingSeats);
-        updateSeats(updatingSeats);
+        updateSeat(updatingSeats);
     }
 
     public void addSeats(List<SeatDto> dtos) {
@@ -123,7 +123,7 @@ public class Room extends BaseEntity<UUID> implements AggregateRoot<UUID> {
         });
     }
 
-    private void updateSeats(List<SeatDto> dtos) {
+    private void updateSeat(List<SeatDto> dtos) {
         for (SeatDto dto : dtos) {
             this.seats.stream()
                     .filter(x -> x.getId().equals(dto.getId()))

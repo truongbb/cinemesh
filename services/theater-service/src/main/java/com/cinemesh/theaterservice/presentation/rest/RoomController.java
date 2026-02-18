@@ -1,16 +1,17 @@
 package com.cinemesh.theaterservice.presentation.rest;
 
-import com.cinemesh.theaterservice.application.dto.request.RoomRequest;
+import com.cinemesh.theaterservice.application.dto.request.RoomCreationRequest;
+import com.cinemesh.theaterservice.application.dto.request.RoomUpdateRequest;
 import com.cinemesh.theaterservice.application.dto.response.RoomResponse;
 import com.cinemesh.theaterservice.application.service.RoomService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/rooms")
@@ -21,8 +22,13 @@ public class RoomController {
     RoomService roomService;
 
     @PostMapping
-    public RoomResponse createRoom(@RequestBody @Valid RoomRequest request) {
+    public RoomResponse createRoom(@RequestBody @Valid RoomCreationRequest request) {
         return roomService.createRoom(request);
+    }
+
+    @PutMapping("/{id}")
+    public RoomResponse updateRoom(@RequestBody @Valid RoomUpdateRequest request, @NotNull @PathVariable UUID id) {
+        return roomService.updateRoom(id, request);
     }
 
 }

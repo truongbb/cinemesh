@@ -63,6 +63,7 @@ public class RoomPersistenceAdapter implements com.cinemesh.theaterservice.domai
             log.setDetail(objectMapper.writeValueAsString(room));
 
             RoomEntity entity = objectMapper.convertValue(room, RoomEntity.class);
+            entity.getSeats().forEach(seat -> seat.setRoom(entity)); // to save room_id in `seats` table
             roomRepository.save(entity);
             roomLogRepository.save(log);
         } catch (JsonProcessingException e) {

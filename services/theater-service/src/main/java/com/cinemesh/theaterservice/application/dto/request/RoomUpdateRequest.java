@@ -1,5 +1,6 @@
 package com.cinemesh.theaterservice.application.dto.request;
 
+import com.cinemesh.theaterservice.statics.RoomStatus;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
@@ -15,11 +16,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RoomRequest {
+public class RoomUpdateRequest {
 
     @NotBlank(message = "Room name is required")
     @Length(max = 255, message = "Room name must be less than 255 characters")
     String name;
+
+    RoomStatus status;
 
     List<@Valid SeatRequest> seats;
 
