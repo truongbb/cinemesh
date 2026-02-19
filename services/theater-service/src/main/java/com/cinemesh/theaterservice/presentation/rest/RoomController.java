@@ -1,6 +1,9 @@
 package com.cinemesh.theaterservice.presentation.rest;
 
+import com.cinemesh.common.dto.response.CommonSearchResponse;
 import com.cinemesh.theaterservice.application.dto.request.RoomCreationRequest;
+import com.cinemesh.theaterservice.application.dto.request.RoomSearchRequest;
+import com.cinemesh.theaterservice.application.dto.request.RoomStatusUpdateRequest;
 import com.cinemesh.theaterservice.application.dto.request.RoomUpdateRequest;
 import com.cinemesh.theaterservice.application.dto.response.RoomResponse;
 import com.cinemesh.theaterservice.application.service.RoomService;
@@ -29,6 +32,21 @@ public class RoomController {
     @PutMapping("/{id}")
     public RoomResponse updateRoom(@RequestBody @Valid RoomUpdateRequest request, @NotNull @PathVariable UUID id) {
         return roomService.updateRoom(id, request);
+    }
+
+    @PutMapping("/{id}/status")
+    public RoomResponse updateRoomStatus(@RequestBody @Valid RoomStatusUpdateRequest request, @NotNull @PathVariable UUID id) {
+        return roomService.updateRoomStatus(id, request);
+    }
+
+    @GetMapping("/{id}")
+    public RoomResponse getRoomDetails(@NotNull @PathVariable UUID id) {
+        return roomService.getRoomDetails(id);
+    }
+
+    @GetMapping
+    public CommonSearchResponse<RoomResponse> searchRoom(RoomSearchRequest request) {
+        return roomService.searchRoom(request);
     }
 
 }

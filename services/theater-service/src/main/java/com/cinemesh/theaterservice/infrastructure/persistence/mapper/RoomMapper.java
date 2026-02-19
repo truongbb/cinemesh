@@ -7,6 +7,7 @@ import com.cinemesh.theaterservice.application.dto.request.SeatRequest;
 import com.cinemesh.theaterservice.application.dto.response.RoomResponse;
 import com.cinemesh.theaterservice.application.dto.response.SeatResponse;
 import com.cinemesh.theaterservice.domain.model.Room;
+import com.cinemesh.theaterservice.infrastructure.persistence.entity.RoomEntity;
 import com.cinemesh.theaterservice.statics.RoomStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
@@ -49,4 +50,13 @@ public class RoomMapper {
                 .build();
     }
 
+    public RoomResponse convertEntityToResponse(RoomEntity room) {
+        return RoomResponse.builder()
+                .id(room.getId())
+                .name(room.getName())
+                .status(room.getStatus())
+                .totalSeats(room.getTotalSeats())
+                .seats(room.getSeats().stream().map(seat -> objectMapper.convertValue(seat, SeatResponse.class)).toList())
+                .build();
+    }
 }
