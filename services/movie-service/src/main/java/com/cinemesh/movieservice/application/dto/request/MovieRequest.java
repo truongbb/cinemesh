@@ -1,6 +1,6 @@
 package com.cinemesh.movieservice.application.dto.request;
 
-import com.cinemesh.movieservice.statics.MovieRated;
+import com.cinemesh.common.statics.MovieRated;
 import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

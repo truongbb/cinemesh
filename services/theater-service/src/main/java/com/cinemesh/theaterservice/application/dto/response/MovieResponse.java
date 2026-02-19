@@ -1,4 +1,4 @@
-package com.cinemesh.movieservice.application.dto.response;
+package com.cinemesh.theaterservice.application.dto.response;
 
 import com.cinemesh.common.statics.MovieRated;
 import lombok.*;

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.cinemesh.movieservice.statics.MovieRated;
+import com.cinemesh.common.statics.MovieRated;
 import com.cinemesh.movieservice.statics.MovieStatus;
 
 import java.time.LocalDate;

@@ -32,11 +32,13 @@ public class TheaterSecurityConfig {
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+
                         .requestMatchers(HttpMethod.POST, "/api/v1/rooms").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
                         .requestMatchers(HttpMethod.PUT, "/api/v1/rooms/{id}").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
                         .requestMatchers(HttpMethod.PUT, "/api/v1/rooms/{id}/status").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
                         .requestMatchers(HttpMethod.GET, "/api/v1/rooms/{id}").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
                         .requestMatchers(HttpMethod.GET, "/api/v1/rooms").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

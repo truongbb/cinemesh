@@ -8,7 +8,7 @@ import com.cinemesh.common.event.CinemeshEvent;
 import com.cinemesh.common.event.CinemeshEventName;
 import com.cinemesh.common.event.payload.FieldChangedPayload;
 import com.cinemesh.common.exception.UnprocessableEntityException;
-import com.cinemesh.movieservice.statics.MovieRated;
+import com.cinemesh.common.statics.MovieRated;
 import com.cinemesh.movieservice.statics.MovieStatus;
 import com.cinemesh.common.utils.ObjectUtils;
 import com.cinemesh.movieservice.domain.exception.MovieErrorCode;

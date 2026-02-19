@@ -35,4 +35,6 @@ public enum CinemeshEventName {
     SEAT_UPDATED,
     SEAT_REMOVED,
 
+    SHOWTIME_CREATED
+
 }

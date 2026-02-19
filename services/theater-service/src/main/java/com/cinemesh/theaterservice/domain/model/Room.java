@@ -39,7 +39,11 @@ public class Room extends BaseEntity<UUID> implements AggregateRoot<UUID> {
         this.status = roomDto.getStatus();
         this.seats = roomDto.getSeats()
                 .stream()
-                .map(seatDto -> new Seat(this, seatDto))
+                .map(seatDto -> {
+                    Seat seat = new Seat(this, seatDto);
+                    addEvent(new CinemeshEvent(CinemeshEventName.SEAT_UPDATED, seat.getId()));
+                    return seat;
+                })
                 .toList();
         create();
         addEvent(new CinemeshEvent(CinemeshEventName.ROOM_CREATED, id));

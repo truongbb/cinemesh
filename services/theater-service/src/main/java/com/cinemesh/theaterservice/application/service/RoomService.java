@@ -41,7 +41,7 @@ public class RoomService {
     SeatMapper seatMapper;
     RoomPersistenceAdapter roomPersistenceAdapter;
     SeatPersistenceAdapter seatPersistenceAdapter;
-    private final RoomRepository roomRepository;
+    RoomRepository roomRepository;
 
     public RoomResponse createRoom(@Valid RoomCreationRequest request) {
         roomPersistenceAdapter.findByName(request.getName())
