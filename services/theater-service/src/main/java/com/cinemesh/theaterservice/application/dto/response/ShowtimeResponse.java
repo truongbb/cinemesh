@@ -1,5 +1,6 @@
 package com.cinemesh.theaterservice.application.dto.response;
 
+import com.cinemesh.theaterservice.statics.ShowtimeStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -20,5 +21,6 @@ public class ShowtimeResponse {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private BigDecimal basePrice;
+    private ShowtimeStatus status;
 
 }

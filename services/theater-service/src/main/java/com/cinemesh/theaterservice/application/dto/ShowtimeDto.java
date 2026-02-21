@@ -1,5 +1,6 @@
 package com.cinemesh.theaterservice.application.dto;
 
+import com.cinemesh.theaterservice.statics.ShowtimeStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -26,5 +27,7 @@ public class ShowtimeDto {
     LocalDateTime endTime;
 
     BigDecimal basePrice;
+
+    ShowtimeStatus status;
 
 }

@@ -1,4 +1,4 @@
-package com.cinemesh.movieservice.statics;
+package com.cinemesh.common.statics;
 
 public enum MovieStatus {
 

@@ -1,7 +1,10 @@
 package com.cinemesh.theaterservice.infrastructure.persistence.entity;
 
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;
+import com.cinemesh.theaterservice.statics.ShowtimeStatus;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,5 +32,8 @@ public class ShowTimeEntity extends BaseEntity {
     private LocalDateTime endTime;
 
     private BigDecimal basePrice;
+
+    @Enumerated(EnumType.STRING)
+    private ShowtimeStatus status;
 
 }

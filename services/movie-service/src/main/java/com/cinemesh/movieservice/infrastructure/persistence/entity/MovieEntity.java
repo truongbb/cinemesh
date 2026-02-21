@@ -1,7 +1,7 @@
 package com.cinemesh.movieservice.infrastructure.persistence.entity;
 
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;
-import com.cinemesh.movieservice.statics.MovieStatus;
+import com.cinemesh.common.statics.MovieStatus;
 import com.cinemesh.common.statics.MovieRated;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

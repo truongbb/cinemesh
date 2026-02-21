@@ -7,6 +7,7 @@ import com.cinemesh.common.event.CinemeshEventName;
 import com.cinemesh.common.event.payload.FieldChangedPayload;
 import com.cinemesh.common.utils.ObjectUtils;
 import com.cinemesh.theaterservice.application.dto.ShowtimeDto;
+import com.cinemesh.theaterservice.statics.ShowtimeStatus;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -31,6 +32,7 @@ public class ShowTime extends BaseEntity<UUID> implements AggregateRoot<UUID> {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private BigDecimal basePrice;
+    private ShowtimeStatus status;
 
     public ShowTime() {
         this.id = UUID.randomUUID();
@@ -45,8 +47,20 @@ public class ShowTime extends BaseEntity<UUID> implements AggregateRoot<UUID> {
         this.startTime = dto.getStartTime();
         this.endTime = dto.getEndTime();
         this.basePrice = dto.getBasePrice();
+        this.startTime = dto.getStartTime();
         addEvent(new CinemeshEvent(CinemeshEventName.SHOWTIME_CREATED, id));
         create();
+    }
+
+    public void update(ShowtimeDto dto) {
+        this.id = dto.getId() == null ? UUID.randomUUID() : dto.getId();
+        setMovieId(dto.getMovieId());
+        setRoomId(dto.getRoomId());
+        setStartTime(dto.getStartTime());
+        setEndTime(dto.getEndTime());
+        setBasePrice(dto.getBasePrice());
+        setStatus(dto.getStatus());
+        modify();
     }
 
     public void setMovieId(UUID movieId) {
@@ -81,6 +95,13 @@ public class ShowTime extends BaseEntity<UUID> implements AggregateRoot<UUID> {
         if (ObjectUtils.equals(this.endTime, basePrice)) return;
         addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("basePrice", this.basePrice, basePrice)));
         this.basePrice = basePrice;
+        modify();
+    }
+
+    public void setStatus(ShowtimeStatus status) {
+        if (ObjectUtils.equals(this.status, status)) return;
+        addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("status", this.status, status)));
+        this.status = status;
         modify();
     }
 

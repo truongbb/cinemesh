@@ -39,6 +39,10 @@ public class TheaterSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/rooms/{id}").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
                         .requestMatchers(HttpMethod.GET, "/api/v1/rooms").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
 
+                        .requestMatchers(HttpMethod.POST, "/api/v1/showtimes").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/showtimes/{id}").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/showtimes/{id}/status").hasAnyAuthority(RoleName.ROLE_ADMIN.name())
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

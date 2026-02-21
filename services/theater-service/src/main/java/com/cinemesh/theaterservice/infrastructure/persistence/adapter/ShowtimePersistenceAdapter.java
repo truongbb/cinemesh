@@ -18,6 +18,8 @@ import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,7 +34,8 @@ public class ShowtimePersistenceAdapter implements com.cinemesh.theaterservice.d
 
     @Override
     public Optional<ShowTime> findById(UUID id) {
-        return Optional.empty();
+        return showtimeRepository.findById(id)
+                .map(showTimeEntity -> objectMapper.convertValue(showTimeEntity, ShowTime.class));
     }
 
     @Override
@@ -53,6 +56,14 @@ public class ShowtimePersistenceAdapter implements com.cinemesh.theaterservice.d
         } catch (StaleStateException | ConcurrencyFailureException ex) {
             throw new UnprocessableEntityException(CommonErrorCode.OPTIMISTIC_LOCK_UNPROCESSABLE);
         }
+    }
+
+    @Override
+    public List<ShowTime> findTimeIntervalOverlapping(LocalDateTime start, LocalDateTime end) {
+        return showtimeRepository.findTimeIntervalOverlapping(start, end)
+                .stream()
+                .map(showTimeEntity -> objectMapper.convertValue(showTimeEntity, ShowTime.class))
+                .toList();
     }
 
 }
