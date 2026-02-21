@@ -8,5 +8,5 @@ application:
       tokenValidityMilliseconds: 1800000
 
 feign:
-  url:
+  domain:
     movie-service: localhost:9002

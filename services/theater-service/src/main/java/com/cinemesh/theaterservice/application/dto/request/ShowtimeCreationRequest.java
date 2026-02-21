@@ -1,5 +1,6 @@
 package com.cinemesh.theaterservice.application.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -27,10 +28,12 @@ public class ShowtimeCreationRequest {
 
     @NotNull(message = "Start time required")
     @Future(message = "Start time must be future time")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startTime;
 
     @NotNull(message = "End time required")
     @Future(message = "End time must be future time")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime endTime;
 
     @NotNull(message = "Base price required")

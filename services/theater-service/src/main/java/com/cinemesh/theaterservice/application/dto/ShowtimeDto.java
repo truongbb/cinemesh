@@ -1,5 +1,6 @@
 package com.cinemesh.theaterservice.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,8 +18,13 @@ public class ShowtimeDto {
     UUID id;
     UUID movieId;
     UUID roomId;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime startTime;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime endTime;
+
     BigDecimal basePrice;
 
 }

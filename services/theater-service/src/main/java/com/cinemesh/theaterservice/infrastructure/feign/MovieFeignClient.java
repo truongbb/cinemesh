@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @FeignClient(
         name = "movie-service",
-        url = "${feign.url.movie-service}",
+        url = "${feign.domain.movie-service}",
         configuration = FeignConfiguration.class
 )
 public interface MovieFeignClient {
