@@ -59,8 +59,8 @@ public class ShowtimePersistenceAdapter implements com.cinemesh.theaterservice.d
     }
 
     @Override
-    public List<ShowTime> findTimeIntervalOverlapping(LocalDateTime start, LocalDateTime end) {
-        return showtimeRepository.findTimeIntervalOverlapping(start, end)
+    public List<ShowTime> findTimeIntervalOverlapping(LocalDateTime start, LocalDateTime end, List<UUID> excludeIds) {
+        return showtimeRepository.findTimeIntervalOverlapping(start, end, excludeIds)
                 .stream()
                 .map(showTimeEntity -> objectMapper.convertValue(showTimeEntity, ShowTime.class))
                 .toList();

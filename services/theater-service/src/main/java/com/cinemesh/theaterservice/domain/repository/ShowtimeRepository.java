@@ -13,6 +13,6 @@ public interface ShowtimeRepository {
 
     void saveShowTime(ShowTime showTime);
 
-    List<ShowTime> findTimeIntervalOverlapping(LocalDateTime start, LocalDateTime end);
+    List<ShowTime> findTimeIntervalOverlapping(LocalDateTime start, LocalDateTime end, List<UUID> excludedIds);
 
 }

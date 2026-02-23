@@ -26,6 +26,7 @@ public class ShowtimeMapper {
                 .startTime(showTime.getStartTime())
                 .endTime(showTime.getEndTime())
                 .basePrice(showTime.getBasePrice())
+                .status(showTime.getStatus())
                 .build();
     }
 

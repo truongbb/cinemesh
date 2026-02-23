@@ -1,6 +1,7 @@
 package com.cinemesh.movieservice.application.dto.response;
 
 import com.cinemesh.common.statics.MovieRated;
+import com.cinemesh.common.statics.MovieStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -27,5 +28,6 @@ public class MovieResponse {
     String actors;
     MovieRated rated;
     List<MovieGenreResponse> genres;
+    MovieStatus status;
 
 }

@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,7 +46,7 @@ public class ShowtimeService {
                 .orElseThrow(() -> new NotFoundException(TheaterErrorCode.ROOM_NOT_FOUND));
         MovieResponse movie = movieFeignClient.getMovieDetails(request.getMovieId());
 
-        validateShowtimeRequest(movie, request.getStartTime(), request.getEndTime());
+        validateShowtimeRequest(movie, request.getStartTime(), request.getEndTime(), null);
 
         ShowtimeDto showtimeDto = objectMapper.convertValue(request, ShowtimeDto.class);
         showtimeDto.setStatus(ShowtimeStatus.CREATED);
@@ -63,7 +64,7 @@ public class ShowtimeService {
                 .orElseThrow(() -> new NotFoundException(TheaterErrorCode.ROOM_NOT_FOUND));
         MovieResponse movie = movieFeignClient.getMovieDetails(request.getMovieId());
 
-        validateShowtimeRequest(movie, request.getStartTime(), request.getEndTime());
+        validateShowtimeRequest(movie, request.getStartTime(), request.getEndTime(), id);
 
         ShowtimeDto showtimeDto = objectMapper.convertValue(request, ShowtimeDto.class);
         showtimeDto.setId(id);
@@ -74,10 +75,11 @@ public class ShowtimeService {
         return showtimeMapper.convertDomainToResponse(showTime, movie, room);
     }
 
-    private void validateShowtimeRequest(MovieResponse movie, LocalDateTime startTime, LocalDateTime endTime) {
+    private void validateShowtimeRequest(MovieResponse movie, LocalDateTime startTime, LocalDateTime endTime, UUID showtimeId) {
         // check xem phòng chiếu đó tại khung giờ đó có free hay không
         List<ShowTime> timeIntervalOverlapping =
-                showtimePersistenceAdapter.findTimeIntervalOverlapping(startTime, endTime);
+                showtimePersistenceAdapter.findTimeIntervalOverlapping(startTime, endTime,
+                        showtimeId == null ? Collections.emptyList() : Collections.singletonList(showtimeId));
         if (!CollectionUtils.isEmpty(timeIntervalOverlapping)) {
             throw new UnprocessableEntityException(TheaterErrorCode.ROOM_OCCUPIED);
         }
@@ -115,6 +117,17 @@ public class ShowtimeService {
 
         showTime.setStatus(request.getStatus());
         showtimePersistenceAdapter.saveShowTime(showTime);
+
+        return showtimeMapper.convertDomainToResponse(showTime, movie, room);
+    }
+
+    public ShowtimeResponse getDetails(UUID id) {
+        ShowTime showTime = showtimePersistenceAdapter.findById(id)
+                .orElseThrow(() -> new NotFoundException(TheaterErrorCode.SHOWTIME_NOT_FOUND));
+
+        Room room = roomPersistenceAdapter.findById(showTime.getRoomId())
+                .orElseThrow(() -> new NotFoundException(TheaterErrorCode.ROOM_NOT_FOUND));
+        MovieResponse movie = movieFeignClient.getMovieDetails(showTime.getMovieId());
 
         return showtimeMapper.convertDomainToResponse(showTime, movie, room);
     }

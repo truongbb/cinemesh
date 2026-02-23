@@ -37,4 +37,9 @@ public class ShowtimeController {
         return showtimeService.updateShowtimeStatus(id, request);
     }
 
+    @GetMapping("/{id}")
+    public ShowtimeResponse getDetails(@PathVariable UUID id) {
+        return showtimeService.getDetails(id);
+    }
+
 }

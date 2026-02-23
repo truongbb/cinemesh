@@ -3,6 +3,9 @@ package com.cinemesh.common.event.payload;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.Date;
@@ -13,7 +16,9 @@ public class FieldChangedPayload extends BaseEventPayload {
     private String fieldName;
     private String oldValue;
     private String newValue;
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter LOCAL_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+    private static final DateTimeFormatter ZONED_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     public FieldChangedPayload() {
     }
@@ -39,9 +44,13 @@ public class FieldChangedPayload extends BaseEventPayload {
         } else if (obj instanceof Double) {
             return (new BigDecimal((Double) obj)).toPlainString();
         } else if (obj instanceof Date) {
-            return FORMATTER.format(((Date) obj).toInstant());
-        } else if (obj instanceof TemporalAccessor) {
-            return FORMATTER.format((TemporalAccessor) obj);
+            return DATE_FORMATTER.format(((Date) obj).toInstant());
+        } else if (obj instanceof LocalDate) {
+            return DATE_FORMATTER.format(((LocalDate) obj));
+        } else if (obj instanceof LocalDateTime) {
+            return LOCAL_DATE_TIME_FORMATTER.format((LocalDateTime) obj);
+        } else if (obj instanceof ZonedDateTime) {
+            return ZONED_DATE_TIME_FORMATTER.format((ZonedDateTime) obj);
         }
         return obj.toString();
     }
