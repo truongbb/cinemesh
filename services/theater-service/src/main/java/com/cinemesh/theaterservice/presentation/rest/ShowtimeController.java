@@ -1,7 +1,9 @@
 package com.cinemesh.theaterservice.presentation.rest;
 
 
+import com.cinemesh.common.dto.response.CommonSearchResponse;
 import com.cinemesh.theaterservice.application.dto.request.ShowtimeCreationRequest;
+import com.cinemesh.theaterservice.application.dto.request.ShowtimeSearchRequest;
 import com.cinemesh.theaterservice.application.dto.request.ShowtimeStatusUpdateRequest;
 import com.cinemesh.theaterservice.application.dto.request.ShowtimeUpdateRequest;
 import com.cinemesh.theaterservice.application.dto.response.ShowtimeResponse;
@@ -40,6 +42,11 @@ public class ShowtimeController {
     @GetMapping("/{id}")
     public ShowtimeResponse getDetails(@PathVariable UUID id) {
         return showtimeService.getDetails(id);
+    }
+
+    @GetMapping
+    public CommonSearchResponse<ShowtimeResponse> search(ShowtimeSearchRequest request) {
+        return showtimeService.search(request);
     }
 
 }

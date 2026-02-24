@@ -4,6 +4,7 @@ import com.cinemesh.movieservice.application.dto.request.SearchMovieRequest;
 import com.cinemesh.movieservice.infrastructure.persistence.entity.MovieEntity;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,10 @@ public class MovieSpecification {
             if (request.getDirectors() != null && !request.getDirectors().isEmpty()) {
                 predicates.add(cb.like(cb.lower(root.join("directors").get("name")),
                         "%" + request.getDirectors().toLowerCase() + "%"));
+            }
+
+            if (!CollectionUtils.isEmpty(request.getIds())) {
+                predicates.add(root.get("id").in(request.getIds()));
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

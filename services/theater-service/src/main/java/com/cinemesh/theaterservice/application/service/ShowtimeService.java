@@ -1,13 +1,16 @@
 package com.cinemesh.theaterservice.application.service;
 
+import com.cinemesh.common.dto.response.CommonSearchResponse;
 import com.cinemesh.common.exception.NotFoundException;
 import com.cinemesh.common.exception.UnprocessableEntityException;
 import com.cinemesh.common.statics.MovieStatus;
 import com.cinemesh.theaterservice.application.dto.ShowtimeDto;
 import com.cinemesh.theaterservice.application.dto.request.ShowtimeCreationRequest;
+import com.cinemesh.theaterservice.application.dto.request.ShowtimeSearchRequest;
 import com.cinemesh.theaterservice.application.dto.request.ShowtimeStatusUpdateRequest;
 import com.cinemesh.theaterservice.application.dto.request.ShowtimeUpdateRequest;
 import com.cinemesh.theaterservice.application.dto.response.MovieResponse;
+import com.cinemesh.theaterservice.application.dto.response.RoomResponse;
 import com.cinemesh.theaterservice.application.dto.response.ShowtimeResponse;
 import com.cinemesh.theaterservice.domain.exception.TheaterErrorCode;
 import com.cinemesh.theaterservice.domain.model.Room;
@@ -15,20 +18,25 @@ import com.cinemesh.theaterservice.domain.model.ShowTime;
 import com.cinemesh.theaterservice.infrastructure.feign.MovieFeignClient;
 import com.cinemesh.theaterservice.infrastructure.persistence.adapter.RoomPersistenceAdapter;
 import com.cinemesh.theaterservice.infrastructure.persistence.adapter.ShowtimePersistenceAdapter;
+import com.cinemesh.theaterservice.infrastructure.persistence.entity.ShowTimeEntity;
 import com.cinemesh.theaterservice.infrastructure.persistence.mapper.ShowtimeMapper;
+import com.cinemesh.theaterservice.infrastructure.persistence.repository.ShowtimeRepository;
+import com.cinemesh.theaterservice.infrastructure.persistence.specification.ShowtimeSpecification;
 import com.cinemesh.theaterservice.statics.ShowtimeStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +46,7 @@ public class ShowtimeService {
     ObjectMapper objectMapper;
     ShowtimeMapper showtimeMapper;
     MovieFeignClient movieFeignClient;
+    ShowtimeRepository showtimeRepository;
     RoomPersistenceAdapter roomPersistenceAdapter;
     ShowtimePersistenceAdapter showtimePersistenceAdapter;
 
@@ -132,4 +141,35 @@ public class ShowtimeService {
         return showtimeMapper.convertDomainToResponse(showTime, movie, room);
     }
 
+    public CommonSearchResponse<ShowtimeResponse> search(ShowtimeSearchRequest request) {
+        PageRequest pageable = PageRequest.of(request.getPageIndex(), request.getPageSize());
+
+        Specification<ShowTimeEntity> spec = ShowtimeSpecification.search(request);
+
+        Page<ShowTimeEntity> pageResult = showtimeRepository.findAll(spec, pageable);
+
+        Set<UUID> movieIds = pageResult.getContent().stream().map(ShowTimeEntity::getMovieId).collect(Collectors.toSet());
+        Set<UUID> roomIds = pageResult.getContent().stream().map(ShowTimeEntity::getRoomId).collect(Collectors.toSet());
+
+        List<Room> rooms = roomPersistenceAdapter.findAllByIds(new ArrayList<>(roomIds));
+
+        CommonSearchResponse<MovieResponse> movieResponse = movieFeignClient.search(new ArrayList<>(movieIds));
+
+        return CommonSearchResponse.<ShowtimeResponse>builder()
+                .data(
+                        pageResult.getContent()
+                                .stream()
+                                .map(showTimeEntity -> showtimeMapper.convertEntityToResponse(showTimeEntity, rooms, movieResponse.getData()))
+                                .toList()
+                )
+                .pagination(
+                        CommonSearchResponse.PaginationResponse.builder()
+                                .pageSize(request.getPageSize())
+                                .pageIndex(request.getPageIndex())
+                                .totalRecords(pageResult.getTotalElements())
+                                .totalPage(pageResult.getTotalPages())
+                                .build()
+                )
+                .build();
+    }
 }

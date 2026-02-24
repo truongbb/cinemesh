@@ -41,4 +41,7 @@ public class SearchMovieRequest extends CommonSearchRequest {
 
     private List<MovieStatus> statuses;
 
+    // phục vụ bên theater-service call qua
+    private List<UUID> ids;
+
 }
