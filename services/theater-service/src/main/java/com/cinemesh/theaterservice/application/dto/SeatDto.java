@@ -1,6 +1,6 @@
 package com.cinemesh.theaterservice.application.dto;
 
-import com.cinemesh.theaterservice.statics.SeatType;
+import com.cinemesh.common.statics.SeatType;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

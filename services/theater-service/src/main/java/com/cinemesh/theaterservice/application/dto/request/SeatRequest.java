@@ -1,7 +1,7 @@
 package com.cinemesh.theaterservice.application.dto.request;
 
 
-import com.cinemesh.theaterservice.statics.SeatType;
+import com.cinemesh.common.statics.SeatType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

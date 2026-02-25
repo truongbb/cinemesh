@@ -10,7 +10,7 @@ import com.cinemesh.common.utils.ObjectUtils;
 import com.cinemesh.theaterservice.application.dto.RoomDto;
 import com.cinemesh.theaterservice.application.dto.SeatDto;
 import com.cinemesh.theaterservice.domain.exception.TheaterErrorCode;
-import com.cinemesh.theaterservice.statics.RoomStatus;
+import com.cinemesh.common.statics.RoomStatus;
 import lombok.Getter;
 
 import java.util.ArrayList;

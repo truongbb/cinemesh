@@ -10,3 +10,4 @@ application:
 feign:
   domain:
     movie-service: localhost:9002
+    theater-service: localhost:9003

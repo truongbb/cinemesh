@@ -1,7 +1,7 @@
 package com.cinemesh.theaterservice.infrastructure.persistence.entity;
 
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;
-import com.cinemesh.theaterservice.statics.ShowtimeStatus;
+import com.cinemesh.common.statics.ShowtimeStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

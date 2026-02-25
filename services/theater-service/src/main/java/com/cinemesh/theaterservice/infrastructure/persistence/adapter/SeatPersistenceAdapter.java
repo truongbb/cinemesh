@@ -2,7 +2,7 @@ package com.cinemesh.theaterservice.infrastructure.persistence.adapter;
 
 import com.cinemesh.theaterservice.domain.model.Seat;
 import com.cinemesh.theaterservice.domain.repository.SeatRepository;
-import com.cinemesh.theaterservice.statics.SeatType;
+import com.cinemesh.common.statics.SeatType;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

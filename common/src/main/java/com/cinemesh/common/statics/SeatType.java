@@ -1,4 +1,4 @@
-package com.cinemesh.theaterservice.statics;
+package com.cinemesh.common.statics;
 
 public enum SeatType {
     STANDARD,

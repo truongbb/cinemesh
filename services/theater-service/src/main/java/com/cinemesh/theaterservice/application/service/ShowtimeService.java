@@ -10,7 +10,6 @@ import com.cinemesh.theaterservice.application.dto.request.ShowtimeSearchRequest
 import com.cinemesh.theaterservice.application.dto.request.ShowtimeStatusUpdateRequest;
 import com.cinemesh.theaterservice.application.dto.request.ShowtimeUpdateRequest;
 import com.cinemesh.theaterservice.application.dto.response.MovieResponse;
-import com.cinemesh.theaterservice.application.dto.response.RoomResponse;
 import com.cinemesh.theaterservice.application.dto.response.ShowtimeResponse;
 import com.cinemesh.theaterservice.domain.exception.TheaterErrorCode;
 import com.cinemesh.theaterservice.domain.model.Room;
@@ -22,7 +21,7 @@ import com.cinemesh.theaterservice.infrastructure.persistence.entity.ShowTimeEnt
 import com.cinemesh.theaterservice.infrastructure.persistence.mapper.ShowtimeMapper;
 import com.cinemesh.theaterservice.infrastructure.persistence.repository.ShowtimeRepository;
 import com.cinemesh.theaterservice.infrastructure.persistence.specification.ShowtimeSpecification;
-import com.cinemesh.theaterservice.statics.ShowtimeStatus;
+import com.cinemesh.common.statics.ShowtimeStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;

@@ -1,6 +1,6 @@
 package com.cinemesh.theaterservice.application.dto;
 
-import com.cinemesh.theaterservice.statics.RoomStatus;
+import com.cinemesh.common.statics.RoomStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

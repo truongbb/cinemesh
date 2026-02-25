@@ -8,7 +8,7 @@ import com.cinemesh.theaterservice.application.dto.response.RoomResponse;
 import com.cinemesh.theaterservice.application.dto.response.SeatResponse;
 import com.cinemesh.theaterservice.domain.model.Room;
 import com.cinemesh.theaterservice.infrastructure.persistence.entity.RoomEntity;
-import com.cinemesh.theaterservice.statics.RoomStatus;
+import com.cinemesh.common.statics.RoomStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

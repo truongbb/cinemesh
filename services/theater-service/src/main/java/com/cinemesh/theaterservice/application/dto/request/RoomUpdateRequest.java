@@ -1,6 +1,6 @@
 package com.cinemesh.theaterservice.application.dto.request;
 
-import com.cinemesh.theaterservice.statics.RoomStatus;
+import com.cinemesh.common.statics.RoomStatus;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;

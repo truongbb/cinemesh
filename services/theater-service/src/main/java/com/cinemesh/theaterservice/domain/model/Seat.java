@@ -7,7 +7,7 @@ import com.cinemesh.common.event.CinemeshEventName;
 import com.cinemesh.common.event.payload.FieldChangedPayload;
 import com.cinemesh.common.utils.ObjectUtils;
 import com.cinemesh.theaterservice.application.dto.SeatDto;
-import com.cinemesh.theaterservice.statics.SeatType;
+import com.cinemesh.common.statics.SeatType;
 import lombok.Getter;
 
 import java.util.UUID;

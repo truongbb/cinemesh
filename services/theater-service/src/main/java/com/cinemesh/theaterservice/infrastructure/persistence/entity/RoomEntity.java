@@ -1,7 +1,7 @@
 package com.cinemesh.theaterservice.infrastructure.persistence.entity;
 
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;
-import com.cinemesh.theaterservice.statics.RoomStatus;
+import com.cinemesh.common.statics.RoomStatus;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;

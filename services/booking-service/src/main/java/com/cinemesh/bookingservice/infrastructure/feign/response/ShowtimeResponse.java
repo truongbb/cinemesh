@@ -1,4 +1,4 @@
-package com.cinemesh.theaterservice.application.dto.response;
+package com.cinemesh.bookingservice.infrastructure.feign.response;
 
 import com.cinemesh.common.statics.ShowtimeStatus;
 import lombok.*;

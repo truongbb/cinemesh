@@ -1,7 +1,7 @@
 package com.cinemesh.theaterservice.domain.repository;
 
 import com.cinemesh.theaterservice.domain.model.Seat;
-import com.cinemesh.theaterservice.statics.SeatType;
+import com.cinemesh.common.statics.SeatType;
 
 import java.util.List;
 import java.util.Optional;

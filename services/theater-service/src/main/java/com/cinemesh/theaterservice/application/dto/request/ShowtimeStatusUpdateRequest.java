@@ -1,6 +1,6 @@
 package com.cinemesh.theaterservice.application.dto.request;
 
-import com.cinemesh.theaterservice.statics.ShowtimeStatus;
+import com.cinemesh.common.statics.ShowtimeStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

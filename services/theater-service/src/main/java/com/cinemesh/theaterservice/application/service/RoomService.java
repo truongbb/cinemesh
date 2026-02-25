@@ -15,7 +15,7 @@ import com.cinemesh.theaterservice.infrastructure.persistence.mapper.RoomMapper;
 import com.cinemesh.theaterservice.infrastructure.persistence.mapper.SeatMapper;
 import com.cinemesh.theaterservice.infrastructure.persistence.repository.RoomRepository;
 import com.cinemesh.theaterservice.infrastructure.persistence.specification.RoomSpecification;
-import com.cinemesh.theaterservice.statics.RoomStatus;
+import com.cinemesh.common.statics.RoomStatus;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;

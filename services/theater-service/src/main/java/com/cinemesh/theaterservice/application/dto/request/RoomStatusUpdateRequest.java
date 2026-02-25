@@ -1,6 +1,6 @@
 package com.cinemesh.theaterservice.application.dto.request;
 
-import com.cinemesh.theaterservice.statics.RoomStatus;
+import com.cinemesh.common.statics.RoomStatus;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
