@@ -35,6 +35,14 @@ public enum CinemeshEventName {
     SEAT_UPDATED,
     SEAT_REMOVED,
 
-    SHOWTIME_CREATED
+    SHOWTIME_CREATED,
 
+    /**
+     * BOOKING-SERVICE
+     */
+    TICKET_ADDED,
+    TICKET_UPDATED,
+    TICKET_REMOVED,
+
+    ORDER_CREATED,
 }

@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public enum BookingErrorCode implements BaseErrorCode {
-    
+    TICKET_NOT_FOUND("005001")
 
     ;
 

@@ -38,21 +38,21 @@ public class Seat extends BaseLocalEntity<Room, UUID> implements LocalEntity<Roo
         modify();
     }
 
-    public void setRowCode(String rowCode) {
+    private void setRowCode(String rowCode) {
         if (ObjectUtils.equals(this.rowCode, rowCode)) return;
         addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("rowCode", this.rowCode, rowCode)));
         this.rowCode = rowCode;
         modify();
     }
 
-    public void setColumnNumber(Integer columnNumber) {
+    private void setColumnNumber(Integer columnNumber) {
         if (ObjectUtils.equals(this.columnNumber, columnNumber)) return;
         addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("columnNumber", this.columnNumber, columnNumber)));
         this.columnNumber = columnNumber;
         modify();
     }
 
-    public void setType(SeatType type) {
+    private void setType(SeatType type) {
         if (ObjectUtils.equals(this.type, type)) return;
         addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("type", this.type, type)));
         this.type = type;
