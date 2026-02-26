@@ -85,7 +85,30 @@ services:
     networks:
       - cinemesh-net
 
+  redis:
+    image: redis:7.2-alpine
+    container_name: cinemesh-redis
+    ports:
+      - "6379:6379"
+    # Setting a password is a good habit, even locally
+    command: redis-server --requirepass cinemesh_secret
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  # The GUI (Highly recommended for viewing lock TTLs)
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: cinemesh-redisinsight
+    ports:
+      - "5540:5540"
+    depends_on:
+      - redis
+    restart: unless-stopped
+
 volumes:
+  redis_data:
+    driver: local
   postgres_data:
 
 networks:

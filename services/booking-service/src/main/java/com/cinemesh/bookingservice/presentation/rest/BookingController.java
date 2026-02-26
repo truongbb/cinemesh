@@ -25,4 +25,5 @@ public class BookingController {
     public ShowtimeSeatResponse getSeatsOfShowtime(@PathVariable @NotNull UUID showtimeId) {
         return bookingService.getSeatsOfShowtime(showtimeId);
     }
+
 }

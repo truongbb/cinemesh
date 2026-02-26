@@ -70,7 +70,7 @@ public class BookingService {
     // Simple helper method to keep your map() clean
     private BigDecimal calculateSeatPrice(BigDecimal basePrice, SeatType type) {
         // TODO - cần có cơ chế set price khác nhau giữa các loại phim, loại ghế và giờ chiếu
-        // Example: VIP seats cost 50,000 more
+        // Example: VIP seats cost 50k more
         if (SeatType.VIP.equals(type)) {
             return basePrice.add(new BigDecimal("50000"));
         } else if (SeatType.COUPLE.equals(type)) {
