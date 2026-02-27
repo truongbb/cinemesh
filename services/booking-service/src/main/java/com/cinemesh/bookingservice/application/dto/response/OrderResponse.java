@@ -1,7 +1,6 @@
-package com.cinemesh.bookingservice.application.dto;
+package com.cinemesh.bookingservice.application.dto.response;
 
 import com.cinemesh.bookingservice.statics.OrderPaymentStatus;
-import com.cinemesh.bookingservice.statics.OrderStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -14,13 +13,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class OrderDto {
+public class OrderResponse {
 
     UUID id;
-    UUID userId;
     BigDecimal totalAmount;
     OrderPaymentStatus paymentStatus;
-    OrderStatus status;
-    List<TicketDto> tickets;
+    List<TicketResponse> tickets;
 
 }

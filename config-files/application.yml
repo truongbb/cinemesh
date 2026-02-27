@@ -11,3 +11,4 @@ feign:
   domain:
     movie-service: localhost:9002
     theater-service: localhost:9003
+    auth-service: localhost:9000

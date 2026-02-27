@@ -1,5 +1,7 @@
-package com.cinemesh.bookingservice.application.dto;
+package com.cinemesh.bookingservice.application.dto.response;
 
+import com.cinemesh.bookingservice.infrastructure.feign.response.SeatResponse;
+import com.cinemesh.bookingservice.infrastructure.feign.response.ShowtimeResponse;
 import com.cinemesh.bookingservice.statics.TicketStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -12,11 +14,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TicketDto {
+public class TicketResponse {
 
     UUID id;
-    UUID showtimeId;
-    UUID seatId;
+    ShowtimeResponse showtime;
+    SeatResponse seat;
     BigDecimal price;
     TicketStatus status;
 

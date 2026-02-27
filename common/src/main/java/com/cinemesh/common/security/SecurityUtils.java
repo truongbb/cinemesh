@@ -1,6 +1,7 @@
 package com.cinemesh.common.security;
 
 
+import com.cinemesh.common.dto.UserDetailsDto;
 import com.cinemesh.common.statics.RoleName;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -33,6 +34,9 @@ public final class SecurityUtils {
                 return springSecurityUser.getUsername();
             } else if (authentication.getPrincipal() instanceof String) {
                 return (String) authentication.getPrincipal();
+            } else if (authentication.getPrincipal() instanceof UserDetailsDto) {
+                UserDetailsDto springSecurityUserDto = (UserDetailsDto) authentication.getPrincipal();
+                return springSecurityUserDto.getEmail();
             }
             return null;
         });

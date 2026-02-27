@@ -1,13 +1,12 @@
 package com.cinemesh.authservice.presenration.rest;
 
+import com.cinemesh.authservice.application.dto.response.UserResponse;
 import com.cinemesh.authservice.application.service.UserService;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -22,6 +21,11 @@ public class UserController {
     @PostMapping("/{id}/activation")
     public void activateUser(@PathVariable UUID id) {
         userService.activateUser(id);
+    }
+
+    @GetMapping("/email")
+    public UserResponse getUserByEmail(@RequestParam @NotEmpty(message = "Email required") String email) {
+        return userService.getUserByEmail(email);
     }
 
 }

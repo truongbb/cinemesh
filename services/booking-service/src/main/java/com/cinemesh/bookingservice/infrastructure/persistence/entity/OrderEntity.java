@@ -1,6 +1,7 @@
 package com.cinemesh.bookingservice.infrastructure.persistence.entity;
 
 import com.cinemesh.bookingservice.statics.OrderPaymentStatus;
+import com.cinemesh.bookingservice.statics.OrderStatus;
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -24,6 +25,9 @@ public class OrderEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private OrderPaymentStatus paymentStatus;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @ToString.Exclude

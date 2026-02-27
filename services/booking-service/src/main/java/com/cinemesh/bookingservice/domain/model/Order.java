@@ -4,6 +4,7 @@ import com.cinemesh.bookingservice.application.dto.OrderDto;
 import com.cinemesh.bookingservice.application.dto.TicketDto;
 import com.cinemesh.bookingservice.domain.exception.BookingErrorCode;
 import com.cinemesh.bookingservice.statics.OrderPaymentStatus;
+import com.cinemesh.bookingservice.statics.OrderStatus;
 import com.cinemesh.common.domain.AggregateRoot;
 import com.cinemesh.common.domain.BaseEntity;
 import com.cinemesh.common.event.CinemeshEvent;
@@ -24,6 +25,7 @@ public class Order extends BaseEntity<UUID> implements AggregateRoot<UUID> {
     private UUID userId;
     private BigDecimal totalAmount;
     private OrderPaymentStatus paymentStatus;
+    private OrderStatus status;
     private List<Ticket> tickets;
 
     public Order() {
@@ -38,6 +40,7 @@ public class Order extends BaseEntity<UUID> implements AggregateRoot<UUID> {
         this.userId = orderDto.getUserId();
         this.totalAmount = orderDto.getTotalAmount();
         this.paymentStatus = orderDto.getPaymentStatus();
+        this.status = orderDto.getStatus();
         this.tickets = orderDto.getTickets()
                 .stream()
                 .map(ticketDto -> {
@@ -69,6 +72,13 @@ public class Order extends BaseEntity<UUID> implements AggregateRoot<UUID> {
         if (ObjectUtils.equals(this.paymentStatus, paymentStatus)) return;
         addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("paymentStatus", this.paymentStatus, paymentStatus)));
         this.paymentStatus = paymentStatus;
+        modify();
+    }
+
+    public void setStatus(OrderStatus status) {
+        if (ObjectUtils.equals(this.status, status)) return;
+        addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("status", this.status, status)));
+        this.status = status;
         modify();
     }
 
