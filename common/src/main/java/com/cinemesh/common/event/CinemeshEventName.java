@@ -45,4 +45,10 @@ public enum CinemeshEventName {
     TICKET_REMOVED,
 
     ORDER_CREATED,
+
+    /**
+     * PAYMENT-SERVICE
+     */
+    PAYMENT_CREATED,
+    PAYMENT_NOTIFICATION_CREATED,
 }
