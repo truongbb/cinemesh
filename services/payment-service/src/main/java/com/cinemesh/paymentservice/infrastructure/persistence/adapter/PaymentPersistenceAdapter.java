@@ -18,6 +18,7 @@ import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -47,6 +48,12 @@ public class PaymentPersistenceAdapter implements PaymentRepository {
         } catch (StaleStateException | ConcurrencyFailureException ex) {
             throw new UnprocessableEntityException(CommonErrorCode.OPTIMISTIC_LOCK_UNPROCESSABLE);
         }
+    }
+
+    @Override
+    public Optional<Payment> findById(UUID id) {
+        return paymentRepository.findById(id)
+                .map(entity -> objectMapper.convertValue(entity, Payment.class));
     }
 
 }

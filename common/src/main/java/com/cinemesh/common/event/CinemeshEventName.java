@@ -51,4 +51,6 @@ public enum CinemeshEventName {
      */
     PAYMENT_CREATED,
     PAYMENT_NOTIFICATION_CREATED,
+    PAYMENT_PAID,
+    PAYMENT_FAILED
 }

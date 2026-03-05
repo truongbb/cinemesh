@@ -1,21 +1,23 @@
 package com.cinemesh.paymentservice.application.dto;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.cinemesh.paymentservice.statics.PaymentNotificationStatus;
+import com.cinemesh.paymentservice.statics.PaymentPartner;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.UUID;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PaymentNotificationDto {
 
     UUID id;
-    String paymentPartner;
+    PaymentPartner paymentPartner;
     String rawPayload;
+    PaymentNotificationStatus status;
+    String errorLog;
 
 }

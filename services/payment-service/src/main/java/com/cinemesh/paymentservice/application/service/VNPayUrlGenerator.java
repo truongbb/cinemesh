@@ -107,4 +107,48 @@ public class VNPayUrlGenerator {
         return vnpPayUrl + "?" + queryUrl;
     }
 
+    /**
+     * Validates and hashes all fields returned by VNPay's IPN Webhook.
+     * VNPay requires the fields to be sorted alphabetically, URL-encoded,
+     * and concatenated with '&' before hashing.
+     */
+    public String hashAllFields(Map<String, String> fields) {
+        // 1. Create a copy to avoid modifying the original map,
+        // and ensure the security fields are strictly removed before hashing
+        Map<String, String> safeFields = new HashMap<>(fields);
+        safeFields.remove("vnp_SecureHash");
+        safeFields.remove("vnp_SecureHashType");
+
+        // 2. Sort the parameter names alphabetically
+        List<String> fieldNames = new ArrayList<>(safeFields.keySet());
+        Collections.sort(fieldNames);
+
+        // 3. Build the raw string to be hashed
+        StringBuilder hashData = new StringBuilder();
+        Iterator<String> itr = fieldNames.iterator();
+
+        while (itr.hasNext()) {
+            String fieldName = itr.next();
+            String fieldValue = safeFields.get(fieldName);
+
+            // VNPay strictly ignores null or empty values in the hash
+            if ((fieldValue != null) && (!fieldValue.isEmpty())) {
+
+                hashData.append(fieldName);
+                hashData.append('=');
+
+                // URL Encode the value using US-ASCII exactly as VNPay specifies
+                hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII));
+
+                // Add '&' separator if it's not the last element
+                if (itr.hasNext()) {
+                    hashData.append('&');
+                }
+            }
+        }
+
+        // 4. Generate the HMAC SHA-512 string using your secret key
+        return DataUtils.hmacSHA512(vnpHashSecret, hashData.toString());
+    }
+
 }
