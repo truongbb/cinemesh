@@ -3,7 +3,7 @@ package com.cinemesh.bookingservice.infrastructure.persistence.adapter;
 import com.cinemesh.bookingservice.domain.model.Ticket;
 import com.cinemesh.bookingservice.infrastructure.persistence.mapper.TickerMapper;
 import com.cinemesh.bookingservice.infrastructure.persistence.repository.TicketRepository;
-import com.cinemesh.bookingservice.statics.TicketStatus;
+import com.cinemesh.common.statics.TicketStatus;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

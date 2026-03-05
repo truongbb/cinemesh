@@ -1,7 +1,5 @@
-package com.cinemesh.bookingservice.application.dto.response;
+package com.cinemesh.paymentservice.infrastructure.feign.response;
 
-import com.cinemesh.bookingservice.infrastructure.feign.response.SeatResponse;
-import com.cinemesh.bookingservice.infrastructure.feign.response.ShowtimeResponse;
 import com.cinemesh.common.statics.TicketStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

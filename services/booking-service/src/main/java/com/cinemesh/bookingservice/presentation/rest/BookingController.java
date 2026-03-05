@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/boookings")
+@RequestMapping("/api/v1/bookings")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BookingController {
 
@@ -29,6 +29,11 @@ public class BookingController {
     @PostMapping
     public OrderResponse createBooking(@RequestBody @Valid BookingCreationRequest request) {
         return bookingService.createBooking(request);
+    }
+
+    @GetMapping("/{id}")
+    public OrderResponse getBookingDetails(@PathVariable @NotNull UUID id) {
+        return bookingService.getBookingDetails(id);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.cinemesh.bookingservice.statics;
+package com.cinemesh.common.statics;
 
 public enum OrderStatus {
 

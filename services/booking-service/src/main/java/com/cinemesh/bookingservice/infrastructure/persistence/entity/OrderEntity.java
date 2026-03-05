@@ -1,7 +1,7 @@
 package com.cinemesh.bookingservice.infrastructure.persistence.entity;
 
-import com.cinemesh.bookingservice.statics.OrderPaymentStatus;
-import com.cinemesh.bookingservice.statics.OrderStatus;
+import com.cinemesh.common.statics.OrderPaymentStatus;
+import com.cinemesh.common.statics.OrderStatus;
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;

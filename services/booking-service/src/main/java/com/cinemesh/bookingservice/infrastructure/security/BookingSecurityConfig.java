@@ -34,6 +34,7 @@ public class BookingSecurityConfig {
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/api/v1/bookings").hasAnyAuthority(RoleName.ROLE_CUSTOMER.name())
+                        .requestMatchers(HttpMethod.GET, "/api/v1/bookings/{id}").hasAnyAuthority(RoleName.ROLE_CUSTOMER.name())
                         .requestMatchers(HttpMethod.GET, "/api/v1/bookings/showtimes/{showtimeId}/seats").hasAnyAuthority(RoleName.ROLE_CUSTOMER.name())
 
                         .anyRequest().authenticated()

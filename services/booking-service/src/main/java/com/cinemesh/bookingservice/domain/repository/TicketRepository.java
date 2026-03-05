@@ -1,7 +1,7 @@
 package com.cinemesh.bookingservice.domain.repository;
 
 import com.cinemesh.bookingservice.domain.model.Ticket;
-import com.cinemesh.bookingservice.statics.TicketStatus;
+import com.cinemesh.common.statics.TicketStatus;
 
 import java.util.List;
 import java.util.Optional;

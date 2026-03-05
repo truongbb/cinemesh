@@ -1,7 +1,7 @@
 package com.cinemesh.bookingservice.infrastructure.persistence.repository;
 
 import com.cinemesh.bookingservice.infrastructure.persistence.entity.OrderEntity;
-import com.cinemesh.bookingservice.statics.OrderStatus;
+import com.cinemesh.common.statics.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

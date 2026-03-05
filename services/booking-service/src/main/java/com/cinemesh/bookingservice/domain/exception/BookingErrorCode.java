@@ -8,7 +8,9 @@ public enum BookingErrorCode implements BaseErrorCode {
     TICKET_NOT_FOUND("005001"),
     SEATS_ALREADY_TAKEN("005002"),
     SEAT_NOT_FOUND_IN_SHOWTIME("005003"),
-    CHECKOUT_PROCESSING_FAILED("005004");
+    CHECKOUT_PROCESSING_FAILED("005004"),
+    ORDER_NOT_FOUND("005005"),
+    ;
 
     private final String code;
 

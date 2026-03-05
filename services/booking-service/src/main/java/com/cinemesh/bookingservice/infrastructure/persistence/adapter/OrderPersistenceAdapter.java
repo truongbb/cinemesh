@@ -6,10 +6,10 @@ import com.cinemesh.bookingservice.infrastructure.persistence.entity.OrderLogEnt
 import com.cinemesh.bookingservice.infrastructure.persistence.mapper.OrderMapper;
 import com.cinemesh.bookingservice.infrastructure.persistence.repository.OrderLogRepository;
 import com.cinemesh.bookingservice.infrastructure.persistence.repository.OrderRepository;
-import com.cinemesh.bookingservice.statics.OrderStatus;
 import com.cinemesh.common.exception.CommonErrorCode;
 import com.cinemesh.common.exception.UnprocessableEntityException;
 import com.cinemesh.common.statics.LogType;
+import com.cinemesh.common.statics.OrderStatus;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +40,8 @@ public class OrderPersistenceAdapter implements com.cinemesh.bookingservice.doma
 
     @Override
     public Optional<Order> findById(UUID id) {
-        return Optional.empty();
+        return orderRepository.findById(id)
+                .map(orderMapper::convertFromEntityToDomain);
     }
 
     @Override

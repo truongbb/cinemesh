@@ -1,7 +1,7 @@
 package com.cinemesh.bookingservice.domain.model;
 
 import com.cinemesh.bookingservice.application.dto.TicketDto;
-import com.cinemesh.bookingservice.statics.TicketStatus;
+import com.cinemesh.common.statics.TicketStatus;
 import com.cinemesh.common.domain.BaseLocalEntity;
 import com.cinemesh.common.domain.LocalEntity;
 import com.cinemesh.common.event.CinemeshEvent;

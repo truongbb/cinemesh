@@ -1,6 +1,6 @@
 package com.cinemesh.bookingservice.application.dto;
 
-import com.cinemesh.bookingservice.statics.TicketStatus;
+import com.cinemesh.common.statics.TicketStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

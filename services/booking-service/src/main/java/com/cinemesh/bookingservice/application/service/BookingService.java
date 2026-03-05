@@ -16,10 +16,10 @@ import com.cinemesh.bookingservice.infrastructure.feign.response.UserResponse;
 import com.cinemesh.bookingservice.infrastructure.persistence.adapter.OrderPersistenceAdapter;
 import com.cinemesh.bookingservice.infrastructure.persistence.adapter.TicketPersistenceAdapter;
 import com.cinemesh.bookingservice.infrastructure.persistence.mapper.OrderMapper;
-import com.cinemesh.bookingservice.statics.OrderPaymentStatus;
-import com.cinemesh.bookingservice.statics.OrderStatus;
-import com.cinemesh.bookingservice.statics.SeatBookingStatus;
-import com.cinemesh.bookingservice.statics.TicketStatus;
+import com.cinemesh.common.statics.OrderPaymentStatus;
+import com.cinemesh.common.statics.OrderStatus;
+import com.cinemesh.common.statics.SeatBookingStatus;
+import com.cinemesh.common.statics.TicketStatus;
 import com.cinemesh.common.exception.NotFoundException;
 import com.cinemesh.common.exception.UnprocessableEntityException;
 import com.cinemesh.common.security.SecurityUtils;
@@ -181,4 +181,9 @@ public class BookingService {
                 .orElseThrow(() -> new NotFoundException(BookingErrorCode.SEAT_NOT_FOUND_IN_SHOWTIME));
     }
 
+    public OrderResponse getBookingDetails(@NotNull UUID id) {
+        Order order = orderPersistenceAdapter.findById(id)
+                .orElseThrow(() -> new NotFoundException(BookingErrorCode.TICKET_NOT_FOUND));
+        return orderMapper.convertFromDomainToResponse(order);
+    }
 }

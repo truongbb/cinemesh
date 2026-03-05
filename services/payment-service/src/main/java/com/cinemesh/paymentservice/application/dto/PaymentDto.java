@@ -3,16 +3,14 @@ package com.cinemesh.paymentservice.application.dto;
 import com.cinemesh.paymentservice.statics.PaymentCurrency;
 import com.cinemesh.paymentservice.statics.PaymentPartner;
 import com.cinemesh.paymentservice.statics.PaymentStatus;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)

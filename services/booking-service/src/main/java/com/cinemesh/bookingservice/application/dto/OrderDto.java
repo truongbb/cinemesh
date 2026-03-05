@@ -1,7 +1,7 @@
 package com.cinemesh.bookingservice.application.dto;
 
-import com.cinemesh.bookingservice.statics.OrderPaymentStatus;
-import com.cinemesh.bookingservice.statics.OrderStatus;
+import com.cinemesh.common.statics.OrderPaymentStatus;
+import com.cinemesh.common.statics.OrderStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

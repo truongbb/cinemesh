@@ -1,4 +1,4 @@
-package com.cinemesh.bookingservice.application.dto.response;
+package com.cinemesh.paymentservice.infrastructure.feign.response;
 
 import com.cinemesh.common.statics.OrderPaymentStatus;
 import com.cinemesh.common.statics.OrderStatus;
