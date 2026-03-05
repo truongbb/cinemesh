@@ -1,4 +1,4 @@
-package com.cinemesh.common.event.payload;
+package com.cinemesh.common.event.domain.payload;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 
 public class FieldChangedPayload extends BaseEventPayload {

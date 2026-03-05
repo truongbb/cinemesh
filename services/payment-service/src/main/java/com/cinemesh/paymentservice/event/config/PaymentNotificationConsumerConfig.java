@@ -1,4 +1,4 @@
-package com.cinemesh.notificationservice.event.config;
+package com.cinemesh.paymentservice.event.config;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -17,24 +17,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class UserEventLogConsumerConfig {
+public class PaymentNotificationConsumerConfig {
 
-    @Value(value = "${application.kafka.user-log.bootstrap-server}")
+    @Value(value = "${application.kafka.payment-notification.bootstrap-server}")
     private String bootstrapAddress;
 
-    @Value(value = "${application.kafka.user-log.group-id}")
+    @Value(value = "${application.kafka.payment-notification.group-id}")
     private String group;
 
-    @Value("${application.kafka.user-log.retry-interval}")
+    @Value("${application.kafka.payment-notification.retry-interval}")
     private long retryInterval;
 
-    @Value("${application.kafka.user-log.retry-multiplier}")
+    @Value("${application.kafka.payment-notification.retry-multiplier}")
     private int retryMultiplier;
 
-    @Value("${application.kafka.user-log.retry-max-interval}")
+    @Value("${application.kafka.payment-notification.retry-max-interval}")
     private long retryMaxInterval;
 
-    @Value("${application.kafka.user-log.retry-max-attempts}")
+    @Value("${application.kafka.payment-notification.retry-max-attempts}")
     private int retryMaxAttempts;
 
     @Bean
@@ -54,7 +54,7 @@ public class UserEventLogConsumerConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, String> userEventLogConsumerFactory() {
+    public ConsumerFactory<String, String> paymentNotificationConsumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, group);
@@ -66,9 +66,9 @@ public class UserEventLogConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> userLogKafkaListenerContainerFactory() {
+    public ConcurrentKafkaListenerContainerFactory<String, String> paymentNotificationKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(userEventLogConsumerFactory());
+        factory.setConsumerFactory(paymentNotificationConsumerFactory());
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
         factory.getContainerProperties().setSyncCommits(true);
 //        factory.setRecordInterceptor(new TracingInterceptor<>());

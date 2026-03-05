@@ -1,6 +1,6 @@
-package com.cinemesh.notificationservice.event.listener;
+package com.cinemesh.paymentservice.event.listener;
 
-import com.cinemesh.notificationservice.event.service.UserLogEventKafkaService;
+import com.cinemesh.paymentservice.event.service.PaymentNotificationEventKafkaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -12,23 +12,23 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class UserLogListener {
+public class PaymentNotificationListener {
 
-    @Value("${application.kafka.user-log.group-id}")
+    @Value("${application.kafka.payment-notification.group-id}")
     private String groupId;
 
-    @Value("${application.kafka.user-log.ignored}")
+    @Value("${application.kafka.payment-notification.ignored}")
     private boolean ignored;
 
-    private final UserLogEventKafkaService eventKafkaService;
+    private final PaymentNotificationEventKafkaService eventKafkaService;
 
 //    private final KafkaMessageLogService kafkaMessageLogService;
 
     @KafkaListener(
-            topics = "${application.kafka.user-log.topic}",
-            groupId = "${application.kafka.user-log.group-id}",
-            containerFactory = "userLogKafkaListenerContainerFactory",
-            autoStartup = "${application.kafka.user-log.auto-startup}"
+            topics = "${application.kafka.payment-notification.topic}",
+            groupId = "${application.kafka.payment-notification.group-id}",
+            containerFactory = "paymentNotificationKafkaListenerContainerFactory",
+            autoStartup = "${application.kafka.payment-notification.auto-startup}"
     )
     public void listenRecord(ConsumerRecord<String, String> record, Acknowledgment acknowledgment) {
         try {

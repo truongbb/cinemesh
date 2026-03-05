@@ -1,6 +1,6 @@
 package com.cinemesh.common.domain;
 
-import com.cinemesh.common.event.DomainEvent;
+import com.cinemesh.common.event.domain.DomainEvent;
 
 import java.util.List;
 

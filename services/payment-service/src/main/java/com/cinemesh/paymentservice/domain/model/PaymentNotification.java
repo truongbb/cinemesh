@@ -2,9 +2,9 @@ package com.cinemesh.paymentservice.domain.model;
 
 import com.cinemesh.common.domain.AggregateRoot;
 import com.cinemesh.common.domain.BaseEntity;
-import com.cinemesh.common.event.CinemeshEvent;
-import com.cinemesh.common.event.CinemeshEventName;
-import com.cinemesh.common.event.payload.FieldChangedPayload;
+import com.cinemesh.common.event.domain.CinemeshEvent;
+import com.cinemesh.common.event.domain.CinemeshEventName;
+import com.cinemesh.common.event.domain.payload.FieldChangedPayload;
 import com.cinemesh.common.utils.ObjectUtils;
 import com.cinemesh.paymentservice.application.dto.PaymentNotificationDto;
 import com.cinemesh.paymentservice.statics.PaymentNotificationStatus;

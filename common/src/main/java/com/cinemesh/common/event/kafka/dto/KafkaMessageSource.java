@@ -1,4 +1,4 @@
-package com.cinemesh.notificationservice.event.dto.base;
+package com.cinemesh.common.event.kafka.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;

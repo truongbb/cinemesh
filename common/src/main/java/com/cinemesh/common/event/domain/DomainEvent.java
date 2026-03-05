@@ -1,4 +1,4 @@
-package com.cinemesh.common.event;
+package com.cinemesh.common.event.domain;
 
 import java.io.Serializable;
 import java.time.Instant;

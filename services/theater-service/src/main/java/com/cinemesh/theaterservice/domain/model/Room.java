@@ -2,9 +2,9 @@ package com.cinemesh.theaterservice.domain.model;
 
 import com.cinemesh.common.domain.AggregateRoot;
 import com.cinemesh.common.domain.BaseEntity;
-import com.cinemesh.common.event.CinemeshEvent;
-import com.cinemesh.common.event.CinemeshEventName;
-import com.cinemesh.common.event.payload.FieldChangedPayload;
+import com.cinemesh.common.event.domain.CinemeshEvent;
+import com.cinemesh.common.event.domain.CinemeshEventName;
+import com.cinemesh.common.event.domain.payload.FieldChangedPayload;
 import com.cinemesh.common.exception.NotFoundException;
 import com.cinemesh.common.utils.ObjectUtils;
 import com.cinemesh.theaterservice.application.dto.RoomDto;

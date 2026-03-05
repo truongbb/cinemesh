@@ -1,4 +1,4 @@
-package com.cinemesh.common.event.payload;
+package com.cinemesh.common.event.domain.payload;
 
 import java.io.Serializable;
 

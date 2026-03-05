@@ -2,9 +2,9 @@ package com.cinemesh.authservice.domain.model;
 
 import com.cinemesh.common.domain.BaseAggregateRoot;
 import com.cinemesh.common.dto.RoleDto;
-import com.cinemesh.common.event.CinemeshEvent;
-import com.cinemesh.common.event.CinemeshEventName;
-import com.cinemesh.common.event.payload.FieldChangedPayload;
+import com.cinemesh.common.event.domain.CinemeshEvent;
+import com.cinemesh.common.event.domain.CinemeshEventName;
+import com.cinemesh.common.event.domain.payload.FieldChangedPayload;
 import com.cinemesh.common.statics.RoleName;
 import com.cinemesh.common.utils.ObjectUtils;
 import lombok.Getter;

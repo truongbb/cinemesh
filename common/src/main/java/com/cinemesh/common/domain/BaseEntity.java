@@ -1,7 +1,7 @@
 package com.cinemesh.common.domain;
 
 import com.cinemesh.common.dto.UserDetailsDto;
-import com.cinemesh.common.event.DomainEvent;
+import com.cinemesh.common.event.domain.DomainEvent;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

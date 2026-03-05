@@ -2,9 +2,9 @@ package com.cinemesh.theaterservice.domain.model;
 
 import com.cinemesh.common.domain.BaseLocalEntity;
 import com.cinemesh.common.domain.LocalEntity;
-import com.cinemesh.common.event.CinemeshEvent;
-import com.cinemesh.common.event.CinemeshEventName;
-import com.cinemesh.common.event.payload.FieldChangedPayload;
+import com.cinemesh.common.event.domain.CinemeshEvent;
+import com.cinemesh.common.event.domain.CinemeshEventName;
+import com.cinemesh.common.event.domain.payload.FieldChangedPayload;
 import com.cinemesh.common.utils.ObjectUtils;
 import com.cinemesh.theaterservice.application.dto.SeatDto;
 import com.cinemesh.common.statics.SeatType;

@@ -1,4 +1,4 @@
-package com.cinemesh.common.event;
+package com.cinemesh.common.event.domain;
 
 public enum CinemeshEventName {
     FIELD_VALUE_CHANGED,

@@ -1,4 +1,4 @@
-package com.cinemesh.notificationservice.event.dto.base;
+package com.cinemesh.common.event.kafka.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

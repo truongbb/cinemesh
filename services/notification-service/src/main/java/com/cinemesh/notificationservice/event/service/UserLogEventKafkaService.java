@@ -2,11 +2,11 @@ package com.cinemesh.notificationservice.event.service;
 
 import com.cinemesh.common.dto.domain.DomainEventDto;
 import com.cinemesh.common.dto.domain.UserDomainDto;
-import com.cinemesh.common.event.CinemeshEventName;
+import com.cinemesh.common.event.domain.CinemeshEventName;
 import com.cinemesh.common.exception.UnprocessableEntityException;
 import com.cinemesh.notificationservice.email.EmailService;
 import com.cinemesh.notificationservice.event.dto.UserLogDto;
-import com.cinemesh.notificationservice.event.dto.base.KafkaMessageDto;
+import com.cinemesh.common.event.kafka.dto.KafkaMessageDto;
 import com.cinemesh.notificationservice.exception.NotificationErrorCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

@@ -4,9 +4,9 @@ import com.cinemesh.bookingservice.application.dto.TicketDto;
 import com.cinemesh.common.statics.TicketStatus;
 import com.cinemesh.common.domain.BaseLocalEntity;
 import com.cinemesh.common.domain.LocalEntity;
-import com.cinemesh.common.event.CinemeshEvent;
-import com.cinemesh.common.event.CinemeshEventName;
-import com.cinemesh.common.event.payload.FieldChangedPayload;
+import com.cinemesh.common.event.domain.CinemeshEvent;
+import com.cinemesh.common.event.domain.CinemeshEventName;
+import com.cinemesh.common.event.domain.payload.FieldChangedPayload;
 import com.cinemesh.common.utils.ObjectUtils;
 import lombok.Getter;
 
