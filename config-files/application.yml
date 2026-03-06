@@ -9,7 +9,7 @@ application:
 
 feign:
   domain:
-    auth-service: localhost:9000
-    movie-service: localhost:9002
-    theater-service: localhost:9003
-    booking-service: localhost:9004
+    auth-service: localhost:9999 # domain API gateway
+    movie-service: localhost:9999
+    theater-service: localhost:9999
+    booking-service: localhost:9999

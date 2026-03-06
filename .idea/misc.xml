@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/services/theater-service/pom.xml" />
         <option value="$PROJECT_DIR$/services/booking-service/pom.xml" />
         <option value="$PROJECT_DIR$/services/payment-service/pom.xml" />
+        <option value="$PROJECT_DIR$/infrastructure/cinemesh-gateway/pom.xml" />
       </list>
     </option>
   </component>

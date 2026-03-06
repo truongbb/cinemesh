@@ -1,0 +1,67 @@
+server:
+  port: 9999
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # Point this to your discovery-server
+
+spring:
+  application:
+    name: cinemesh-gateway
+  config:
+    import: "optional:configserver:http://localhost:8888/" # <--- calling to Config Server
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true # Allows Gateway to use Eureka
+              lower-case-service-id: true
+
+          # ==========================================
+          # GLOBAL CORS CONFIGURATION
+          # ==========================================
+          globalcors:
+            cors-configurations:
+              '[/**]': # Apply to all routes
+                allowedOrigins:
+                  - "http://localhost:3000" # Your React Frontend
+                allowedMethods: "*"
+                allowedHeaders: "*"
+                allowCredentials: true
+
+          # ==========================================
+          # ROUTING RULES
+          # ==========================================
+          routes:
+            # 1. Auth Service Route
+            - id: auth-service-route
+              uri: lb://auth-service # The exact application.name registered in Eureka
+              predicates:
+                - Path=/api/v1/authentications/**, /api/v1/users/** # Any request starting with this path goes to auth-service
+
+            # 2. Movie Service Route
+            - id: movie-service-route
+              uri: lb://movie-service
+              predicates:
+                - Path=/api/v1/movies/**, /api/v1/movies-genres/**
+
+            # 3. Theater Service Route
+            - id: theater-service-route
+              uri: lb://theater-service
+              predicates:
+                - Path=/api/v1/rooms/**, /api/v1/showtimes/**
+
+            # 4. Booking Service Route
+            - id: booking-service-route
+              uri: lb://booking-service
+              predicates:
+                - Path=/api/v1/rooms/**, /api/v1/bookings/**
+
+            # 5. Payment Service Route
+            - id: payment-service-route
+              uri: lb://payment-service
+              predicates:
+                - Path=/api/v1/payments/**
