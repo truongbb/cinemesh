@@ -38,7 +38,7 @@ public class UserEventLogConsumerConfig {
     private int retryMaxAttempts;
 
     @Bean
-    public RetryTemplate retryTemplate() {
+    public RetryTemplate userEventLogRetryTemplate() {
         RetryTemplate retryTemplate = new RetryTemplate();
 
         ExponentialBackOffPolicy exponentialBackOffPolicy = new ExponentialBackOffPolicy();

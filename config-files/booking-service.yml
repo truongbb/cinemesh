@@ -28,3 +28,17 @@ eureka:
 application:
   booking:
     seat-locking-ttl-in-sec: 600 # 10 mins
+  kafka:
+    payment-log: # lắng nghe message quyét từ bảng user-logs của auth-service
+      bootstrap-server: localhost:9092 # Or kafka:29092 if inside Docker
+      topic: cinemesh.payment-service.payment-logs
+      group-id: payment-logs-dev
+      retry-interval: 2000 #Khoảng thời gian giữa các lần lặp
+      retry-multiplier: 2 #Hệ số tăng thời gian
+      retry-max-interval: 10000 #Khoảng thời gian lớn nhất giữa các lần lặp
+      retry-max-attempts: 2 #Số lần lặp lại công việc nếu xảy ra lỗi
+      ignored: false #Có bỏ qua hay không (commit và đi tiếp)?
+      reproduced: false #Có đẩy sang topic khác không?
+      reproduce-topic: cinemesh.payment-service.payment-logs
+      stopped: true #Dừng lại khi xử lý lỗi message và đã thực hiện xử lý lại message nếu có.
+      auto-startup: true #Tự động startup kafka consumer

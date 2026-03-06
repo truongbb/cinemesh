@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 public enum NotificationErrorCode implements BaseErrorCode {
     SEND_ACTIVATION_EMAIL_FAILED("002001"),
+    SEND_ORDER_COMPLETED_EMAIL_FAILED("002002"),
 
     ;
 

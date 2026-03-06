@@ -3,14 +3,14 @@ package com.cinemesh.bookingservice.domain.model;
 import com.cinemesh.bookingservice.application.dto.OrderDto;
 import com.cinemesh.bookingservice.application.dto.TicketDto;
 import com.cinemesh.bookingservice.domain.exception.BookingErrorCode;
-import com.cinemesh.common.statics.OrderPaymentStatus;
-import com.cinemesh.common.statics.OrderStatus;
 import com.cinemesh.common.domain.AggregateRoot;
 import com.cinemesh.common.domain.BaseEntity;
 import com.cinemesh.common.event.domain.CinemeshEvent;
 import com.cinemesh.common.event.domain.CinemeshEventName;
 import com.cinemesh.common.event.domain.payload.FieldChangedPayload;
 import com.cinemesh.common.exception.NotFoundException;
+import com.cinemesh.common.statics.OrderStatus;
+import com.cinemesh.common.statics.PaymentStatus;
 import com.cinemesh.common.utils.ObjectUtils;
 import lombok.Getter;
 
@@ -24,7 +24,7 @@ public class Order extends BaseEntity<UUID> implements AggregateRoot<UUID> {
 
     private UUID userId;
     private BigDecimal totalAmount;
-    private OrderPaymentStatus paymentStatus;
+    private PaymentStatus paymentStatus;
     private OrderStatus status;
     private List<Ticket> tickets;
 
@@ -53,6 +53,16 @@ public class Order extends BaseEntity<UUID> implements AggregateRoot<UUID> {
         addEvent(new CinemeshEvent(CinemeshEventName.ORDER_CREATED, id));
     }
 
+    public void update(OrderDto orderDto) {
+        this.id = orderDto.getId() == null ? UUID.randomUUID() : orderDto.getId();
+        setUserId(orderDto.getUserId());
+        setTotalAmount(orderDto.getTotalAmount());
+        setPaymentStatus(orderDto.getPaymentStatus());
+        setStatus(orderDto.getStatus());
+        updateTickets(orderDto.getTickets());
+        modify();
+    }
+
 
     public void setUserId(UUID userId) {
         if (ObjectUtils.equals(this.userId, userId)) return;
@@ -68,7 +78,7 @@ public class Order extends BaseEntity<UUID> implements AggregateRoot<UUID> {
         modify();
     }
 
-    public void setPaymentStatus(OrderPaymentStatus paymentStatus) {
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
         if (ObjectUtils.equals(this.paymentStatus, paymentStatus)) return;
         addEvent(new CinemeshEvent(CinemeshEventName.FIELD_VALUE_CHANGED, new FieldChangedPayload("paymentStatus", this.paymentStatus, paymentStatus)));
         this.paymentStatus = paymentStatus;

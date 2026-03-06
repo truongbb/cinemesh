@@ -2,6 +2,8 @@ package com.cinemesh.paymentservice.application.service;
 
 import com.cinemesh.common.exception.UnprocessableEntityException;
 import com.cinemesh.common.statics.OrderStatus;
+import com.cinemesh.common.statics.PaymentCurrency;
+import com.cinemesh.common.statics.PaymentPartner;
 import com.cinemesh.paymentservice.application.dto.PaymentDto;
 import com.cinemesh.paymentservice.application.dto.PaymentNotificationDto;
 import com.cinemesh.paymentservice.application.dto.request.PaymentRequestPayload;
@@ -53,7 +55,7 @@ public class PaymentService {
                 .paymentPartner(request.getPaymentPartner())
                 .orderId(order.getId())
                 .currency(PaymentCurrency.VND)
-                .status(PaymentStatus.PENDING)
+                .status(com.cinemesh.common.statics.PaymentStatus.PENDING)
                 .build();
         Payment payment = new Payment(paymentDto);
 
@@ -104,7 +106,7 @@ public class PaymentService {
                 savePaymentNotification(notificationDto);
                 return PaymentNotificationError.ORDER_NOT_FOUND;
             }
-            if (!payment.getStatus().equals(PaymentStatus.PENDING)) {
+            if (!payment.getStatus().equals(com.cinemesh.common.statics.PaymentStatus.PENDING)) {
                 notificationDto.setStatus(PaymentNotificationStatus.FAILED);
                 notificationDto.setErrorLog(PaymentNotificationError.ORDER_ALREADY_CONFIRMED.getMessage());
                 savePaymentNotification(notificationDto);

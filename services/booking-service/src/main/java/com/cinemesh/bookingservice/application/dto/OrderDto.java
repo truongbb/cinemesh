@@ -1,7 +1,7 @@
 package com.cinemesh.bookingservice.application.dto;
 
-import com.cinemesh.common.statics.OrderPaymentStatus;
 import com.cinemesh.common.statics.OrderStatus;
+import com.cinemesh.common.statics.PaymentStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -19,7 +19,7 @@ public class OrderDto {
     UUID id;
     UUID userId;
     BigDecimal totalAmount;
-    OrderPaymentStatus paymentStatus;
+    PaymentStatus paymentStatus;
     OrderStatus status;
     List<TicketDto> tickets;
 

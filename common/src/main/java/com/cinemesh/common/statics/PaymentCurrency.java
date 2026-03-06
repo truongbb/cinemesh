@@ -1,4 +1,4 @@
-package com.cinemesh.paymentservice.statics;
+package com.cinemesh.common.statics;
 
 public enum PaymentCurrency {
 

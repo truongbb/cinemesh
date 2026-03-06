@@ -1,7 +1,7 @@
 package com.cinemesh.paymentservice.application.dto.response;
 
 
-import com.cinemesh.paymentservice.statics.PaymentStatus;
+import com.cinemesh.common.statics.PaymentStatus;
 import lombok.Builder;
 import lombok.Data;
 

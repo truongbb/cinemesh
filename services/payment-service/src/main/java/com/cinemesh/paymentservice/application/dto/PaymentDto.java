@@ -1,8 +1,8 @@
 package com.cinemesh.paymentservice.application.dto;
 
-import com.cinemesh.paymentservice.statics.PaymentCurrency;
-import com.cinemesh.paymentservice.statics.PaymentPartner;
-import com.cinemesh.paymentservice.statics.PaymentStatus;
+import com.cinemesh.common.statics.PaymentCurrency;
+import com.cinemesh.common.statics.PaymentPartner;
+import com.cinemesh.common.statics.PaymentStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

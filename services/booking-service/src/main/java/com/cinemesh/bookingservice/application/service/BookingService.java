@@ -16,14 +16,13 @@ import com.cinemesh.bookingservice.infrastructure.feign.response.UserResponse;
 import com.cinemesh.bookingservice.infrastructure.persistence.adapter.OrderPersistenceAdapter;
 import com.cinemesh.bookingservice.infrastructure.persistence.adapter.TicketPersistenceAdapter;
 import com.cinemesh.bookingservice.infrastructure.persistence.mapper.OrderMapper;
-import com.cinemesh.common.statics.OrderPaymentStatus;
-import com.cinemesh.common.statics.OrderStatus;
-import com.cinemesh.common.statics.SeatBookingStatus;
-import com.cinemesh.common.statics.TicketStatus;
+import com.cinemesh.common.dto.domain.PaymentDomainDto;
+import com.cinemesh.common.event.domain.CinemeshEvent;
+import com.cinemesh.common.event.domain.CinemeshEventName;
 import com.cinemesh.common.exception.NotFoundException;
 import com.cinemesh.common.exception.UnprocessableEntityException;
 import com.cinemesh.common.security.SecurityUtils;
-import com.cinemesh.common.statics.SeatType;
+import com.cinemesh.common.statics.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -145,7 +144,7 @@ public class BookingService {
                     .totalAmount(totalPrice)
                     .tickets(tickets)
                     .status(OrderStatus.PENDING)
-                    .paymentStatus(OrderPaymentStatus.UNPAID)
+                    .paymentStatus(PaymentStatus.PENDING)
                     .build();
 
             Order order = new Order(orderDto);
@@ -186,4 +185,42 @@ public class BookingService {
                 .orElseThrow(() -> new NotFoundException(BookingErrorCode.TICKET_NOT_FOUND));
         return orderMapper.convertFromDomainToResponse(order);
     }
+
+    public void updateOrderStatus(PaymentDomainDto paymentDomainDto) {
+        Order order = orderPersistenceAdapter.findById(paymentDomainDto.getOrderId())
+                .orElseThrow(() -> new NotFoundException(BookingErrorCode.ORDER_NOT_FOUND));
+
+        if (!order.getStatus().equals(OrderStatus.PENDING)) {
+            throw new UnprocessableEntityException(BookingErrorCode.INVALID_ORDER_STATUS_TO_UPDATE_PAYMENT_RESULT);
+        }
+
+        OrderDto orderDto = orderMapper.convertFromDomainToDto(order);
+
+        if (order.getTotalAmount().compareTo(paymentDomainDto.getPaidAmount()) > 0) {
+            orderDto.setStatus(OrderStatus.FAILED);
+            orderDto.setPaymentStatus(PaymentStatus.FAILED);
+            orderDto.getTickets().forEach(ticketDto -> ticketDto.setStatus(TicketStatus.CANCELLED));
+
+            order.update(orderDto);
+            order.addEvent(new CinemeshEvent(CinemeshEventName.ORDER_FAILED));
+            orderPersistenceAdapter.saveOrder(order);
+
+            // TODO - cần có cơ chế hoàn tiền
+            throw new UnprocessableEntityException(BookingErrorCode.PAYMENT_AMOUNT_NOT_ENOUGH);
+        }
+
+        orderDto.setStatus(paymentDomainDto.getStatus().equals(PaymentStatus.PAID) ?
+                OrderStatus.PAID : OrderStatus.FAILED);
+        orderDto.setPaymentStatus(paymentDomainDto.getStatus());
+        orderDto.getTickets().forEach(ticketDto ->
+                ticketDto.setStatus(
+                        paymentDomainDto.getStatus().equals(PaymentStatus.PAID) ? TicketStatus.BOOKED : TicketStatus.CANCELLED
+                )
+        );
+
+        order.update(orderDto);
+        order.addEvent(new CinemeshEvent(CinemeshEventName.ORDER_SUCCEED));
+        orderPersistenceAdapter.saveOrder(order);
+    }
+
 }

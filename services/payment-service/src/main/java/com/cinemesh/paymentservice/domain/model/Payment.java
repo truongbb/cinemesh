@@ -7,9 +7,9 @@ import com.cinemesh.common.event.domain.CinemeshEventName;
 import com.cinemesh.common.event.domain.payload.FieldChangedPayload;
 import com.cinemesh.common.utils.ObjectUtils;
 import com.cinemesh.paymentservice.application.dto.PaymentDto;
-import com.cinemesh.paymentservice.statics.PaymentCurrency;
-import com.cinemesh.paymentservice.statics.PaymentPartner;
-import com.cinemesh.paymentservice.statics.PaymentStatus;
+import com.cinemesh.common.statics.PaymentCurrency;
+import com.cinemesh.common.statics.PaymentPartner;
+import com.cinemesh.common.statics.PaymentStatus;
 import lombok.Getter;
 
 import java.math.BigDecimal;

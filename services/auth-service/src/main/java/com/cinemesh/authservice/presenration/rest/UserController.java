@@ -3,6 +3,7 @@ package com.cinemesh.authservice.presenration.rest;
 import com.cinemesh.authservice.application.dto.response.UserResponse;
 import com.cinemesh.authservice.application.service.UserService;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -26,6 +27,11 @@ public class UserController {
     @GetMapping("/email")
     public UserResponse getUserByEmail(@RequestParam @NotEmpty(message = "Email required") String email) {
         return userService.getUserByEmail(email);
+    }
+
+    @GetMapping("/{id}")
+    public UserResponse getUserById(@PathVariable @NotNull(message = "Id required") UUID id) {
+        return userService.getUserById(id);
     }
 
 }

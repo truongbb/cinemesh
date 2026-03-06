@@ -1,7 +1,7 @@
 package com.cinemesh.bookingservice.application.dto.response;
 
-import com.cinemesh.common.statics.OrderPaymentStatus;
 import com.cinemesh.common.statics.OrderStatus;
+import com.cinemesh.common.statics.PaymentStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -18,7 +18,7 @@ public class OrderResponse {
 
     UUID id;
     BigDecimal totalAmount;
-    OrderPaymentStatus paymentStatus;
+    PaymentStatus paymentStatus;
     List<TicketResponse> tickets;
     OrderStatus status;
 

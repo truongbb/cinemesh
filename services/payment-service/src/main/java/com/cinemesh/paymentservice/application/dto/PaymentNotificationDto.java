@@ -1,7 +1,7 @@
 package com.cinemesh.paymentservice.application.dto;
 
 import com.cinemesh.paymentservice.statics.PaymentNotificationStatus;
-import com.cinemesh.paymentservice.statics.PaymentPartner;
+import com.cinemesh.common.statics.PaymentPartner;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

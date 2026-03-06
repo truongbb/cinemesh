@@ -1,9 +1,9 @@
 package com.cinemesh.paymentservice.infrastructure.persistence.entity;
 
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;
-import com.cinemesh.paymentservice.statics.PaymentCurrency;
-import com.cinemesh.paymentservice.statics.PaymentPartner;
-import com.cinemesh.paymentservice.statics.PaymentStatus;
+import com.cinemesh.common.statics.PaymentCurrency;
+import com.cinemesh.common.statics.PaymentPartner;
+import com.cinemesh.common.statics.PaymentStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

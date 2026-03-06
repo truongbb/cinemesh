@@ -1,5 +1,6 @@
 package com.cinemesh.bookingservice.infrastructure.persistence.mapper;
 
+import com.cinemesh.bookingservice.application.dto.OrderDto;
 import com.cinemesh.bookingservice.application.dto.response.OrderResponse;
 import com.cinemesh.bookingservice.domain.model.Order;
 import com.cinemesh.bookingservice.infrastructure.persistence.entity.OrderEntity;
@@ -23,6 +24,10 @@ public class OrderMapper {
 
     public Order convertFromEntityToDomain(OrderEntity order) {
         return objectMapper.convertValue(order, Order.class);
+    }
+
+    public OrderDto convertFromDomainToDto(Order order) {
+        return objectMapper.convertValue(order, OrderDto.class);
     }
 
 }

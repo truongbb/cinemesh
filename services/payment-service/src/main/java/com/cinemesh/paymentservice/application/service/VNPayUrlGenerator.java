@@ -1,7 +1,7 @@
 package com.cinemesh.paymentservice.application.service;
 
 import com.cinemesh.common.utils.DataUtils;
-import com.cinemesh.paymentservice.statics.PaymentCurrency;
+import com.cinemesh.common.statics.PaymentCurrency;
 import com.cinemesh.paymentservice.statics.PaymentMethod;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,8 @@
 package com.cinemesh.bookingservice.infrastructure.persistence.entity;
 
-import com.cinemesh.common.statics.OrderPaymentStatus;
-import com.cinemesh.common.statics.OrderStatus;
 import com.cinemesh.common.infrastructure.persistence.entity.BaseEntity;
+import com.cinemesh.common.statics.OrderStatus;
+import com.cinemesh.common.statics.PaymentStatus;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,7 +24,7 @@ public class OrderEntity extends BaseEntity {
     private BigDecimal totalAmount;
 
     @Enumerated(EnumType.STRING)
-    private OrderPaymentStatus paymentStatus;
+    private PaymentStatus paymentStatus;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;

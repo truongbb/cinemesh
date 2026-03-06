@@ -1,7 +1,7 @@
 package com.cinemesh.paymentservice.application.dto.request;
 
 import com.cinemesh.paymentservice.statics.PaymentMethod;
-import com.cinemesh.paymentservice.statics.PaymentPartner;
+import com.cinemesh.common.statics.PaymentPartner;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 

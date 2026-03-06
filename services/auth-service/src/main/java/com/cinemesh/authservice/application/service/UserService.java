@@ -46,4 +46,9 @@ public class UserService {
                 .orElse(null);
     }
 
+    public UserResponse getUserById(UUID id) {
+        return userPersistenceAdapter.findById(id)
+                .map(user -> objectMapper.convertValue(user, UserResponse.class))
+                .orElse(null);
+    }
 }

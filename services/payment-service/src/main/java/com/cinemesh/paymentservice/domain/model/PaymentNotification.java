@@ -8,7 +8,7 @@ import com.cinemesh.common.event.domain.payload.FieldChangedPayload;
 import com.cinemesh.common.utils.ObjectUtils;
 import com.cinemesh.paymentservice.application.dto.PaymentNotificationDto;
 import com.cinemesh.paymentservice.statics.PaymentNotificationStatus;
-import com.cinemesh.paymentservice.statics.PaymentPartner;
+import com.cinemesh.common.statics.PaymentPartner;
 import lombok.Getter;
 
 import java.util.UUID;

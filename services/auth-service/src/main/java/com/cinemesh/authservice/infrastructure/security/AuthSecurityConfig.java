@@ -35,6 +35,7 @@ public class AuthSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/authentications/registration").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/authentications/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/users/{id}/activation").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/users/{id}").permitAll() // cho bên notification service gọi
                         // Còn lại chặn hết
                         .anyRequest().authenticated()
                 )
