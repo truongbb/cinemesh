@@ -7,7 +7,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:54321/cinemesh_theater_db
     username: cinemesh
-    password: 'cinemesh123!@#'
+    password: '{cipher}85afe47df2b242740712388acc200673e4afe7d1194f3e826efdd1c3dfdb5761'
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
