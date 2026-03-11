@@ -13,3 +13,16 @@ feign:
     movie-service: localhost:9999
     theater-service: localhost:9999
     booking-service: localhost:9999
+
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS # Forces IntelliJ/Terminal to render the colors
+
+logging:
+  pattern:
+    # We wrap different sections in %clr(){color_name}
+    # Level gets auto-colored (INFO=green, ERROR=red)
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss}){faint} %clr(%-5level) %clr([%X{requestId}]){magenta} %clr(---){faint} %clr([%15.15thread]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %msg%n"
+
+
