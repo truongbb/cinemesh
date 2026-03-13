@@ -1,24 +1,31 @@
-package com.cinemesh.theaterservice.infrastructure.configuration;
+package com.cinemesh.common.config;
 
+import com.cinemesh.common.statics.CommonConstant;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.RequestInterceptor;
 import feign.codec.Decoder;
 import feign.codec.Encoder;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.http.HttpHeaders;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.ObjectFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.openfeign.support.SpringDecoder;
 import org.springframework.cloud.openfeign.support.SpringEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+@Slf4j
 @Configuration
-public class FeignConfiguration {
+@ConditionalOnClass(name = {"feign.codec.Encoder", "feign.codec.Decoder"})
+// 🌟 THE MAGIC SHIELD: Only load this bean if Feign is actually on the classpath!
+public class FeignClientConfig {
 
     /**
      * 1. TOKEN RELAY (Request Interceptor)
@@ -64,4 +71,16 @@ public class FeignConfiguration {
         return new SpringEncoder(objectFactory);
     }
 
+    @Bean
+    public RequestInterceptor correlationIdInterceptor() {
+        return template -> {
+            // Grab the ID from the current thread's MDC
+            String requestId = MDC.get(CommonConstant.MDC_KEY);
+
+            if (requestId != null) {
+                // Inject it into the outbound Feign request
+                template.header(CommonConstant.REQUEST_ID_HEADER, requestId);
+            }
+        };
+    }
 }

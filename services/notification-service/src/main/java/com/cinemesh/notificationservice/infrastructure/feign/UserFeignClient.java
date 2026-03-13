@@ -1,6 +1,6 @@
 package com.cinemesh.notificationservice.infrastructure.feign;
 
-import com.cinemesh.notificationservice.infrastructure.configuration.FeignConfiguration;
+import com.cinemesh.common.config.FeignClientConfig;
 import com.cinemesh.notificationservice.infrastructure.feign.response.UserResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +11,7 @@ import java.util.UUID;
 @FeignClient(
         name = "auth-service",
         url = "${feign.domain.auth-service}",
-        configuration = FeignConfiguration.class
+        configuration = FeignClientConfig.class
 )
 public interface UserFeignClient {
 

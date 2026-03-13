@@ -1,8 +1,8 @@
 package com.cinemesh.theaterservice.infrastructure.feign;
 
+import com.cinemesh.common.config.FeignClientConfig;
 import com.cinemesh.common.dto.response.CommonSearchResponse;
 import com.cinemesh.theaterservice.application.dto.response.MovieResponse;
-import com.cinemesh.theaterservice.infrastructure.configuration.FeignConfiguration;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +14,7 @@ import java.util.UUID;
 @FeignClient(
         name = "movie-service",
         url = "${feign.domain.movie-service}",
-        configuration = FeignConfiguration.class
+        configuration = FeignClientConfig.class
 )
 public interface MovieFeignClient {
 
