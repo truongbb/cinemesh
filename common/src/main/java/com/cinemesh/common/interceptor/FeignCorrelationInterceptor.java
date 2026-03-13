@@ -6,6 +6,7 @@ import feign.RequestTemplate;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.MDC;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -19,12 +20,18 @@ public class FeignCorrelationInterceptor implements RequestInterceptor {
     public void apply(RequestTemplate template) {
         // 1. First try the MDC (If Feign is on the same thread, this works perfectly)
         String requestId = MDC.get(CommonConstant.MDC_KEY);
+        String authHeader = null;
 
-        // 2. If MDC is empty (because Feign hopped threads), fetch the original HTTP request!
-        if (requestId == null || requestId.isEmpty()) {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            if (attributes != null) {
-                HttpServletRequest originalRequest = attributes.getRequest();
+        // 2. If MDC is empty or we need other headers, fetch the original HTTP request!
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (attributes != null) {
+            HttpServletRequest originalRequest = attributes.getRequest();
+            
+            // Get Auth header
+            authHeader = originalRequest.getHeader(HttpHeaders.AUTHORIZATION);
+
+            // If MDC didn't have the request ID, try getting it from the request headers
+            if (requestId == null || requestId.isEmpty()) {
                 requestId = originalRequest.getHeader(CommonConstant.REQUEST_ID_HEADER);
 
                 // Fallback to the response header if we injected it there
@@ -39,6 +46,10 @@ public class FeignCorrelationInterceptor implements RequestInterceptor {
             template.header(CommonConstant.REQUEST_ID_HEADER, requestId);
         } else {
             System.out.println("🚨 CRITICAL: Feign Interceptor failed to find the Request ID in MDC or RequestContext!");
+        }
+
+        if (authHeader != null && !authHeader.isEmpty()) {
+            template.header(HttpHeaders.AUTHORIZATION, authHeader);
         }
     }
 

@@ -30,8 +30,6 @@ public class MdcLogFilter extends OncePerRequestFilter {
             requestId = UUID.randomUUID().toString().replace("-", "");
         }
 
-        response.setHeader(CommonConstant.REQUEST_ID_HEADER, requestId);
-
         try {
             // 3. Put it in MDC (ThreadLocal)
             MDC.put(CommonConstant.MDC_KEY, requestId);
