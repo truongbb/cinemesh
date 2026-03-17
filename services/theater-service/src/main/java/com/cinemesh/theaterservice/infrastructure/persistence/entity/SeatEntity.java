@@ -22,6 +22,7 @@ public class SeatEntity extends BaseEntity {
     private Integer columnNumber;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private SeatType type;
 
     @ManyToOne
