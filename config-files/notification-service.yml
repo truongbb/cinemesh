@@ -5,7 +5,7 @@ spring:
   application:
     name: notification-service
   datasource:
-    url: jdbc:postgresql://localhost:54321/cinemesh_notification_db
+    url: jdbc:postgresql://postgres-postgresql:54321/cinemesh_notification_db
     username: cinemesh
     password: '{cipher}85afe47df2b242740712388acc200673e4afe7d1194f3e826efdd1c3dfdb5761'
     driver-class-name: org.postgresql.Driver
@@ -36,16 +36,16 @@ eureka:
 application:
   account:
     activation:
-      activationUrl: http://localhost:9000/api/v1/users/{id}/activation
+      activationUrl: http://localhost:9999/api/v1/users/{id}/activation
       expiredDurationInMilliseconds: 1800000
       maxResendTimes: 3
     passwordForgotten:
-      url: http://localhost:9000/api/v1/users/{id}/password_forgotten
+      url: http://localhost:9999/api/v1/users/{id}/password_forgotten
       expiredDurationInMilliseconds: 1800000
   kafka:
-    user-log: # lắng nghe message quyét từ bảng user-logs của auth-service
-      bootstrap-server: localhost:9092 # Or kafka:29092 if inside Docker
-      topic: cinemesh.auth-service.user-logs
+    user-log: # lắng nghe message quyét từ bảng user-logs của auth-service.yml
+      bootstrap-server: kafka-cluster-kafka-bootstrap:9092 # Or kafka:29092 if inside Docker
+      topic: cinemesh.auth-service.yml.user-logs
       group-id: user-logs-dev
       retry-interval: 2000 #Khoảng thời gian giữa các lần lặp
       retry-multiplier: 2 #Hệ số tăng thời gian
@@ -53,11 +53,11 @@ application:
       retry-max-attempts: 2 #Số lần lặp lại công việc nếu xảy ra lỗi
       ignored: false #Có bỏ qua hay không (commit và đi tiếp)?
       reproduced: false #Có đẩy sang topic khác không?
-      reproduce-topic: cinemesh.auth-service.user-logs
+      reproduce-topic: cinemesh.auth-service.yml.user-logs
       stopped: true #Dừng lại khi xử lý lỗi message và đã thực hiện xử lý lại message nếu có.
       auto-startup: true #Tự động startup kafka consumer
-    order-log: # lắng nghe message quyét từ bảng user-logs của auth-service
-      bootstrap-server: localhost:9092 # Or kafka:29092 if inside Docker
+    order-log: # lắng nghe message quyét từ bảng user-logs của auth-service.yml
+      bootstrap-server: kafka-cluster-kafka-bootstrap:9092 # Or kafka:29092 if inside Docker
       topic: cinemesh.booking-service.order-logs
       group-id: order-logs-dev
       retry-interval: 2000 #Khoảng thời gian giữa các lần lặp

@@ -19,6 +19,15 @@ helm install postgres bitnami/postgresql \
   --set primary.persistence.size=8Gi
 ```
 
+Create user and pass for all services (short way, in prod, each service has separated user and pass)
+```bash
+kubectl exec -it svc/postgres-postgresql -n default -- psql -U postgres
+
+CREATE USER cinemesh WITH PASSWORD 'cinemesh123!@#';
+ALTER USER cinemesh CREATEDB;
+ALTER USER cinemesh SUPERUSER;
+```
+
 **3. Deploy Redis:**
 ```bash
 helm install redis bitnami/redis \

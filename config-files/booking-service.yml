@@ -5,7 +5,7 @@ spring:
   application:
     name: booking-service
   datasource:
-    url: jdbc:postgresql://localhost:54321/cinemesh_booking_db
+    url: jdbc:postgresql://postgres-postgresql:54321/cinemesh_booking_db
     username: cinemesh
     password: '{cipher}85afe47df2b242740712388acc200673e4afe7d1194f3e826efdd1c3dfdb5761'
     driver-class-name: org.postgresql.Driver
@@ -17,7 +17,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   redis:
-    host: localhost
+    host: redis-master
     port: 6379
     password: cinemesh_secret
 eureka:
@@ -29,8 +29,8 @@ application:
   booking:
     seat-locking-ttl-in-sec: 600 # 10 mins
   kafka:
-    payment-log: # lắng nghe message quyét từ bảng user-logs của auth-service
-      bootstrap-server: localhost:9092 # Or kafka:29092 if inside Docker
+    payment-log: # lắng nghe message quyét từ bảng user-logs của auth-service.yml
+      bootstrap-server: kafka-cluster-kafka-bootstrap:9092 # Or kafka:29092 if inside Docker
       topic: cinemesh.payment-service.payment-logs
       group-id: payment-logs-dev
       retry-interval: 2000 #Khoảng thời gian giữa các lần lặp

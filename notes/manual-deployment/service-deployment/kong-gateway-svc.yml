@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kong-gateway
+  namespace: default
+spec:
+  type: ExternalName
+  externalName: kong-kong-proxy.default.svc.cluster.local

@@ -9,10 +9,10 @@ application:
 
 feign:
   domain:
-    auth-service: localhost:9999 # domain API gateway
-    movie-service: localhost:9999
-    theater-service: localhost:9999
-    booking-service: localhost:9999
+    auth-service: http://kong-gateway # domain API gateway
+    movie-service: http://kong-gateway
+    theater-service: http://kong-gateway
+    booking-service: http://kong-gateway
 
 spring:
   output:
