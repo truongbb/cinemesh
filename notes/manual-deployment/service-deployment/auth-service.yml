@@ -49,8 +49,14 @@ spec:
             # 1. Activate Kubernetes Profile
             - name: SPRING_PROFILES_ACTIVE
               value: "prod"
+            - name: SPRING_APPLICATION_NAME
+              value: "auth-service"
             # Force the Config Server to read from the 'main' branch
             - name: SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL
+              value: "main"
+            - name: SPRING_CLOUD_CONFIG_PROFILE
+              value: "prod"
+            - name: SPRING_CLOUD_CONFIG_LABEL
               value: "main"
             - name: SPRING_CONFIG_IMPORT
               value: "optional:configserver:http://config-server:8888/"
