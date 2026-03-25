@@ -1,20 +1,4 @@
 ---
-# Service: Internal Networking
-apiVersion: v1
-kind: Service
-metadata:
-  name: config-server
-  namespace: default
-spec:
-  selector:
-    app: config-server
-  ports:
-    - protocol: TCP
-      port: 8888       # The port other K8s pods will call
-      targetPort: 8888 # The port your Java app runs on inside the container
-  type: ClusterIP      # Internal traffic only
-
----
 # Deployment: The Pod & Image
 apiVersion: apps/v1
 kind: Deployment

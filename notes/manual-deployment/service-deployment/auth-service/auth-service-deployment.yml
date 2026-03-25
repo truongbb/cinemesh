@@ -1,20 +1,4 @@
 ---
-# Service: Internal Networking (The "Company Way")
-apiVersion: v1
-kind: Service
-metadata:
-  name: auth-service
-  namespace: default
-spec:
-  selector:
-    app: auth-service
-  ports:
-    - protocol: TCP
-      port: 80         # 🌟 Kong calls this clean port
-      targetPort: 8080 # 🌟 K8s secretly forwards it to Spring Boot on 8080
-  type: ClusterIP
-
----
 # Deployment: The Pod & Image
 apiVersion: apps/v1
 kind: Deployment
@@ -34,7 +18,7 @@ spec:
       containers:
         - name: auth-service
           # Using the Monorepo Tagging strategy!
-          image: registry.digitalocean.com/cinemesh-registry-truongbb/cinemesh:auth-service-v1.0.2
+          image: registry.digitalocean.com/cinemesh-registry-truongbb/cinemesh:auth-service-v1.0.3
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
