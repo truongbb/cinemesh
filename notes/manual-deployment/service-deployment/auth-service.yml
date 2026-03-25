@@ -34,7 +34,7 @@ spec:
       containers:
         - name: auth-service
           # Using the Monorepo Tagging strategy!
-          image: registry.digitalocean.com/cinemesh-registry-truongbb/cinemesh:auth-service-v1.0.0
+          image: registry.digitalocean.com/cinemesh-registry-truongbb/cinemesh:auth-service-v1.0.2
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
