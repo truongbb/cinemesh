@@ -18,7 +18,7 @@ spec:
       containers:
         - name: movie-service
           # Using the Monorepo Tagging strategy!
-          image: registry.digitalocean.com/cinemesh-registry-truongbb/cinemesh:movie-service-v1.0.0
+          image: registry.digitalocean.com/cinemesh-registry-truongbb/cinemesh:movie-service-v1.0.1
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

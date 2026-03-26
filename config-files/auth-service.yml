@@ -5,7 +5,7 @@ spring:
   application:
     name: auth-service
   datasource:
-    url: jdbc:postgresql://postgres-postgresql:54321/cinemesh_auth_db
+    url: jdbc:postgresql://localhost:54321/cinemesh_auth_db
     username: cinemesh
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver

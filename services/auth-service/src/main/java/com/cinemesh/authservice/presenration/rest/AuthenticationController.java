@@ -6,6 +6,7 @@ import com.cinemesh.authservice.application.dto.request.RegisterRequest;
 import com.cinemesh.authservice.application.dto.response.AuthenticationTokenResponse;
 import com.cinemesh.authservice.application.dto.response.RegisterResponse;
 import com.cinemesh.authservice.application.service.AuthService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/refresh")
-    public AuthenticationTokenResponse refresh(@RequestBody @Valid RefreshTokenRequest request) {
+    public AuthenticationTokenResponse refresh(@RequestBody @Valid RefreshTokenRequest request) throws JsonProcessingException {
         return authService.refresh(request);
     }
 

@@ -26,11 +26,13 @@ import com.cinemesh.common.security.JwtService;
 import com.cinemesh.common.security.SecurityUtils;
 import com.cinemesh.common.statics.RoleName;
 import com.cinemesh.common.statics.UserStatus;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -44,6 +46,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -127,9 +130,11 @@ public class AuthService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public AuthenticationTokenResponse refresh(RefreshTokenRequest request) {
+    public AuthenticationTokenResponse refresh(RefreshTokenRequest request) throws JsonProcessingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsDto userDetails = (UserDetailsDto) authentication.getPrincipal();
+        log.info("authentication={}", objectMapper.writeValueAsString(authentication));
+        log.info("userDetails={}", objectMapper.writeValueAsString(userDetails));
         AuthenticationTokenResponse response = userRepository.findByEmail(userDetails.getEmail())
                 .flatMap(user -> refreshTokenRepository
                         .findByUserAndTokenAndStatus(user, request.getRefreshToken(), RefreshTokenStatus.INACTIVE)

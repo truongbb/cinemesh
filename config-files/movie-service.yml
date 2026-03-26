@@ -5,7 +5,7 @@ spring:
   application:
     name: movie-service
   datasource:
-    url: jdbc:postgresql://postgres-postgresql:54321/cinemesh_movie_db
+    url: jdbc:postgresql://localhost:54321/cinemesh_movie_db
     username: cinemesh
     password: '{cipher}85afe47df2b242740712388acc200673e4afe7d1194f3e826efdd1c3dfdb5761'
     driver-class-name: org.postgresql.Driver
@@ -16,7 +16,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/ # <--- Eureka address
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/ # <--- Eureka address
