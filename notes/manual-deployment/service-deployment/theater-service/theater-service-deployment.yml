@@ -1,0 +1,52 @@
+---
+# Deployment: The Pod & Image
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: theater-service
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: theater-service
+  template:
+    metadata:
+      labels:
+        app: theater-service
+    spec:
+      containers:
+        - name: theater-service
+          # Using the Monorepo Tagging strategy!
+          image: registry.digitalocean.com/cinemesh-registry-truongbb/cinemesh:theater-service-v1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          env:
+            # 1. Activate Kubernetes Profile
+            - name: SPRING_PROFILES_ACTIVE
+              value: "prod"
+            - name: SPRING_APPLICATION_NAME
+              value: "theater-service"
+            # Force the Config Server to read from the 'main' branch
+            - name: SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL
+              value: "main"
+            - name: SPRING_CLOUD_CONFIG_PROFILE
+              value: "prod"
+            - name: SPRING_CLOUD_CONFIG_LABEL
+              value: "main"
+            - name: SPRING_CONFIG_IMPORT
+              value: "optional:configserver:http://config-server:8888/"
+            # 2. Inject DB Password from K8s Secret Vault
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cinemesh-secrets
+                  key: DB_PASSWORD

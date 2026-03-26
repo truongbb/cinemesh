@@ -1,0 +1,15 @@
+---
+# Service: Internal Networking (The "Company Way")
+apiVersion: v1
+kind: Service
+metadata:
+  name: theater-service
+  namespace: default
+spec:
+  selector:
+    app: theater-service
+  ports:
+    - protocol: TCP
+      port: 80         # 🌟 Kong calls this clean port
+      targetPort: 8080 # 🌟 K8s secretly forwards it to Spring Boot on 8080
+  type: ClusterIP
