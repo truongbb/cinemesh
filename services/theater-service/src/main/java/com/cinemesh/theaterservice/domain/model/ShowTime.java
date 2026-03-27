@@ -47,7 +47,7 @@ public class ShowTime extends BaseEntity<UUID> implements AggregateRoot<UUID> {
         this.startTime = dto.getStartTime();
         this.endTime = dto.getEndTime();
         this.basePrice = dto.getBasePrice();
-        this.startTime = dto.getStartTime();
+        this.status = dto.getStatus();
         addEvent(new CinemeshEvent(CinemeshEventName.SHOWTIME_CREATED, id));
         create();
     }

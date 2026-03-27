@@ -1,0 +1,62 @@
+---
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaConnector
+metadata:
+  name: auth-service-postgres-connector
+  namespace: kafka
+  labels:
+    # 🌟 MUST perfectly match the metadata.name of your KafkaConnect cluster pod configured in kafka-connect-build.yml
+    strimzi.io/cluster: cinemesh-kafka-connect
+spec:
+  class: io.debezium.connector.postgresql.PostgresConnector
+  tasksMax: 1
+  config:
+    # ==========================================
+    # 1. DATABASE CONNECTION & CORE SETTINGS
+    # ==========================================
+    plugin.name: pgoutput
+#    database.server.name: auth-service-postgres-connector
+    topic.prefix: auth-service-postgres-connector
+
+    # Cross-Namespace Routing: Connect is in 'kafka', Postgres is in 'default'
+    database.hostname: postgres-postgresql.default.svc.cluster.local
+    database.port: "5432"
+    database.user: cinemesh
+    database.password: "cinemesh123!@#"
+    database.dbname: cinemesh_auth_db
+
+    # ==========================================
+    # 2. TARGET TABLES
+    # ==========================================
+    # Only capture changes from these specific tables to save bandwidth
+    table.include.list: public.user_logs
+
+    # ==========================================
+    # 3. PAYLOAD FORMATTING
+    # ==========================================
+    # Setting schemas.enable to 'false' prevents Debezium from wrapping every single
+    # JSON message with a massive schema definition, keeping the payload tiny and fast.
+    key.converter.schemas.enable: false
+    value.converter.schemas.enable: false
+    key.converter: org.apache.kafka.connect.storage.StringConverter
+    value.converter: org.apache.kafka.connect.json.JsonConverter
+
+    # ==========================================
+    # 4. TOPIC ROUTING (TRANSFORMS)
+    # ==========================================
+    # By default, Debezium names topics like "serverName.schemaName.tableName"
+    # We use a RegexRouter to cleanly rename the output to match our custom topic.
+    transforms: routeUserLogs
+    transforms.routeUserLogs.type: org.apache.kafka.connect.transforms.RegexRouter
+    transforms.routeUserLogs.regex: (.*).user_logs
+    transforms.routeUserLogs.replacement: cinemesh.auth-service.user-logs
+
+    # ==========================================
+    # 5. ENTERPRISE SAFETY NET (THE HEARTBEAT)
+    # ==========================================
+    # Forces a database write every 60 seconds. This advances the LSN (Log Sequence Number)
+    # and prevents PostgreSQL from holding onto old WAL files and running out of disk space.
+    heartbeat.topics.prefix: debezium-heartbeat
+    heartbeat.interval.ms: "60000"
+    heartbeat.action.query: "INSERT INTO public.kafka_connect_heartbeats (created_date_time, connector_name) VALUES (now(), 'auth-service-postgres-connector')"
+    # connector_name value must be matched with metadata.name and database.server.name/topic.prefix in the begining of this file

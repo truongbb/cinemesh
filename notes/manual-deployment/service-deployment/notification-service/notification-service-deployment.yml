@@ -3,22 +3,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: theater-service
+  name: notification-service
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: theater-service
+      app: notification-service
   template:
     metadata:
       labels:
-        app: theater-service
+        app: notification-service
     spec:
       containers:
-        - name: theater-service
+        - name: notification-service
           # Using the Monorepo Tagging strategy!
-          image: registry.digitalocean.com/cinemesh-registry-truongbb/cinemesh:theater-service-v1.0.1
+          image: registry.digitalocean.com/cinemesh-registry-truongbb/cinemesh:notification-service-v1.0.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -34,7 +34,7 @@ spec:
             - name: SPRING_PROFILES_ACTIVE
               value: "prod"
             - name: SPRING_APPLICATION_NAME
-              value: "theater-service"
+              value: "notification-service"
             # Force the Config Server to read from the 'main' branch
             - name: SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL
               value: "main"

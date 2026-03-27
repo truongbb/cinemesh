@@ -28,7 +28,7 @@ application:
     pay-url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
     return-url: http://localhost:3000
   kafka:
-    payment-notification: # lắng nghe message quyét từ bảng payment-notification của auth-service.yml
+    payment-notification: # lắng nghe message quyét từ bảng payment-notification của auth-service
       bootstrap-server: localhost:9092 # Or kafka:29092 if inside Docker
       topic: cinemesh.payment-service.payment-notification
       group-id: payment-notification-dev
