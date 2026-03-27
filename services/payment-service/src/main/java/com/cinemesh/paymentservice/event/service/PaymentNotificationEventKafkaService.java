@@ -53,9 +53,9 @@ public class PaymentNotificationEventKafkaService {
     }
 
     private PaymentNotificationDto selectMessage(ConsumerRecord<String, String> consumerRecord) throws JsonProcessingException {
-        KafkaMessageDto<PaymentNotificationDto> eventMessage = snakeCaseObjectMapper.readValue(consumerRecord.value(), new TypeReference<>() {
+        KafkaMessagePayloadDto<PaymentNotificationDto> eventMessagePayload = snakeCaseObjectMapper.readValue(consumerRecord.value(), new TypeReference<>() {
         });
-        KafkaMessagePayloadDto<PaymentNotificationDto> eventMessagePayload = eventMessage.getPayload();
+//        KafkaMessagePayloadDto<PaymentNotificationDto> eventMessagePayload = eventMessage.getPayload();
         if (!eventMessagePayload.getOp().equals("r") && !eventMessagePayload.getOp().equals("c")) {
             return null;
         }

@@ -56,7 +56,7 @@ application:
       reproduce-topic: cinemesh.auth-service.user-logs
       stopped: true #Dừng lại khi xử lý lỗi message và đã thực hiện xử lý lại message nếu có.
       auto-startup: true #Tự động startup kafka consumer
-    order-log: # lắng nghe message quyét từ bảng user-logs của auth-service
+    order-log: # lắng nghe message quyét từ bảng user-logs của booking-service
       bootstrap-server: kafka-cluster-kafka-bootstrap:9092 # Or kafka:29092 if inside Docker
       topic: cinemesh.booking-service.order-logs
       group-id: order-logs-dev

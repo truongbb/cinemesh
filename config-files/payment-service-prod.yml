@@ -1,13 +1,13 @@
 server:
-  port: 9005
+  port: 8080
 
 spring:
   application:
     name: payment-service
   datasource:
-    url: jdbc:postgresql://postgres-postgresql:54321/cinemesh_payment_db
+    url: jdbc:postgresql://postgres-postgresql:5432/cinemesh_payment_db
     username: cinemesh
-    password: '{cipher}85afe47df2b242740712388acc200673e4afe7d1194f3e826efdd1c3dfdb5761'
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -29,9 +29,9 @@ application:
     return-url: http://localhost:3000
   kafka:
     payment-notification: # lắng nghe message quyét từ bảng payment-notification của payment-service
-      bootstrap-server: localhost:9092 # Or kafka:29092 if inside Docker
+      bootstrap-server: cinemesh-kafka-kafka-bootstrap.kafka:9092
       topic: cinemesh.payment-service.payment-notification
-      group-id: payment-notification-dev
+      group-id: payment-notification
       retry-interval: 2000 #Khoảng thời gian giữa các lần lặp
       retry-multiplier: 2 #Hệ số tăng thời gian
       retry-max-interval: 10000 #Khoảng thời gian lớn nhất giữa các lần lặp
