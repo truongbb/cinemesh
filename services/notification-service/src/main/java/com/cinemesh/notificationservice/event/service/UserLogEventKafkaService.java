@@ -52,9 +52,9 @@ public class UserLogEventKafkaService {
     }
 
     private UserLogDto selectMessage(ConsumerRecord<String, String> consumerRecord) throws JsonProcessingException {
-        KafkaMessageDto<UserLogDto> eventMessage = snakeCaseObjectMapper.readValue(consumerRecord.value(), new TypeReference<>() {
+        KafkaMessagePayloadDto<UserLogDto> eventMessagePayload = snakeCaseObjectMapper.readValue(consumerRecord.value(), new TypeReference<>() {
         });
-        KafkaMessagePayloadDto<UserLogDto> eventMessagePayload = eventMessage.getPayload();
+//        KafkaMessagePayloadDto<UserLogDto> eventMessagePayload = eventMessage.getPayload();
         if (!eventMessagePayload.getOp().equals("r") && !eventMessagePayload.getOp().equals("c")) {
             return null;
         }

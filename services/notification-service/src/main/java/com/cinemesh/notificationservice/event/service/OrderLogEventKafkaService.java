@@ -53,9 +53,9 @@ public class OrderLogEventKafkaService {
     }
 
     private OrderLogDto selectMessage(ConsumerRecord<String, String> consumerRecord) throws JsonProcessingException {
-        KafkaMessageDto<OrderLogDto> eventMessage = snakeCaseObjectMapper.readValue(consumerRecord.value(), new TypeReference<>() {
+        KafkaMessagePayloadDto<OrderLogDto> eventMessagePayload = snakeCaseObjectMapper.readValue(consumerRecord.value(), new TypeReference<>() {
         });
-        KafkaMessagePayloadDto<OrderLogDto> eventMessagePayload = eventMessage.getPayload();
+//        KafkaMessagePayloadDto<OrderLogDto> eventMessagePayload = eventMessage.getPayload();
         if (!eventMessagePayload.getOp().equals("r") && !eventMessagePayload.getOp().equals("c")) {
             return null;
         }
