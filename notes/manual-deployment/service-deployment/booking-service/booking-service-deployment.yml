@@ -50,3 +50,9 @@ spec:
                 secretKeyRef:
                   name: cinemesh-secrets
                   key: DB_PASSWORD
+            - name: SPRING_DATA_REDIS_HOST
+              value: "redis-master"
+            - name: SPRING_DATA_REDIS_PORT
+              value: "6379"
+            - name: SPRING_DATA_REDIS_PASSWORD
+              value: "cinemesh_secret"
