@@ -7,7 +7,11 @@ resources:
   - kafka-connect-build.yml # kafka connect pod config
 
   # topics
-  - topic/user-logs-topic.yml
+  - topic/auth-service-topic.yml
+  - topic/booking-service-topic.yml
+  - topic/payment-service-topic.yml
 
   # connectors
   - connect/auth-db-connector.yml
+  - connect/booking-db-connector.yml
+  - connect/payment-db-connector.yml

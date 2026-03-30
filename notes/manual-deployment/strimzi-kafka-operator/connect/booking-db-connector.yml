@@ -2,7 +2,7 @@
 apiVersion: kafka.strimzi.io/v1
 kind: KafkaConnector
 metadata:
-  name: auth-service-postgres-connector
+  name: booking-service-postgres-connector
   namespace: kafka
   labels:
     # 🌟 MUST perfectly match the metadata.name of your KafkaConnect cluster pod configured in kafka-connect-build.yml
@@ -15,22 +15,22 @@ spec:
     # 1. DATABASE CONNECTION & CORE SETTINGS
     # ==========================================
     plugin.name: pgoutput
-    slot.name: "auth_service_slot"
-#    database.server.name: auth-service-postgres-connector
-    topic.prefix: auth-service-postgres-connector
+    slot.name: "booking_service_slot"
+#    database.server.name: booking-service-postgres-connector
+    topic.prefix: booking-service-postgres-connector
 
     # Cross-Namespace Routing: Connect is in 'kafka', Postgres is in 'default'
     database.hostname: postgres-postgresql.default.svc.cluster.local
     database.port: "5432"
     database.user: cinemesh
     database.password: "cinemesh123!@#"
-    database.dbname: cinemesh_auth_db
+    database.dbname: cinemesh_booking_db
 
     # ==========================================
     # 2. TARGET TABLES
     # ==========================================
     # Only capture changes from these specific tables to save bandwidth
-    table.include.list: public.user_logs
+    table.include.list: public.order_logs
 
     # ==========================================
     # 3. PAYLOAD FORMATTING
@@ -47,10 +47,10 @@ spec:
     # ==========================================
     # By default, Debezium names topics like "serverName.schemaName.tableName"
     # We use a RegexRouter to cleanly rename the output to match our custom topic.
-    transforms: routeUserLogs
-    transforms.routeUserLogs.type: org.apache.kafka.connect.transforms.RegexRouter
-    transforms.routeUserLogs.regex: (.*).user_logs
-    transforms.routeUserLogs.replacement: cinemesh.auth-service.user-logs
+    transforms: routeOrderLogs
+    transforms.routeOrderLogs.type: org.apache.kafka.connect.transforms.RegexRouter
+    transforms.routeOrderLogs.regex: (.*).order_logs
+    transforms.routeOrderLogs.replacement: cinemesh.payment-service.order-logs
 
     # ==========================================
     # 5. ENTERPRISE SAFETY NET (THE HEARTBEAT)
@@ -59,5 +59,5 @@ spec:
     # and prevents PostgreSQL from holding onto old WAL files and running out of disk space.
     heartbeat.topics.prefix: debezium-heartbeat
     heartbeat.interval.ms: "60000"
-    heartbeat.action.query: "INSERT INTO public.kafka_connect_heartbeats (created_date_time, connector_name) VALUES (now(), 'auth-service-postgres-connector')"
+    heartbeat.action.query: "INSERT INTO public.kafka_connect_heartbeats (created_date_time, connector_name) VALUES (now(), 'order-service-postgres-connector')"
     # connector_name value must be matched with metadata.name and database.server.name/topic.prefix in the begining of this file

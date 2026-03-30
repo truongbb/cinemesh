@@ -221,6 +221,7 @@ spec:
     # 1. DATABASE CONNECTION & CORE SETTINGS
     # ==========================================
     plugin.name: pgoutput
+    slot.name: "auth_service_slot"
 #    database.server.name: auth-service-postgres-connector
     topic.prefix: auth-service-postgres-connector
 

@@ -1,0 +1,43 @@
+---
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaTopic
+metadata:
+  name: cinemesh.payment-service.payment-notification
+  namespace: kafka
+  labels:
+    # MUST match your core Kafka cluster name!
+    strimzi.io/cluster: cinemesh-kafka
+spec:
+  partitions: 3
+  replicas: 1
+  config:
+    retention.ms: 604800000 # 7 Days
+    segment.bytes: 1073741824
+---
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaTopic
+metadata:
+  name: cinemesh.payment-service.payment-logs
+  namespace: kafka
+  labels:
+    # MUST match your core Kafka cluster name!
+    strimzi.io/cluster: cinemesh-kafka
+spec:
+  partitions: 3
+  replicas: 1
+  config:
+    retention.ms: 604800000 # 7 Days
+    segment.bytes: 1073741824
+---
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaTopic
+metadata:
+  name: debezium-heartbeat.payment-service
+  labels:
+    strimzi.io/cluster: kafka-cluster
+spec:
+  partitions: 1
+  replicas: 3
+  config:
+    retention.ms: 2419200000
+    segment.bytes: 1073741824
