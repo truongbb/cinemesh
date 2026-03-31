@@ -24,6 +24,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: 'maven'
+
   # ==========================================
   # JOB 2: THE FACTORY (Build & Push Docker Images)
   # ==========================================
@@ -62,8 +63,43 @@ jobs:
           # 2. Push to the single cinemesh repository
           docker push registry.digitalocean.com/cinemesh-registry-truongbb/cinemesh:${{ matrix.service }}-${{ github.sha }}
 
-#      - name: Build and Push Docker Image
-#        run: |
-#          docker build -f ../../services/auth-service/Dockerfile -t registry.digitalocean.com/cinemesh-registry-truongbb/auth-service:${{ github.sha }} .
-#          docker tag registry.digitalocean.com/cinemesh-registry-truongbb/auth-service:${{ github.sha }} registry.digitalocean.com/cinemesh-registry-truongbb/cinemesh:auth-service:${{ github.sha }}
-#          docker push registry.digitalocean.com/cinemesh-registry-truongbb/cinemesh:auth-service:${{ github.sha }}
+  # ==========================================
+  # JOB 3: THE DEPLOYMENT (Update Kubernetes)
+  # ==========================================
+  deploy-to-cluster:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+
+    # 🌟 CRITICAL: Do not run this until the Factory job finishes successfully!
+    needs: artifact-factory
+
+    # Only deploy if we are on the main branch
+    if: github.ref == 'refs/heads/main'
+
+    # We need the matrix again to deploy each service individually
+    strategy:
+      matrix:
+        service: [auth-service, booking-service, movie-service, notification-service, payment-service, theater-service]
+
+    steps:
+      # 1. AUTHENTICATION: We need doctl again in this new virtual machine
+      - name: Install DigitalOcean CLI
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      # 2. CLUSTER ACCESS: Download the K8s security keys
+      - name: Save DigitalOcean Kubeconfig
+        # ⚠️ Replace <your-cluster-name> with the exact name of your DOKS cluster!
+        run: doctl kubernetes cluster config save <your-cluster-name>
+
+      # 3. THE ROLLOUT: Tell K8s to update the specific deployment
+      - name: Deploy ${{ matrix.service }} to Kubernetes
+        run: |
+          # Patch the live cluster with the new Docker image tag
+          kubectl set image deployment/${{ matrix.service }} \
+            ${{ matrix.service }}=registry.digitalocean.com/cinemesh-registry-truongbb/cinemesh:${{ matrix.service }}-${{ github.sha }} \
+            -n default
+          
+          # Wait and verify that the new pods start up successfully
+          kubectl rollout status deployment/${{ matrix.service }} -n default
