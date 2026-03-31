@@ -25,6 +25,9 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
+      - name: Run Maven Build and Tests
+        run: mvn clean install -DskipTests
+
   # ==========================================
   # JOB 2: THE FACTORY (Build & Push Docker Images)
   # ==========================================
@@ -90,8 +93,7 @@ jobs:
 
       # 2. CLUSTER ACCESS: Download the K8s security keys
       - name: Save DigitalOcean Kubeconfig
-        # ⚠️ Replace <your-cluster-name> with the exact name of your DOKS cluster!
-        run: doctl kubernetes cluster config save <your-cluster-name>
+        run: doctl kubernetes cluster config save cinemesh-registry-truongbb
 
       # 3. THE ROLLOUT: Tell K8s to update the specific deployment
       - name: Deploy ${{ matrix.service }} to Kubernetes
