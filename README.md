@@ -37,8 +37,6 @@ To maintain high development velocity while ensuring production stability, we us
 
 ## 🏗️ Architecture Overview
 
-*(Recommendation: Add a link to an architecture diagram image here, e.g., `![Architecture Diagram](docs/images/architecture.png)`)*
-
 Cinemesh breaks down the monolithic approach into strictly bounded contexts:
 
 * **Auth Service:** Manages user registration, login, and JWT token issuance.
