@@ -16,7 +16,7 @@ spec:
         app: payment-service
     spec:
       containers:
-        - name: booking-service
+        - name: payment-service
           # Using the Monorepo Tagging strategy!
           image: registry.digitalocean.com/cinemesh-registry-truongbb/cinemesh:payment-service-v1.0.0
           imagePullPolicy: Always
