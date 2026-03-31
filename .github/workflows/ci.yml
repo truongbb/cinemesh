@@ -28,3 +28,18 @@ jobs:
       # 4. THE TEST: Compile the code and run all unit tests
       - name: Run Maven Build and Tests
         run: mvn -B clean test
+
+      # 5. AUTHENTICATION: Log into DigitalOcean
+      - name: Install DigitalOcean CLI
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Log in to DO Container Registry
+        run: doctl registry login --expiry-seconds 1200
+
+      # 6. BUILD & PUSH: Package the app and send it to the vault
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t registry.digitalocean.com/cinemesh-registry-truongbb/booking-service:${{ github.sha }} .
+          docker push registry.digitalocean.com/cinemesh-registry-truongbb/booking-service:${{ github.sha }}
