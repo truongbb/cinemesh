@@ -93,7 +93,7 @@ jobs:
 
       # 2. CLUSTER ACCESS: Download the K8s security keys
       - name: Save DigitalOcean Kubeconfig
-        run: doctl kubernetes cluster config save cinemesh-registry-truongbb
+        run: doctl kubernetes cluster config save cinemesh-cluster
 
       # 3. THE ROLLOUT: Tell K8s to update the specific deployment
       - name: Deploy ${{ matrix.service }} to Kubernetes
