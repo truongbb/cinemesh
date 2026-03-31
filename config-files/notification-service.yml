@@ -20,7 +20,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: truongbb96
-    password: 'xrhz quxn ohfw jdwv' # App password (here's just a demo)
+    password: 123456 # App password (here's just a demo)
     properties:
       mail:
         smtp:
@@ -28,10 +28,10 @@ spring:
           starttls:
             enable: true
 
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka/ # <--- Eureka address
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # <--- Eureka address
 
 application:
   account:
